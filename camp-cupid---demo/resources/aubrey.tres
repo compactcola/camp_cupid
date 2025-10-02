@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://7qhxawrk80dy"]
+
+[ext_resource type="Texture2D" uid="uid://bevyolsxn4iv1" path="res://assets/characters/aubrey/aubrey-temp.webp" id="1_lq8i8"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lq8i8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

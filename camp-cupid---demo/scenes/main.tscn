@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://bx8xyru4725yx"]
+
+[ext_resource type="Script" uid="uid://bbjj45yg48jpd" path="res://scripts/main.gd" id="1_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://iis0boqow6g4" path="res://assets/camp-bg.jpg" id="1_sugp2"]
+[ext_resource type="PackedScene" uid="uid://drd1ph4insfpu" path="res://scenes/character.tscn" id="2_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://sb08vxy1iwjd" path="res://scenes/dialogue_ui.tscn" id="3_tbgi4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7iok0"]
+content_margin_left = 40.0
+content_margin_right = 40.0
+bg_color = Color(0.435294, 0.121569, 0.266667, 0.545098)
+border_width_top = 2
+border_color = Color(0.661381, 0.272783, 0.521502, 1)
+
+[sub_resource type="Theme" id="Theme_jyhfs"]
+resource_local_to_scene = true
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_7iok0")
+RichTextLabel/font_sizes/normal_font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
+bg_color = Color(0.58, 0.2436, 0.316487, 0.647059)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_jyhfs")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_sugp2")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Character" parent="UI/Control" instance=ExtResource("2_jyhfs")]
+unique_name_in_owner = true
+position = Vector2(4, -150)
+scale = Vector2(1.5, 1.5)
+
+[node name="DialogueUI" parent="UI" instance=ExtResource("3_tbgi4")]
+unique_name_in_owner = true
+z_index = 4
+theme = SubResource("Theme_jyhfs")
+
+[node name="Button" type="Button" parent="UI"]
+z_index = 10
+offset_left = 1645.0
+offset_top = 706.0
+offset_right = 1889.0
+offset_bottom = 817.0
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_jyhfs")
+text = "Next!"
+
+[connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
