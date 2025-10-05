@@ -19,6 +19,11 @@ func _ready():
 	pass
 
 func validate_name(name : String):
+	#check for player dialog
+	if (name == Globals.player_name):
+		return "Player"
+	
+	#make sure name is valid
 	var name_index = approved_names.find(name)
 	if (name_index == -1):
 		return "Empty"
@@ -27,5 +32,6 @@ func validate_name(name : String):
 
 func change_character(character_name : String):
 	character_name = validate_name(character_name)
-	animated_sprite.sprite_frames = CHARACTER_FRAMES[character_name]
-	animated_sprite.play("default")
+	if (character_name != "Player"):
+		animated_sprite.sprite_frames = CHARACTER_FRAMES[character_name]
+		animated_sprite.play("default")

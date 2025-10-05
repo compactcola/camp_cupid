@@ -1,12 +1,13 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://coxia71551uox"]
 
-[ext_resource type="Texture2D" uid="uid://b3ryf1bh5wd1r" path="res://assets/characters/harper/harper-temp.webp" id="1_dwlaf"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m0wv8"]
+load_path = "res://.godot/imported/harper-temp.png-d2f0794ae1b22494c87dd82f331c93b9.ctex"
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_dwlaf")
+"texture": SubResource("CompressedTexture2D_m0wv8")
 }],
 "loop": true,
 "name": &"default",

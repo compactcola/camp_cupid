@@ -1,7 +1,10 @@
 {
-    "conversation": [
-        "Aubrey:Hello!",
-        "Ethan:Hello as well.",
-        "Harper:I'm here too!"
-    ]
+	"conversation": [
+		"Aubrey:Hello!",
+		"Ethan:Hello as well.",
+		"Harper:I'm here too!",
+		"Player: You said it!",
+		"Harper:I sure fucking did!",
+		"Ethan:..."
+	]
 }

@@ -36,6 +36,10 @@ func process_current_line():
 	var line = dialog_lines[dialog_index]
 	var line_info = parse_line(line)
 	
+	## add custom player name
+	if (line_info["speaker"] == "Player"):
+		line_info["speaker"] = Globals.player_name
+	
 	dui.speaker.text = line_info["speaker"]
 	dui.dialog.text = line_info["dialog"]
 	character.change_character(line_info["speaker"])

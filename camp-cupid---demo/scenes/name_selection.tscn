@@ -1,0 +1,225 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0ny4fif3070h"]
+
+[ext_resource type="Script" uid="uid://cyhbqoj7lorgt" path="res://scripts/name_entry.gd" id="1_b8nv3"]
+[ext_resource type="Theme" uid="uid://bwbjqk7oa8baa" path="res://resources/themes/letter_buttons.tres" id="1_cjs6i"]
+
+[node name="name_entry" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_b8nv3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "What's your name? "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+placeholder_text = "Camper"
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="A" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "A"
+
+[node name="B" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "B"
+
+[node name="C" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "C"
+
+[node name="D" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "D"
+
+[node name="E" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "E"
+
+[node name="F" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "F"
+
+[node name="G" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "G"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="H" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "H"
+
+[node name="I" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "I"
+
+[node name="J" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "J"
+
+[node name="K" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "K"
+
+[node name="L" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "L"
+
+[node name="M" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "M"
+
+[node name="N" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "N"
+
+[node name="O" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "O"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+alignment = 1
+
+[node name="P" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "P"
+
+[node name="Q" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "Q"
+
+[node name="R" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "R"
+
+[node name="S" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "S"
+
+[node name="T" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "T"
+
+[node name="U" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "U"
+
+[node name="V" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "V"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="W" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "W"
+
+[node name="X" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "X"
+
+[node name="Y" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "Y"
+
+[node name="Z" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "Z"
+
+[node name="OK" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme = ExtResource("1_cjs6i")
+text = "OK"

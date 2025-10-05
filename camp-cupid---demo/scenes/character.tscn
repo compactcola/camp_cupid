@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://drd1ph4insfpu"]
 
 [ext_resource type="Script" uid="uid://d0g0voj10ed0l" path="res://scripts/character.gd" id="1_rkhd4"]
-[ext_resource type="SpriteFrames" uid="uid://7qhxawrk80dy" path="res://resources/aubrey.tres" id="2_rkhd4"]
+[ext_resource type="SpriteFrames" uid="uid://coxia71551uox" path="res://resources/harper.tres" id="2_rkhd4"]
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_rkhd4")

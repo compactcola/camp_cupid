@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://doembhv4yxcfo"]
+
+[ext_resource type="Texture2D" uid="uid://c26qbokk5cfqr" path="res://assets/arrow_impact.png" id="1_nbfab"]
+[ext_resource type="Script" uid="uid://calagdags11ec" path="res://scripts/arrow_impact.gd" id="2_xcd1o"]
+
+[node name="Sprite2D" type="Sprite2D"]
+top_level = true
+z_index = 1000
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_nbfab")
+script = ExtResource("2_xcd1o")
