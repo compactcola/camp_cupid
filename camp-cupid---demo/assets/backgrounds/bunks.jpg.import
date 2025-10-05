@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcr6tjlilvg7k"
-path="res://.godot/imported/shitty-background.jpg-7a8a421e115d0b12c10ba38287816a81.ctex"
+uid="uid://bsxcmi7kf3w0h"
+path="res://.godot/imported/bunks.jpg-286baf5ef8048883a585b58060038a29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/shitty-background.jpg"
-dest_files=["res://.godot/imported/shitty-background.jpg-7a8a421e115d0b12c10ba38287816a81.ctex"]
+source_file="res://assets/backgrounds/bunks.jpg"
+dest_files=["res://.godot/imported/bunks.jpg-286baf5ef8048883a585b58060038a29.ctex"]
 
 [params]
 

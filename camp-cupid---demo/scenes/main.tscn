@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bbjj45yg48jpd" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://drd1ph4insfpu" path="res://scenes/character.tscn" id="2_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://bcr6tjlilvg7k" path="res://assets/shitty-background.jpg" id="2_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://bsxcmi7kf3w0h" path="res://assets/backgrounds/bunks.jpg" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://sb08vxy1iwjd" path="res://scenes/dialogue_ui.tscn" id="3_tbgi4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7iok0"]
@@ -31,7 +31,7 @@ script = ExtResource("1_jyhfs")
 layer = -1
 follow_viewport_enabled = true
 
-[node name="TextureRect" type="TextureRect" parent="Background"]
+[node name="image" type="TextureRect" parent="Background"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

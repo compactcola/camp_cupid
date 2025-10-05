@@ -4,6 +4,7 @@ extends Node2D
 @onready var dui = %DialogueUI
 
 var dialog_index : int = 0
+var typing_speed : float = 0.02
 var dialog_lines = []
 
 func _ready():
@@ -16,7 +17,7 @@ func _ready():
 	dialog_index = -1
 	process_current_line()
 	
-# button to advance dialogue
+## button to advance dialogue
 func _on_button_pressed() -> void:
 	process_current_line()
 	#randomize_botton_pos()
@@ -40,10 +41,45 @@ func process_current_line():
 	if (line_info["speaker"] == "Player"):
 		line_info["speaker"] = Globals.player_name
 	
-	dui.speaker.text = line_info["speaker"]
-	dui.dialog.text = line_info["dialog"]
-	character.change_character(line_info["speaker"])
+	if(line_info["speaker"] == "Background"):
+		change_background(line_info["dialog"])
+		process_current_line() ## auto advance so you don't have to click next again
+		return
 	
+	dui.speaker.text = line_info["speaker"]
+	
+	dui.dialog.text = line_info["dialog"]
+	dui.dialog.visible_characters = 0
+	type_text(line_info["dialog"].length()) ## call typewriter effect function
+	character.change_character(line_info["speaker"])
+
+func type_text(line_length : int) -> void:
+	var timer = Timer.new()
+	timer.wait_time = typing_speed
+	timer.one_shot = false
+	add_child(timer)
+	timer.start()
+	
+	timer.timeout.connect(func():
+		if dui.dialog.visible_characters < line_length:
+			dui.dialog.visible_characters +=1
+		else:
+			timer.queue_free()
+	)
+
+# getting fancy with backgrounds
+var backgrounds := {
+	"bunks": preload("res://assets/backgrounds/bunks.jpg"),
+	"camp_day": preload("res://assets/backgrounds/camp1.jpg"),
+	"camp_evening": preload("res://assets/backgrounds/camp2.jpg")
+}	
+func change_background(id : String) -> void:
+	if id in backgrounds:
+		$Background/image.texture = backgrounds[id]
+	else:
+		return
+
+## useless ass button position randomizer
 func randomize_botton_pos() -> void:
 	var viewport_size = get_viewport_rect().size
 	var button_size = $UI/Button.size

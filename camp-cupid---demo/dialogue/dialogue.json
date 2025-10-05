@@ -1,9 +1,12 @@
 {
 	"conversation": [
-		"Aubrey:Hello!",
+		"Player:Wow, I slept [shake]terribly![/shake]",
+		"Player:My back is killing me...",
+		"Aubrey:Morning!",
 		"Ethan:Hello as well.",
-		"Harper:I'm here too!",
+		"Harper:I'm here too! Fuck dialog progression-- lets go outside-!",
 		"Player: You said it!",
+		"Background:camp_day",
 		"Harper:I sure fucking did!",
 		"Ethan:..."
 	]

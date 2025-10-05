@@ -1,10 +1,21 @@
-[gd_scene format=3 uid="uid://40awd1gtrwyq"]
+[gd_scene load_steps=3 format=3 uid="uid://40awd1gtrwyq"]
+
+[ext_resource type="Theme" uid="uid://ds5gr620wj1c" path="res://resources/themes/button.tres" id="1_mi6dp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4pas"]
+bg_color = Color(0.58, 0.2436, 0.316487, 0.647059)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="Button" type="Node2D"]
 
 [node name="Button" type="Button" parent="."]
-offset_left = -104.0
-offset_top = -37.0
-offset_right = 96.0
-offset_bottom = 54.0
-text = "Next"
+z_index = 10
+offset_right = 244.0
+offset_bottom = 111.0
+theme = ExtResource("1_mi6dp")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_n4pas")
+text = "Next!"
