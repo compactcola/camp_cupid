@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://dxewf0sji2d5y"]
 
-[ext_resource type="Texture2D" uid="uid://8o2bm30ku13s" path="res://assets/characters/danny/danny-temp.png" id="1_5hfgh"]
+[ext_resource type="Texture2D" uid="uid://ldls3bey851u" path="res://assets/characters/danny/danny-temp (2).png" id="1_5hfgh"]
 
 [resource]
 animations = [{

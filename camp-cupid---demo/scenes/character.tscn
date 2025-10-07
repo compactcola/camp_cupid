@@ -7,4 +7,5 @@
 script = ExtResource("1_rkhd4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
 sprite_frames = ExtResource("2_rkhd4")

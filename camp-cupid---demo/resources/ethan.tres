@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://lujx2edhfdt2"]
 
-[ext_resource type="Texture2D" uid="uid://bk5jfo82r0rp2" path="res://assets/characters/ethan/ethan-temp.webp" id="1_ihtgn"]
+[ext_resource type="Texture2D" uid="uid://wgof3tslgsnj" path="res://assets/characters/ethan/ethan_default.png" id="1_ihtgn"]
 
 [resource]
 animations = [{

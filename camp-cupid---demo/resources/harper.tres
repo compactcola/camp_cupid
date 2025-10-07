@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://coxia71551uox"]
 
-[ext_resource type="Texture2D" uid="uid://j8jxxalybmqk" path="res://assets/characters/harper/harper-temp.webp" id="1_dwlaf"]
+[ext_resource type="Texture2D" uid="uid://2q7ihvum0rru" path="res://assets/characters/harper/harper_default.png" id="1_dwlaf"]
 
 [resource]
 animations = [{

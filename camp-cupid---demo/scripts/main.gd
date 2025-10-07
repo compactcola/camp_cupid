@@ -42,10 +42,14 @@ func process_current_line():
 	if (line_info["speaker"] == "Player"):
 		line_info["speaker"] = Globals.player_name
 	
+	## change background
 	if(line_info["speaker"] == "Background"):
 		change_background(line_info["dialog"])
 		process_current_line() ## auto advance so you don't have to click next again
 		return
+	 ## change scene
+	if (line_info["speaker"] == "Scene"):
+		get_tree().change_scene_to_file("res://scenes/ball_game.tscn")
 		
 	if(line_info["speaker"] == "NameSelect"):
 		run_name_selection()
