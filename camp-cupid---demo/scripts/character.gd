@@ -5,13 +5,15 @@ extends Node2D
 const approved_names = [
 	"Aubrey",
 	"Ethan",
-	"Harper"
+	"Harper",
+	"Danny"
 ]
 
 const CHARACTER_FRAMES = {
 	"Aubrey":preload("res://resources/aubrey.tres"),
 	"Harper":preload("res://resources/harper.tres"),
 	"Ethan":preload("res://resources/ethan.tres"),
+	"Danny":preload("res://resources/danny.tres"),
 	"Empty":preload("res://resources/empty.tres")
 }
 

@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://7qhxawrk80dy"]
 
-[ext_resource type="Texture2D" uid="uid://cosqigsci5nqc" path="res://assets/characters/aubrey/aubrey-temp.png" id="1_lq8i8"]
+[ext_resource type="Texture2D" uid="uid://cytxlcmsj5wkc" path="res://assets/characters/aubrey/aubrey-temp.webp" id="1_lq8i8"]
 
 [resource]
 animations = [{

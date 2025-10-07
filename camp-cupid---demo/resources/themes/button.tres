@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://ds5gr620wj1c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bob45"]
-bg_color = Color(0.914678, 0.386241, 0.62532, 1)
+bg_color = Color(0.951833, 0.363762, 0.537161, 1)
 
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)

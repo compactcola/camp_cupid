@@ -3,6 +3,8 @@ extends Control
 @onready var name_box : LineEdit = $CanvasLayer/VBoxContainer/LineEdit
 @onready var keyboard : VBoxContainer = $CanvasLayer/VBoxContainer/VBoxContainer
 
+signal name_chosen(name : String)
+
 func _ready():
 	for i in keyboard.get_children():
 		if i is Button:
@@ -26,8 +28,10 @@ func _on_key_button_pressed(btn : Button):
 
 func _submit_name(entered_name : String):
 	if entered_name.strip_edges() == "":
-		Globals.player_name = "Camper"
-	else:
-		Globals.player_name = entered_name
+		entered_name = "Camper"
+	Globals.player_name = entered_name
+		
+	emit_signal("name_chosen", entered_name)
+	queue_free()
 	##print("Player name set to: %s" % Globals.player_name)
 	

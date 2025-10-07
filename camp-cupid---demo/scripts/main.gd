@@ -15,6 +15,7 @@ func _ready():
 			dialog_lines = parsed["conversation"]
 		
 	dialog_index = -1
+	character.change_character("Empty")
 	process_current_line()
 	
 ## button to advance dialogue
@@ -45,8 +46,16 @@ func process_current_line():
 		change_background(line_info["dialog"])
 		process_current_line() ## auto advance so you don't have to click next again
 		return
+		
+	if(line_info["speaker"] == "NameSelect"):
+		run_name_selection()
+		character.change_character("Empty")
+		return
 	
-	dui.speaker.text = line_info["speaker"]
+	if (line_info["speaker"] == "Danny"):
+		dui.speaker.text = "Counselor Dan"
+	else:
+		dui.speaker.text = line_info["speaker"]
 	
 	dui.dialog.text = line_info["dialog"]
 	dui.dialog.visible_characters = 0
@@ -60,17 +69,35 @@ func type_text(line_length : int) -> void:
 	add_child(timer)
 	timer.start()
 	
+	$UI/Button.hide()
+	
 	timer.timeout.connect(func():
 		if dui.dialog.visible_characters < line_length:
 			dui.dialog.visible_characters +=1
 		else:
 			timer.queue_free()
+			randomize_botton_pos()
+			$UI/Button.show()
 	)
+
+## name selection logic!
+func run_name_selection():
+	var name_selection = preload("res://scenes/name_selection.tscn").instantiate()
+	name_selection.name_chosen.connect(name_chosen)
+	var parent_ui = $UI
+	dui.hide()
+	$UI/Button.hide() ## probably will cause an error at some point
+	parent_ui.add_child(name_selection)
+
+func name_chosen(_name : String) -> void:
+	dui.show()
+	$UI/Button.show()
+	process_current_line()
 
 # getting fancy with backgrounds
 var backgrounds := {
 	"bunks": preload("res://assets/backgrounds/bunks.jpg"),
-	"camp_day": preload("res://assets/backgrounds/camp1.jpg"),
+	"camp_day": preload("res://assets/backgrounds/camp3.webp"),
 	"camp_evening": preload("res://assets/backgrounds/camp2.jpg")
 }	
 func change_background(id : String) -> void:

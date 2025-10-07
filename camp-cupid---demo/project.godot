@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Camp Cupid - Demo"
-run/main_scene="uid://bx8xyru4725yx"
+config/name="Camp Cupid"
+run/main_scene="uid://bkybrh0xwu0vt"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,10 @@ Globals="*res://scripts/globals.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdserial/plugin.cfg")
 
 [input]
 

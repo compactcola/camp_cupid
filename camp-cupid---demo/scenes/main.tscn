@@ -18,7 +18,7 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_7iok0")
 RichTextLabel/font_sizes/normal_font_size = 40
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
-bg_color = Color(0.58, 0.2436, 0.316487, 0.647059)
+bg_color = Color(0.54102, 0.3479, 0.71, 0.85098)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
