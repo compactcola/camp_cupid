@@ -4,24 +4,47 @@ extends Node2D
 @onready var dui = %DialogueUI
 
 var dialog_index : int = 0
-var typing_speed : float = 0.02
 var dialog_lines = []
 
+var target = Sprite2D.new()
+
 func _ready():
+	$UI/Button.hide()
+	
+	## target reticule
+	target.texture = load("res://assets/target.png")
+	target.scale = Vector2(0.2, 0.2)
+	get_tree().current_scene.add_child(target)
+	
 	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)
 	if file:
 		var parsed = JSON.parse_string(file.get_as_text())
 		if typeof(parsed) == TYPE_DICTIONARY:
-			dialog_lines = parsed["conversation"]
+			dialog_lines = parsed[Globals.scenes[Globals.scene_index]]
 		
 	dialog_index = -1
 	character.change_character("Empty")
 	process_current_line()
 	
+### getting fancy with backgrounds
+var backgrounds := {
+	"bunks": preload("res://assets/backgrounds/bunks.jpg"),
+	"camp_day": preload("res://assets/backgrounds/camp3.webp"),
+	"camp_evening": preload("res://assets/backgrounds/camp2.jpg")
+}	
+func change_background(id : String) -> void:
+	if id in backgrounds:
+		$Background/image.texture = backgrounds[id]
+	else:
+		return
+
+func _process(_delta) -> void:
+	target.position = Globals.pos
+	
 ## button to advance dialogue
-func _on_button_pressed() -> void:
-	process_current_line()
-	#randomize_botton_pos()
+#func _on_button_pressed() -> void:
+	#process_current_line()
+	##randomize_botton_pos()
 	
 func parse_line(line: String):
 	var line_info = line.split(":")
@@ -43,17 +66,24 @@ func process_current_line():
 		line_info["speaker"] = Globals.player_name
 	
 	## change background
-	if(line_info["speaker"] == "Background"):
+	if(line_info["speaker"] == "BACKGROUND"):
 		change_background(line_info["dialog"])
 		process_current_line() ## auto advance so you don't have to click next again
 		return
-	 ## change scene
-	if (line_info["speaker"] == "Scene"):
-		get_tree().change_scene_to_file("res://scenes/ball_game.tscn")
 		
-	if(line_info["speaker"] == "NameSelect"):
-		run_name_selection()
-		character.change_character("Empty")
+	 ## change scene
+	if (line_info["speaker"] == "SCENE"):
+		if (line_info["dialog"] == "name_select"):
+			run_name_selection()
+			character.change_character("EMPTY")
+			return
+		else:
+			get_tree().change_scene_to_file("res://scenes/%s.tscn" % line_info["dialog"])
+	
+	## clear current character on screen
+	if (line_info["speaker"] == "EMPTY"):
+		character.change_character("EMPTY")
+		process_current_line()
 		return
 	
 	if (line_info["speaker"] == "Danny"):
@@ -66,49 +96,53 @@ func process_current_line():
 	type_text(line_info["dialog"].length()) ## call typewriter effect function
 	character.change_character(line_info["speaker"])
 
+##### typewriter and auto-text effect
+var typing_speed_max : float = 0.05
+var typing_speed_min : float = 0.03
+var read_delay : float = 0.8
+
 func type_text(line_length : int) -> void:
 	var timer = Timer.new()
-	timer.wait_time = typing_speed
+	timer.wait_time = 0.05
 	timer.one_shot = false
 	add_child(timer)
 	timer.start()
 	
-	$UI/Button.hide()
+	timer.timeout.connect(Callable(self, "_on_type_timeout").bind(timer, line_length))
 	
-	timer.timeout.connect(func():
-		if dui.dialog.visible_characters < line_length:
-			dui.dialog.visible_characters +=1
-		else:
-			timer.queue_free()
-			randomize_botton_pos()
-			$UI/Button.show()
-	)
+func _on_type_timeout(timer : Timer, line_length : int) -> void:
+	if dui.dialog.visible_characters < line_length:
+		var next_char = dui.dialog.text[dui.dialog.visible_characters]
+		var delay =  randf_range(typing_speed_max, typing_speed_min)
+		
+		if next_char in [".", ",", "!", "?", ";", ":"]:
+			delay += 0.2
+		elif next_char == "." and dui.dialog.text.substr(dui.dialog.visible_characters, 3) == "...":
+			delay += 0.4  # slightly longer pause for ellipses
+		
+		timer.wait_time = delay
+		dui.dialog.visible_characters +=1
+	else:
+		timer.stop()
+		timer.queue_free()
+		await _continue_after_delay()
 
-## name selection logic!
+func _continue_after_delay() -> void:
+	await get_tree().create_timer(read_delay).timeout
+	process_current_line()
+
+
+############### name selection logic!
 func run_name_selection():
 	var name_selection = preload("res://scenes/name_selection.tscn").instantiate()
 	name_selection.name_chosen.connect(name_chosen)
 	var parent_ui = $UI
 	dui.hide()
-	$UI/Button.hide() ## probably will cause an error at some point
 	parent_ui.add_child(name_selection)
 
 func name_chosen(_name : String) -> void:
 	dui.show()
-	$UI/Button.show()
 	process_current_line()
-
-# getting fancy with backgrounds
-var backgrounds := {
-	"bunks": preload("res://assets/backgrounds/bunks.jpg"),
-	"camp_day": preload("res://assets/backgrounds/camp3.webp"),
-	"camp_evening": preload("res://assets/backgrounds/camp2.jpg")
-}	
-func change_background(id : String) -> void:
-	if id in backgrounds:
-		$Background/image.texture = backgrounds[id]
-	else:
-		return
 
 ## useless ass button position randomizer
 func randomize_botton_pos() -> void:

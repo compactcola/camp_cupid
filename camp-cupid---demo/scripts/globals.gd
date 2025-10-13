@@ -5,12 +5,24 @@ var relationships = {
 	"Harper": 0,
 	"Ethan": 0
 }
+
+var scenes = [
+	"intro",
+	"act_1"
+]
+var scene_index : int = 0
+
 var player_name : String = "Me"
 var fx_layer : CanvasLayer
+
+const SCREEN_WIDTH = 1920
+const SCREEN_HEIGHT = 1080
 
 ### Serial Imput (so help me god)
 var serial : GdSerial
 var last_click := false
+var target = Sprite2D.new()
+var pos = Vector2.ZERO
 
 func _ready():
 	serial = GdSerial.new()
@@ -18,7 +30,7 @@ func _ready():
 	print("Ports avalible: ", ports)
 	
 	if ports.size() > 0:
-		serial.set_port(ports[0]) #first open port (maybe use COM3 in future)
+		serial.set_port("COM3") #first open port (maybe use COM3 in future)
 		serial.set_baud_rate(9600)
 		
 		if serial.open():
@@ -32,6 +44,9 @@ func _ready():
 
 var line : String ## serial data line for parsing
 
+#func _on_scene_change():
+	#my_current_scene = get_tree().current_scene
+
 func _process(delta):
 	if serial and serial.is_open():
 		line = serial.readline()
@@ -39,17 +54,12 @@ func _process(delta):
 			_parse_line(line)
 
 func _parse_line(line : String):
-	var parts = line.strip_edges().split(" ")
-	var pos = Vector2.ZERO
-	var click = false ## can change to an int or add int later for fire strength
+	var parts = line.strip_edges().split(",")
+	var click = false # can change to an int or add int later for fire strength
 	
-	for part in parts:
-		if part.begins_with("X:"):
-			pos.x = int(part.substr(2))
-		if part.begins_with("Y:"):
-			pos.y = int(part.substr(2))
-		elif part.begins_with("CLICK:"):
-			click = int(part.substr(6)) == 1
+	pos.x = 2*int(parts[0])
+	pos.y = SCREEN_HEIGHT - int(parts[1])
+	click = bool(int(parts[-1]))
 	
 	# mouse input
 	var motion := InputEventMouseMotion.new()

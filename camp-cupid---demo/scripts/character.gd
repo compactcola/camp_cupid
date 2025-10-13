@@ -14,7 +14,7 @@ const CHARACTER_FRAMES = {
 	"Harper":preload("res://resources/harper.tres"),
 	"Ethan":preload("res://resources/ethan.tres"),
 	"Danny":preload("res://resources/danny.tres"),
-	"Empty":preload("res://resources/empty.tres")
+	"EMPTY":preload("res://resources/empty.tres")
 }
 
 func _ready():
@@ -28,7 +28,7 @@ func validate_name(name : String):
 	#make sure name is valid
 	var name_index = approved_names.find(name)
 	if (name_index == -1):
-		return "Empty"
+		return "EMPTY"
 	else:
 		return approved_names[name_index]
 
