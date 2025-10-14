@@ -12,7 +12,7 @@
 		"Danny:Anyways, enough chit-chat, we're heading outside for orientation!",
 		"EMPTY:",
 		"Player:...?",
-		"Player:Oh, there he goes..",
+		"Player:Oh, well there he goes..",
 
 		{
 			"type": "CHOICE",
@@ -40,6 +40,8 @@
 		"Danny:Well you're last anyways— what's your name again?",
 		"SCENE:name_select",
 		"Danny:Right, exactly what I thought it was!",
+		"Harper:Suuure.",
+		"Danny:[shake]NO BACKTALK[/shake]",
 		"SCENE:ball_game"
 	],
 
