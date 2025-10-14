@@ -42,10 +42,38 @@
 		"Danny:Right, exactly what I thought it was!",
 		"Harper:Suuure.",
 		"Danny:[shake]NO BACKTALK[/shake]",
-		"SCENE:ball_game"
+		"Danny:Anyways...",
+		"Danny:Today you all are free to settle in. We're gonna get started with a tour of the campsite.",
+		"Danny:While I grab my things, introduce yourselves to each other! I'll be back in a couple of minutes.",
+		"Player:(Only a couple of minutes? I'll probably only get to introduce myself to one person..)",
+		"Player:(Who should I meet?)",
+
+		{
+			"type": "CHOICE",
+			"options": [
+				{
+					"text":"Aubrey",
+					"next":"intro_2_aubrey"
+				},
+				{
+					"text":"Ethan",
+					"next":"intro_2_ethan"
+				},
+				{
+					"text":"Harper",
+					"next":"intro_2_harper"
+				}
+			]
+		}
 	],
 
-	"act_1": [
-		"Danny: ASS"
+	"intro_2_aubrey": [
+		"Aubrey:Me"
+	],
+	"intro_2_ethan": [
+		"Ethan:Me"
+	],
+	"intro_2_harper":[
+		"Harper:Me"
 	]
 }
