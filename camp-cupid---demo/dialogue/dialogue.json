@@ -13,6 +13,19 @@
 		"EMPTY:",
 		"Player:...?",
 		"Player:Oh, there he goes..",
+
+		{
+			"type": "CHOICE",
+			"options": [
+				{
+					"text": "Follow him outside",
+					"next": "intro_2"
+				}
+			]
+		}
+	],
+	
+	"intro_2": [
 		"BACKGROUND:camp_day",
 		"Danny:Arlight everyone! Welcome to [shake]Camp Cupid[/shake]!",
 		"Danny:Let's get started with names.",
@@ -24,11 +37,12 @@
 		"Harper:Hey.",
 		"Danny:Hey. Let's see...",
 		"Danny:(Wow my handwriting is terrible...)",
-		"Danny:Well you're last anyways- what's your name again?",
+		"Danny:Well you're last anyways— what's your name again?",
 		"SCENE:name_select",
-		"Danny:Right, exactly what I though it was!",
+		"Danny:Right, exactly what I thought it was!",
 		"SCENE:ball_game"
 	],
+
 	"act_1": [
 		"Danny: ASS"
 	]

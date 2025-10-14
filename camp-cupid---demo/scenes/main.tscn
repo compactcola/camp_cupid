@@ -63,12 +63,27 @@ unique_name_in_owner = true
 z_index = 4
 theme = SubResource("Theme_jyhfs")
 
+[node name="ChoiceContainer" type="VBoxContainer" parent="UI/DialogueUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
 [node name="Button" type="Button" parent="UI"]
 z_index = 10
-offset_left = 1325.0
-offset_top = 349.0
-offset_right = 1780.0
-offset_bottom = 817.0
+offset_left = 2012.0
+offset_top = 501.0
+offset_right = 2467.0
+offset_bottom = 969.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxTexture_tefeu")

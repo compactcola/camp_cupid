@@ -1,8 +1,14 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://ds5gr620wj1c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bob45"]
-bg_color = Color(0.951833, 0.363762, 0.537161, 1)
+bg_color = Color(0.875427, 0.445094, 0.538122, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 12
 
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 50
 Button/styles/normal = SubResource("StyleBoxFlat_bob45")

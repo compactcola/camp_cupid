@@ -38,13 +38,15 @@ func change_background(id : String) -> void:
 	else:
 		return
 
-func _process(_delta) -> void:
+func _process(delta) -> void:
 	target.position = Globals.pos
-	
-## button to advance dialogue
-#func _on_button_pressed() -> void:
-	#process_current_line()
-	##randomize_botton_pos()
+	if Input.is_action_just_pressed("Space"):
+		if active_typing_timer and is_instance_valid(active_typing_timer):
+			active_typing_timer.stop()
+			active_typing_timer.queue_free()
+			active_typing_timer = null
+		process_current_line() 
+
 	
 func parse_line(line: String):
 	var line_info = line.split(":")
@@ -59,6 +61,12 @@ func process_current_line():
 		dialog_index += 1
 	
 	var line = dialog_lines[dialog_index]
+	
+	if typeof(line) == TYPE_DICTIONARY:
+		if line.has("type") and line["type"] == "CHOICE":
+			show_choices(line["options"])
+			return
+	
 	var line_info = parse_line(line)
 	
 	## add custom player name
@@ -100,22 +108,32 @@ func process_current_line():
 var typing_speed_max : float = 0.05
 var typing_speed_min : float = 0.03
 var read_delay : float = 0.8
+var active_typing_timer: Timer = null
 
 func type_text(line_length : int) -> void:
+		# Kill any old timer first
+	if active_typing_timer and is_instance_valid(active_typing_timer):
+		active_typing_timer.stop()
+		active_typing_timer.queue_free()
+		
 	var timer = Timer.new()
 	timer.wait_time = 0.05
 	timer.one_shot = false
 	add_child(timer)
 	timer.start()
 	
+	active_typing_timer = timer
 	timer.timeout.connect(Callable(self, "_on_type_timeout").bind(timer, line_length))
 	
 func _on_type_timeout(timer : Timer, line_length : int) -> void:
+	if not is_instance_valid(timer) or dui.dialog == null: ##timer safeguard
+		return
+		
 	if dui.dialog.visible_characters < line_length:
 		var next_char = dui.dialog.text[dui.dialog.visible_characters]
 		var delay =  randf_range(typing_speed_max, typing_speed_min)
 		
-		if next_char in [".", ",", "!", "?", ";", ":"]:
+		if next_char in [".", ",", "!", "?", ";", ":", ")"]:
 			delay += 0.2
 		elif next_char == "." and dui.dialog.text.substr(dui.dialog.visible_characters, 3) == "...":
 			delay += 0.4  # slightly longer pause for ellipses
@@ -129,6 +147,36 @@ func _on_type_timeout(timer : Timer, line_length : int) -> void:
 
 func _continue_after_delay() -> void:
 	await get_tree().create_timer(read_delay).timeout
+	process_current_line()
+	
+##### choices!
+func show_choices(options : Array) -> void:
+	var container = $UI/DialogueUI/ChoiceContainer
+	container.visible = true
+	
+	for child in container.get_children():
+		child.queue_free()
+	
+	for option in options:
+		var button := Button.new()
+		button.text = option["text"]
+		button.custom_minimum_size = Vector2(600, 200)
+		button.theme = load("res://resources/themes/button.tres")
+		button.pressed.connect(func():
+			on_choice_selected(option["next"])
+			container.visible = false
+			### dialog logic here
+		)
+		container.add_child(button)
+
+func on_choice_selected(next_branch : String):
+	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)
+	if file:
+		var parsed = JSON.parse_string(file.get_as_text())
+		if typeof(parsed) == TYPE_DICTIONARY and parsed.has(next_branch):
+			dialog_lines = parsed[next_branch]
+			dialog_index = -1
+
 	process_current_line()
 
 
