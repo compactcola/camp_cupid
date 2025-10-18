@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://cqb8sj44nyekv"]
+
+[ext_resource type="Texture2D" uid="uid://d2tt3jg075xtf" path="res://assets/characters/harper/harperHead_angry.png" id="1_mvwsq"]
+[ext_resource type="Texture2D" uid="uid://b1vm351ef038y" path="res://assets/characters/harper/harperHead_default.png" id="2_d6mtn"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mvwsq")
+}],
+"loop": true,
+"name": &"angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_d6mtn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

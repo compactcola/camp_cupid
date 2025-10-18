@@ -5,6 +5,8 @@ extends Node2D
 
 var dialog_index : int = 0
 var dialog_lines = []
+var body_expression : String = "Default"
+var head_expression : String = "Default"
 
 var target = Sprite2D.new()
 
@@ -20,10 +22,10 @@ func _ready():
 	if file:
 		var parsed = JSON.parse_string(file.get_as_text())
 		if typeof(parsed) == TYPE_DICTIONARY:
-			dialog_lines = parsed[Globals.scenes[Globals.scene_index]]
+			dialog_lines = parsed[Globals.scenes[Globals.scene_index]] ### HERE'S WHERE I ACCESS THE SCENE INDEX!!!!!
 		
 	dialog_index = -1
-	character.change_character("Empty")
+	character.change_character("Empty", body_expression, head_expression)
 	process_current_line()
 	
 ### getting fancy with backgrounds
@@ -38,8 +40,10 @@ func change_background(id : String) -> void:
 	else:
 		return
 
+@warning_ignore("unused_parameter")
 func _process(delta) -> void:
 	target.position = Globals.pos
+	
 	if Input.is_action_just_pressed("Space"):
 		if active_typing_timer and is_instance_valid(active_typing_timer):
 			active_typing_timer.stop()
@@ -47,7 +51,6 @@ func _process(delta) -> void:
 			active_typing_timer = null
 		process_current_line() 
 
-	
 func parse_line(line: String):
 	var line_info = line.split(":")
 	assert(len(line_info) >= 2)
@@ -55,7 +58,12 @@ func parse_line(line: String):
 		"speaker": line_info[0],
 		"dialog": line_info[1]
 	}
-	
+
+func parse_placeholders(text: String) -> String:
+	var result = text
+	result = result.replace("{player}", Globals.player_name)
+	return result
+
 func process_current_line():
 	if dialog_index < len(dialog_lines) -1:
 		dialog_index += 1
@@ -68,46 +76,77 @@ func process_current_line():
 			return
 	
 	var line_info = parse_line(line)
+	var speaker : String  = line_info["speaker"]
+	var text : String = parse_placeholders(line_info["dialog"])
 	
-	## add custom player name
-	if (line_info["speaker"] == "Player"):
-		line_info["speaker"] = Globals.player_name
+	## change expressions
+	if (speaker == "FACE") or (speaker == "BODY"):
+		if (speaker == "FACE"): head_expression = text
+		else: body_expression = text
+		
+		process_current_line()
+		return
+	
+	## handle character animations
+	if (speaker == "POP_IN"):
+		character.change_character(text, body_expression, head_expression)
+		await character.pop_in()
+		process_current_line()
+		return
+	elif (speaker == "POP_OUT"):
+		await character.pop_out()
+		process_current_line()
+		return
 	
 	## change background
-	if(line_info["speaker"] == "BACKGROUND"):
-		change_background(line_info["dialog"])
+	if(speaker == "BACKGROUND"):
+		change_background(text)
 		process_current_line() ## auto advance so you don't have to click next again
 		return
 		
 	 ## change scene
-	if (line_info["speaker"] == "SCENE"):
-		if (line_info["dialog"] == "name_select"):
+	if (speaker == "SCENE"):
+		if (text == "name_select"):
 			run_name_selection()
-			character.change_character("EMPTY")
+			return
+		elif (text == "smores_game"):
+			run_smores_game()
 			return
 		else:
-			get_tree().change_scene_to_file("res://scenes/%s.tscn" % line_info["dialog"])
+			get_tree().change_scene_to_file("res://scenes/%s.tscn" % text)
+		Globals.scene_index += 1 ## update so that return to main will start new scene (hopefully)
 	
 	## clear current character on screen
-	if (line_info["speaker"] == "EMPTY"):
-		character.change_character("EMPTY")
+	if (speaker == "EMPTY"):
+		character.change_character("EMPTY", "Default", "Default")
 		process_current_line()
 		return
 	
-	if (line_info["speaker"] == "Danny"):
+	#### display on UI
+	
+	## check if its player text
+	if (speaker == "Player"):
+		speaker = Globals.player_name
+	else:
+		character.hop() ## hop when dey talk
+		
+	if (speaker == "Danny"):
 		dui.speaker.text = "Counselor Dan"
 	else:
-		dui.speaker.text = line_info["speaker"]
+		dui.speaker.text = speaker
 	
-	dui.dialog.text = line_info["dialog"]
+	dui.dialog.text = text
 	dui.dialog.visible_characters = 0
-	type_text(line_info["dialog"].length()) ## call typewriter effect function
-	character.change_character(line_info["speaker"])
+	type_text(text.length()) ## call typewriter effect function
+	
+	### change character
+	character.change_character(speaker, body_expression, head_expression)
+	#if (speaker != Globals.player_name): character.hop() ## hop when dey talk
 
 ##### typewriter and auto-text effect
-var typing_speed_max : float = 0.05
-var typing_speed_min : float = 0.03
-var read_delay : float = 0.8
+var typing_speed_max : float = 0.03
+var typing_speed_min : float = 0.025
+var read_delay : float = 0.9
 var active_typing_timer: Timer = null
 
 func type_text(line_length : int) -> void:
@@ -137,6 +176,8 @@ func _on_type_timeout(timer : Timer, line_length : int) -> void:
 			delay += 0.2
 		elif next_char == "." and dui.dialog.text.substr(dui.dialog.visible_characters, 3) == "...":
 			delay += 0.4  # slightly longer pause for ellipses
+		elif next_char == "-":
+			delay = 0 # cut off interruption effect
 		
 		timer.wait_time = delay
 		dui.dialog.visible_characters +=1
@@ -178,15 +219,21 @@ func on_choice_selected(next_branch : String):
 			dialog_index = -1
 
 	process_current_line()
-
-
+	
 ############### name selection logic!
 func run_name_selection():
+	character.change_character("EMPTY", "Default", "Default")
 	var name_selection = preload("res://scenes/name_selection.tscn").instantiate()
 	name_selection.name_chosen.connect(name_chosen)
 	var parent_ui = $UI
 	dui.hide()
 	parent_ui.add_child(name_selection)
+
+func run_smores_game():
+	character.change_character("EMPTY", "Default", "Default")
+	var smores_game = preload("res://scenes/smores_game.tscn").instantiate()
+	var parent_ui = $UI
+	parent_ui.add_child(smores_game)
 
 func name_chosen(_name : String) -> void:
 	dui.show()

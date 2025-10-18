@@ -1,10 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx8xyru4725yx"]
+[gd_scene load_steps=9 format=3 uid="uid://bx8xyru4725yx"]
 
 [ext_resource type="Script" uid="uid://bbjj45yg48jpd" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://drd1ph4insfpu" path="res://scenes/character.tscn" id="2_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://bsxcmi7kf3w0h" path="res://assets/backgrounds/bunks.jpg" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://sb08vxy1iwjd" path="res://scenes/dialogue_ui.tscn" id="3_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://ct1honc1pnd24" path="res://assets/button_target.png" id="5_tbgi4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7iok0"]
+content_margin_left = 40.0
+content_margin_right = 40.0
+bg_color = Color(0.435294, 0.121569, 0.266667, 0.545098)
+border_width_top = 2
+border_color = Color(0.661381, 0.272783, 0.521502, 1)
+
+[sub_resource type="Theme" id="Theme_jyhfs"]
+resource_local_to_scene = true
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_7iok0")
+RichTextLabel/font_sizes/normal_font_size = 40
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tefeu"]
 texture = ExtResource("5_tbgi4")
@@ -43,13 +55,13 @@ grow_vertical = 0
 
 [node name="Character" parent="UI/Control" instance=ExtResource("2_jyhfs")]
 unique_name_in_owner = true
-position = Vector2(0, -35)
-scale = Vector2(1.6, 1.6)
+position = Vector2(4, -150)
+scale = Vector2(1.5, 1.5)
 
 [node name="DialogueUI" parent="UI" instance=ExtResource("3_tbgi4")]
 unique_name_in_owner = true
 z_index = 4
-mouse_filter = 2
+theme = SubResource("Theme_jyhfs")
 
 [node name="ChoiceContainer" type="VBoxContainer" parent="UI/DialogueUI"]
 layout_mode = 1

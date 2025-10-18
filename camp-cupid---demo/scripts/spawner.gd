@@ -1,29 +1,30 @@
 extends Node2D
 
-var ball_scene = preload("res://scenes/ball.tscn")
+@export var IngredientScene : PackedScene
+@export var ingredient_types := ["graham", "chocolate", "marshmallow"]
+
+var spawn_interval : float = 1*Globals.smores_difficulty[Globals.smores_difficulty_index]
 
 const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
 
-@export var spawn_interval := 1.5
-
 func _ready():
-	_spawn_ball()
-	spawn_timer()
+	spawn_loop()
+	IngredientScene = load("res://scenes/ingredient.tscn")
 
-func spawn_timer():
-	await get_tree().create_timer(spawn_interval).timeout
-	_spawn_ball()
-	spawn_timer()
-	
-func _spawn_ball():
-	var ball = ball_scene.instantiate()
-	add_child(ball)
+func spawn_loop():
+	while true:
+		await get_tree().create_timer(spawn_interval).timeout
+		spawn_ingredient()
 
-	ball.position = Vector2(randf_range(50, SCREEN_WIDTH - 50), SCREEN_HEIGHT - 50)
+func spawn_ingredient():
+	if IngredientScene == null:
+		push_error("IngredientScene not assigned")
+		return
 
-	var x_impulse = randf_range(-500, 500) 
-	var y_impulse = -randf_range(600, 900)  
-	ball.apply_impulse(Vector2(x_impulse, y_impulse))
-	
-	ball.popped.connect(get_parent()._on_ball_popped)
+	var ingredient = IngredientScene.instantiate()
+	ingredient.ingredient_type = ingredient_types.pick_random()
+	add_child(ingredient)
+
+	ingredient.position = Vector2(randf_range(50, SCREEN_WIDTH - 50), SCREEN_HEIGHT - 50)
+	ingredient.collected.connect(get_parent()._on_ingredient_collected)

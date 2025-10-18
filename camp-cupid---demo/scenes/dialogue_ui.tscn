@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://sb08vxy1iwjd"]
+[gd_scene load_steps=9 format=3 uid="uid://sb08vxy1iwjd"]
 
 [ext_resource type="Theme" uid="uid://b6gxwgdty7knw" path="res://resources/themes/dialogue_theme.tres" id="1_njptv"]
 [ext_resource type="Script" uid="uid://dpmy0t0fxy2ns" path="res://scripts/dialogue_ui.gd" id="2_6q285"]
@@ -8,19 +8,24 @@ content_margin_left = 40.0
 content_margin_top = 20.0
 content_margin_right = 40.0
 content_margin_bottom = 20.0
-bg_color = Color(0.53, 0.1431, 0.304308, 0.835294)
+bg_color = Color(0.69, 0.2277, 0.41262, 0.843137)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6q285"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_njptv"]
-bg_color = Color(0.66, 0.2706, 0.51722, 0.658824)
+bg_color = Color(0.58, 0.1334, 0.33437, 0.678431)
 corner_radius_top_right = 100
 corner_detail = 1
+
+[sub_resource type="Theme" id="Theme_6q285"]
+Label/font_sizes/font_size = 50
 
 [sub_resource type="SystemFont" id="SystemFont_njptv"]
 subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x5cq"]
 font = SubResource("SystemFont_njptv")
-font_size = 40
+font_size = 60
 
 [node name="DialogueUI" type="Control"]
 layout_mode = 3
@@ -29,7 +34,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_njptv")
 script = ExtResource("2_6q285")
 
 [node name="DialogBox" type="PanelContainer" parent="."]
@@ -48,7 +52,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_6q285")
 [node name="Dialog" type="RichTextLabel" parent="DialogBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme = ExtResource("1_njptv")
+theme_override_font_sizes/normal_font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6q285")
 bbcode_enabled = true
 text = "This is what the [shake]text[/shake] looks like."
 tab_size = 6
@@ -67,9 +72,10 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = -1.0
 offset_top = -92.0
-offset_right = 399.0
+offset_right = 649.0
 offset_bottom = 8.0
 grow_vertical = 0
+theme = ExtResource("1_njptv")
 theme_override_styles/panel = SubResource("StyleBoxFlat_njptv")
 
 [node name="SpeakerName" type="Label" parent="Control2"]
@@ -81,12 +87,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 20.0
-offset_top = -51.0
-offset_right = 276.0
-offset_bottom = 4.0
+offset_top = -65.0
+offset_right = 499.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
+theme = SubResource("Theme_6q285")
 text = "Name"
 label_settings = SubResource("LabelSettings_2x5cq")
 vertical_alignment = 1

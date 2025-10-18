@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gx0eket53kn8"
-path="res://.godot/imported/apple.png-d0c5a0e024efc439723035186c67a74a.ctex"
+uid="uid://do6ykanjcgabs"
+path="res://.godot/imported/chocolate.png-3e5f58701f64bcf333ee657fb930755f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/apple.png"
-dest_files=["res://.godot/imported/apple.png-d0c5a0e024efc439723035186c67a74a.ctex"]
+source_file="res://assets/sprites/chocolate.png"
+dest_files=["res://.godot/imported/chocolate.png-3e5f58701f64bcf333ee657fb930755f.ctex"]
 
 [params]
 

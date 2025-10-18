@@ -3,16 +3,19 @@
 		"BACKGROUND:bunks",
 		"Player:Ughh...  I slept [shake]terribly...[/shake]",
 		"Player:I don't even remember what time we got in last night...",
+		"POP_IN:Danny", 
 		"Danny:Morning everyone, time to get up!",
+		"SCENE:smores_game",
 		"Player:Ahh! Who are you?",
 		"Danny:What do you mean- I'm [shake]Counselor Dan![/shake] Best (and only) counselor here at Camp Cupid!",
 		"Player:Oh, I guess I could've figured that out...",
 		"Player:-given the hat and all.",
 		"Danny:You'd think.",
 		"Danny:Anyways, enough chit-chat, we're heading outside for orientation!",
+		"POP_OUT:Danny",
 		"EMPTY:",
-		"Player:...?",
-		"Player:Oh, well there he goes..",
+		"Player:?",
+		"Player:Oh, well there he goes...",
 
 		{
 			"type": "CHOICE",
@@ -27,6 +30,7 @@
 	
 	"intro_2": [
 		"BACKGROUND:camp_day",
+		"POP_IN:Danny",
 		"Danny:Arlight everyone! Welcome to [shake]Camp Cupid[/shake]!",
 		"Danny:Let's get started with names.",
 		"Danny:Aubrey?",
@@ -35,17 +39,20 @@
 		"Ethan:Right here.",
 		"Danny:Splendid. Harper?",
 		"Harper:Hey.",
-		"Danny:Hey. Let's see...",
-		"Danny:(Wow my handwriting is terrible...)",
+		"Danny:Hey. Now, let's see...",
+		"Danny:...wow... my handwriting is terrible...",
 		"Danny:Well you're last anyways— what's your name again?",
 		"SCENE:name_select",
-		"Danny:Right, exactly what I thought it was!",
+		"Danny:Right, {player}! Exactly what I thought it was!",
 		"Harper:Suuure.",
 		"Danny:[shake]NO BACKTALK[/shake]",
+		"FACE:angry", "Harper:...", "FACE:default",
 		"Danny:Anyways...",
 		"Danny:Today you all are free to settle in. We're gonna get started with a tour of the campsite.",
-		"Danny:While I grab my things, introduce yourselves to each other! I'll be back in a couple of minutes.",
-		"Player:(Only a couple of minutes? I'll probably only get to introduce myself to one person..)",
+		"Danny:While I grab my things, introduce yourselves to each other! I'll be back in ONE MINUTE.",
+		"POP_OUT:Danny",
+		"Player:(Only a minute? I'll probably only get to introduce myself to one person...)",
+		"EMPTY:",
 		"Player:(Who should I meet?)",
 
 		{
@@ -68,12 +75,55 @@
 	],
 
 	"intro_2_aubrey": [
-		"Aubrey:Me"
+		"Aubrey:Oh hey! {player}, right?",
+		"Player:That's what they call me!",
+		"Aubrey:Haha, well they call me Aubrey. It's a pleasure to meet you!",
+		"Aubrey:Have you ever been to Camp Cupid before? I used to come here every summer when I was a kid.",
+		"Player:It's my first time actually.",
+		"Aubrey:Well welcome! I'm sure you'll love it! It's short but soooo much fun!",
+		"Aubrey:I love the bird watching here!",
+		"Aubrey:And the [shake]prom[/shake] on the last day is always a blast!",
+		"Player:...prom?",
+		"Aubrey:Oh yeah, I guess Danny didn't mention it did he?",
+		"Aubrey:On the last day we do a big prom night before we head home.",
+		"Aubrey:It's soooo much fun!!",
+		"Aubrey:Maybe we'll go together!",
+		"Player:That would be awes-",
+		"POP_IN:Danny",
+		"Danny:Alright everyone, tour time! Let's roll!"
 	],
 	"intro_2_ethan": [
 		"Ethan:Me"
 	],
 	"intro_2_harper":[
-		"Harper:Me"
+		"Player:Hey! Harper, right?",
+		"FACE:angry",
+		"Harper:Who's asking?",
+		"Player:Oh, I just thought I'd say hi— introduce myself.",
+		"Player:I can leave if I'm bothering-",
+		"FACE:default",
+		"Harper:No. Sorry. That did sound kinda rude.",
+		"Harper:I am, indeed, Harper. Nice to meet you, {player}.",
+		"Harper:I'm just a little irritable, I'm not usually up this early.",
+		"FACE:angry",
+		"Harper:And I hate being dragged on a tour for the billionth time.",
+		"Harper:And don't even get me started on that dumb [shake]prom[/shake] in a couple days...",
+		"FACE:default",
+		"Player:There's a prom?",
+		"Harper:What? Oh yeah, this is your first year huh?",
+		"Harper:On the last day we hold some dumb 'high-school-camp-prom' thing",
+		"Harper:Unfortunately it's manditory. And a drag.",
+		"Player:Huh.",
+		"POP_IN:Danny",
+		"Danny:Alright everyone, tour time! Let's roll!"
+	],
+	
+	"act_1" : [
+		"BACKGROUND:bunks",
+		"Aubrey:It worked!",
+		"FACE:angry",
+		"Aubrey:Thank fuck..."
+		
+		
 	]
 }

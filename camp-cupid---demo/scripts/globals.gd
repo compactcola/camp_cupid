@@ -7,10 +7,21 @@ var relationships = {
 }
 
 var scenes = [
-	"intro",
-	"act_1"
+	"intro", "night_0",
+	"day_1", "night_1",
+	"day_2", "night_2",
+	"day_3", "night_3",
+	"prom"
 ]
-var scene_index : int = 0
+var scene_index : int = 0 # works, but might need adjustment when going back to old scenes (campfire, map, etc)
+
+var smores_difficulty_index : int = 0 # use for campfire game difficulty scaling
+var smores_difficulty = {
+	0: 1.0,
+	1: 1.05,
+	2: 1.1,
+	3: 1.3
+}
 
 var player_name : String = "Me"
 var fx_layer : CanvasLayer
@@ -34,11 +45,11 @@ func _ready():
 		serial.set_baud_rate(9600)
 		
 		if serial.open():
-			print("serial opened! ", ports[0])
+			print("Serial opened! ", ports[0])
 		else:
-			print("did not open, but found serials I guess")
+			print("Did not open, but found serials?")
 	else:
-		print("didn't find shit")
+		print("!! Didn't find any ports !!")
 	
 	create_fx_layer() #not serial obviously
 

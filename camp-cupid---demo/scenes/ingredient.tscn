@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvi764x45e3e7"]
+
+[ext_resource type="Script" uid="uid://bgob61lepesx0" path="res://scripts/ingredient.gd" id="1_rcex7"]
+[ext_resource type="Texture2D" uid="uid://j0ftj30valpt" path="res://assets/sprites/cracker.png" id="2_ssx0k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rcex7"]
+radius = 104.0
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_rcex7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rcex7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.405, 0.405)
+texture = ExtResource("2_ssx0k")

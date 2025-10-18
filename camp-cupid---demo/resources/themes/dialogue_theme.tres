@@ -1,12 +1,4 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://b6gxwgdty7knw"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mdusw"]
-bg_color = Color(0.89, 0.4361, 0.549575, 0.686275)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-corner_detail = 12
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://b6gxwgdty7knw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kyulj"]
 bg_color = Color(0.886953, 0.436229, 0.528723, 1)
@@ -19,8 +11,7 @@ bg_color = Color(0.840313, 0.46725, 0.579703, 1)
 
 [resource]
 resource_local_to_scene = true
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_mdusw")
-RichTextLabel/font_sizes/normal_font_size = 40
+RichTextLabel/font_sizes/normal_font_size = 60
 RichTextLabel/styles/background = SubResource("StyleBoxFlat_kyulj")
 RichTextLabel/styles/fill = SubResource("StyleBoxFlat_bdau4")
 RichTextLabel/styles/normal = SubResource("StyleBoxFlat_2cn4g")
