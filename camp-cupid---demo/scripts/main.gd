@@ -86,6 +86,15 @@ func process_current_line():
 		
 		process_current_line()
 		return
+		
+	## relationship gain/loss
+	if (speaker == "POINTS"):
+		var info = text.split(",")
+		assert(len(info) >= 2)
+		relationship_gain(info[0], float(info[1]))
+		
+		process_current_line()
+		return
 	
 	## handle character animations
 	if (speaker == "POP_IN"):
@@ -209,6 +218,13 @@ func show_choices(options : Array) -> void:
 			### dialog logic here
 		)
 		container.add_child(button)
+
+###### relationship functions!
+func relationship_gain(character : String, points : float):
+	var old_value = Globals.relationships[character]
+	var delta = points - old_value
+	Globals.add_relationship(character, points)
+	$UI/RelationshipUI.show_relationship_change(old_value, points, delta)
 
 func on_choice_selected(next_branch : String):
 	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)

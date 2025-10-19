@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://sb08vxy1iwjd"]
+[gd_scene load_steps=10 format=3 uid="uid://sb08vxy1iwjd"]
 
 [ext_resource type="Theme" uid="uid://b6gxwgdty7knw" path="res://resources/themes/dialogue_theme.tres" id="1_njptv"]
 [ext_resource type="Script" uid="uid://dpmy0t0fxy2ns" path="res://scripts/dialogue_ui.gd" id="2_6q285"]
+[ext_resource type="FontFile" uid="uid://ccc1y2kkamb7y" path="res://assets/fonts/KGSimplytheBest.ttf" id="3_e6usr"]
+[ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="4_e6usr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6q285"]
 content_margin_left = 40.0
-content_margin_top = 20.0
+content_margin_top = 35.0
 content_margin_right = 40.0
 content_margin_bottom = 20.0
 bg_color = Color(0.69, 0.2277, 0.41262, 0.843137)
@@ -20,12 +22,9 @@ corner_detail = 1
 [sub_resource type="Theme" id="Theme_6q285"]
 Label/font_sizes/font_size = 50
 
-[sub_resource type="SystemFont" id="SystemFont_njptv"]
-subpixel_positioning = 0
-
 [sub_resource type="LabelSettings" id="LabelSettings_2x5cq"]
-font = SubResource("SystemFont_njptv")
-font_size = 60
+font = ExtResource("4_e6usr")
+font_size = 100
 
 [node name="DialogueUI" type="Control"]
 layout_mode = 3
@@ -52,7 +51,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_6q285")
 [node name="Dialog" type="RichTextLabel" parent="DialogBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 60
+theme_override_fonts/normal_font = ExtResource("3_e6usr")
+theme_override_font_sizes/normal_font_size = 70
 theme_override_styles/normal = SubResource("StyleBoxEmpty_6q285")
 bbcode_enabled = true
 text = "This is what the [shake]text[/shake] looks like."
@@ -71,8 +71,8 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = -1.0
-offset_top = -92.0
-offset_right = 649.0
+offset_top = -110.0
+offset_right = 616.0
 offset_bottom = 8.0
 grow_vertical = 0
 theme = ExtResource("1_njptv")
@@ -86,10 +86,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 20.0
-offset_top = -65.0
-offset_right = 499.0
-offset_bottom = 18.0
+offset_left = 22.0
+offset_top = -70.0
+offset_right = 501.0
+offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0

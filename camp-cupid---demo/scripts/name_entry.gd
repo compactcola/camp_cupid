@@ -28,7 +28,7 @@ func _on_key_button_pressed(btn : Button):
 
 func _submit_name(entered_name : String):
 	if entered_name.strip_edges() == "":
-		entered_name = "Me"
+		entered_name = "Camper"
 	Globals.player_name = entered_name
 		
 	emit_signal("name_chosen", entered_name)

@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx8xyru4725yx"]
+[gd_scene load_steps=11 format=3 uid="uid://bx8xyru4725yx"]
 
 [ext_resource type="Script" uid="uid://bbjj45yg48jpd" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://drd1ph4insfpu" path="res://scenes/character.tscn" id="2_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://bsxcmi7kf3w0h" path="res://assets/backgrounds/bunks.jpg" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://sb08vxy1iwjd" path="res://scenes/dialogue_ui.tscn" id="3_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://ct1honc1pnd24" path="res://assets/button_target.png" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://cbn4g4ivrc2id" path="res://scripts/relationship_ui.gd" id="6_tefeu"]
+[ext_resource type="Texture2D" uid="uid://cuejfyhybhrdc" path="res://assets/sprites/status_bar_bg.png" id="7_tipki"]
+[ext_resource type="Texture2D" uid="uid://b0624fcte4m0t" path="res://assets/sprites/status_bar_fill.png" id="8_85g3d"]
+[ext_resource type="Texture2D" uid="uid://cw6yfjo4yw6rw" path="res://assets/sprites/heart-empty.png" id="9_85g3d"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tefeu"]
 texture = ExtResource("5_tbgi4")
@@ -76,5 +80,43 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxTexture_tefeu")
 text = "Next!"
+
+[node name="RelationshipUI" type="Control" parent="UI"]
+visible = false
+z_index = 15
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_tefeu")
+
+[node name="RelationshipBar" type="TextureProgressBar" parent="UI/RelationshipUI"]
+z_index = 15
+layout_mode = 0
+offset_left = 61.0
+offset_top = 68.0
+offset_right = 709.0
+offset_bottom = 132.0
+value = 67.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_tipki")
+texture_progress = ExtResource("8_85g3d")
+
+[node name="Hearts" type="Node2D" parent="UI/RelationshipUI"]
+
+[node name="Heart-empty1" type="Sprite2D" parent="UI/RelationshipUI/Hearts"]
+position = Vector2(279, 100)
+scale = Vector2(0.19, 0.19)
+texture = ExtResource("9_85g3d")
+
+[node name="Heart-empty2" type="Sprite2D" parent="UI/RelationshipUI/Hearts"]
+position = Vector2(492.5, 104.5)
+scale = Vector2(0.211667, 0.211667)
+texture = ExtResource("9_85g3d")
+
+[node name="Heart-empty3" type="Sprite2D" parent="UI/RelationshipUI/Hearts"]
+position = Vector2(710.375, 99.375)
+scale = Vector2(0.24875, 0.24875)
+texture = ExtResource("9_85g3d")
 
 [connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]

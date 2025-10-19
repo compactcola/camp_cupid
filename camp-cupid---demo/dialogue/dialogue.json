@@ -5,7 +5,6 @@
 		"Player:I don't even remember what time we got in last night...",
 		"POP_IN:Danny", 
 		"Danny:Morning everyone, time to get up!",
-		"SCENE:smores_game",
 		"Player:Ahh! Who are you?",
 		"Danny:What do you mean- I'm [shake]Counselor Dan![/shake] Best (and only) counselor here at Camp Cupid!",
 		"Player:Oh, I guess I could've figured that out...",
@@ -30,8 +29,10 @@
 	
 	"intro_2": [
 		"BACKGROUND:camp_day",
+		"EMPTY:",
 		"POP_IN:Danny",
-		"Danny:Arlight everyone! Welcome to [shake]Camp Cupid[/shake]!",
+		"Danny:Alright everyone!",
+		"Danny:Welcome to [shake]Camp Cupid[/shake]!",
 		"Danny:Let's get started with names.",
 		"Danny:Aubrey?",
 		"Aubrey:Here!",
@@ -77,6 +78,7 @@
 	"intro_2_aubrey": [
 		"Aubrey:Oh hey! {player}, right?",
 		"Player:That's what they call me!",
+		"POINTS:Aubrey,16",
 		"Aubrey:Haha, well they call me Aubrey. It's a pleasure to meet you!",
 		"Aubrey:Have you ever been to Camp Cupid before? I used to come here every summer when I was a kid.",
 		"Player:It's my first time actually.",
@@ -90,10 +92,46 @@
 		"Aubrey:Maybe we'll go together!",
 		"Player:That would be awes-",
 		"POP_IN:Danny",
-		"Danny:Alright everyone, tour time! Let's roll!"
+		"Danny:Alright everyone, tour time! Let's roll!",
+		"POP_OUT:Danny",
+
+		{
+		"type": "CHOICE",
+			"options": [
+				{
+					"text": "Tour time!",
+					"next": "intro_3"
+				}
+			]
+		}
 	],
 	"intro_2_ethan": [
-		"Ethan:Me"
+		"EMPTY:",
+		"PLayer:Hey, it's Ethan right?",
+		"Ethan:Oh hey, it's {player}- the newbie.",
+		"POINTS:Ethan,16",
+		"Ethan:Nice to meet ya.",
+		"Player:Newbie? It's that obvious?",
+		"Ethan:Well, there's only four of us.",
+		"Ethan:And Harper, Aubrey, and I have been coming here since we were kids.",
+		"Ethan:So by process of elimination...",
+		"Player:Yeah yeah, I get it.",
+		"Ethan:Hey no hard feelings, it's great to finally have someone else tagging along!",
+		"Ethan:Hopefully you'll get a chance to hit the lake with me sometime.",
+		"Player:Yeah I'll have to get around to that-",
+		"POP_IN:Danny",
+		"Danny:Alright everyone, tour time! Let's roll!",
+		"POP_OUT:Danny",
+		
+		{
+		"type": "CHOICE",
+			"options": [
+				{
+					"text": "Tour time!",
+					"next": "intro_3"
+				}
+			]
+		}
 	],
 	"intro_2_harper":[
 		"Player:Hey! Harper, right?",
@@ -103,6 +141,7 @@
 		"Player:I can leave if I'm bothering-",
 		"FACE:default",
 		"Harper:No. Sorry. That did sound kinda rude.",
+		"POINTS:Harper,16",
 		"Harper:I am, indeed, Harper. Nice to meet you, {player}.",
 		"Harper:I'm just a little irritable, I'm not usually up this early.",
 		"FACE:angry",
@@ -115,14 +154,40 @@
 		"Harper:Unfortunately it's manditory. And a drag.",
 		"Player:Huh.",
 		"POP_IN:Danny",
-		"Danny:Alright everyone, tour time! Let's roll!"
+		"Danny:Alright everyone, tour time! Let's roll!",
+		"POP_OUT:Danny",
+
+		{
+		"type": "CHOICE",
+			"options": [
+				{
+					"text": "Tour time!",
+					"next": "intro_3"
+				}
+			]
+		}
+	],
+	"intro_3":[
+		"BACKGROUND:camp_evening",
+		"Danny:-and so that's the entire tour! Fun right!",
+		"Player:(That was exhausing! We didn't need to talk about [shake]every[/shake] tree!)",
+		"FACE:angry",
+		"Harper:Soooooo fun.",
+		"FACE:default",
+		"Aubrey:Comprehensive as always, Danny.",
+		"FACE:angry",
+		"Ethan:Exhausing as always more like...",
+		"FACE:default",
+		"Danny:That did take a little longer than expected...",
+		"Danny:So how about we roast some s'mores before we call it night!",
+		"Player:I can get behind that!",
+		"SCENE:smores_game"
 	],
 	
-	"act_1" : [
-		"BACKGROUND:bunks",
-		"Aubrey:It worked!",
-		"FACE:angry",
-		"Aubrey:Thank fuck..."
+	"night_0" : [
+		"BACKGROUND:camp_evening",
+		"Player:Wow, that's less relaxing then I remembered as a kid...",
+		""
 		
 		
 	]

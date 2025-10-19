@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0ny4fif3070h"]
+[gd_scene load_steps=5 format=3 uid="uid://c0ny4fif3070h"]
 
 [ext_resource type="Script" uid="uid://cyhbqoj7lorgt" path="res://scripts/name_entry.gd" id="1_b8nv3"]
 [ext_resource type="Theme" uid="uid://bwbjqk7oa8baa" path="res://resources/themes/letter_buttons.tres" id="1_cjs6i"]
+[ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="2_6dp0q"]
 [ext_resource type="Theme" uid="uid://b6gxwgdty7knw" path="res://resources/themes/dialogue_theme.tres" id="2_cql4a"]
 
 [node name="name_entry" type="Control"]
@@ -35,7 +36,8 @@ alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 60
+theme_override_fonts/font = ExtResource("2_6dp0q")
+theme_override_font_sizes/font_size = 90
 text = "What's your name? "
 horizontal_alignment = 1
 vertical_alignment = 1

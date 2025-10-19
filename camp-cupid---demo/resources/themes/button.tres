@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ds5gr620wj1c"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://ds5gr620wj1c"]
+
+[ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="1_oj7kp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bob45"]
 bg_color = Color(0.875427, 0.445094, 0.538122, 1)
@@ -10,5 +12,6 @@ corner_detail = 12
 
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)
-Button/font_sizes/font_size = 50
+Button/font_sizes/font_size = 90
+Button/fonts/font = ExtResource("1_oj7kp")
 Button/styles/normal = SubResource("StyleBoxFlat_bob45")

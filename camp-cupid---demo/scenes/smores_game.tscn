@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://gd8ju7dr11vu"]
+[gd_scene load_steps=9 format=3 uid="uid://gd8ju7dr11vu"]
 
 [ext_resource type="Script" uid="uid://fmkhikk2e51b" path="res://scripts/smores_game.gd" id="1_2njd8"]
 [ext_resource type="Texture2D" uid="uid://k8n88h71wf3u" path="res://assets/backgrounds/camp-night.png" id="2_heodn"]
 [ext_resource type="PackedScene" uid="uid://fvg81clrqfgv" path="res://scenes/spawner.tscn" id="3_08pr4"]
 [ext_resource type="PackedScene" uid="uid://cvi764x45e3e7" path="res://scenes/ingredient.tscn" id="4_6t1ee"]
 [ext_resource type="Texture2D" uid="uid://j0ftj30valpt" path="res://assets/sprites/cracker.png" id="5_heodn"]
+[ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="5_s5djo"]
 [ext_resource type="Texture2D" uid="uid://4spj5v1npfc3" path="res://assets/sprites/marshmallow.png" id="6_s5djo"]
 [ext_resource type="Texture2D" uid="uid://do6ykanjcgabs" path="res://assets/sprites/chocolate.png" id="7_fibls"]
 
@@ -28,19 +29,21 @@ texture = ExtResource("2_heodn")
 IngredientScene = ExtResource("4_6t1ee")
 
 [node name="Score Label" type="Label" parent="."]
-offset_left = 35.0
-offset_top = 28.0
-offset_right = 668.0
-offset_bottom = 180.0
-theme_override_font_sizes/font_size = 70
+offset_left = 54.0
+offset_top = 41.0
+offset_right = 687.0
+offset_bottom = 193.0
+theme_override_fonts/font = ExtResource("5_s5djo")
+theme_override_font_sizes/font_size = 130
 text = "Smores: 0"
 
 [node name="Timer Label" type="Label" parent="."]
-offset_left = 1253.0
-offset_top = 32.0
-offset_right = 1886.0
-offset_bottom = 184.0
-theme_override_font_sizes/font_size = 70
+offset_left = 1238.0
+offset_top = 43.0
+offset_right = 1871.0
+offset_bottom = 195.0
+theme_override_fonts/font = ExtResource("5_s5djo")
+theme_override_font_sizes/font_size = 130
 text = "Time Left: 60"
 horizontal_alignment = 2
 
@@ -51,18 +54,18 @@ scale = Vector2(0.242, 0.242)
 texture = ExtResource("5_heodn")
 
 [node name="Marshmallow" type="Sprite2D" parent="."]
-position = Vector2(158.783, 517.783)
+position = Vector2(157, 535)
 scale = Vector2(0.242, 0.242)
 texture = ExtResource("6_s5djo")
 
 [node name="Chocolate" type="Sprite2D" parent="."]
-position = Vector2(153.783, 330.783)
+position = Vector2(154, 375)
 rotation = -1.35787
 scale = Vector2(0.242, 0.242)
 texture = ExtResource("7_fibls")
 
 [node name="Cracker2" type="Sprite2D" parent="."]
-position = Vector2(157.783, 201.783)
+position = Vector2(156, 253)
 rotation = 0.445059
 scale = Vector2(0.242, 0.242)
 texture = ExtResource("5_heodn")

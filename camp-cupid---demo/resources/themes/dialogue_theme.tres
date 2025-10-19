@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://b6gxwgdty7knw"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://b6gxwgdty7knw"]
+
+[ext_resource type="FontFile" uid="uid://y8fd7tecadlt" path="res://assets/fonts/SimpleHandmade.otf" id="1_kyulj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kyulj"]
 bg_color = Color(0.886953, 0.436229, 0.528723, 1)
@@ -11,7 +13,9 @@ bg_color = Color(0.840313, 0.46725, 0.579703, 1)
 
 [resource]
 resource_local_to_scene = true
-RichTextLabel/font_sizes/normal_font_size = 60
+default_font = ExtResource("1_kyulj")
+default_font_size = 90
+RichTextLabel/font_sizes/normal_font_size = 90
 RichTextLabel/styles/background = SubResource("StyleBoxFlat_kyulj")
 RichTextLabel/styles/fill = SubResource("StyleBoxFlat_bdau4")
 RichTextLabel/styles/normal = SubResource("StyleBoxFlat_2cn4g")

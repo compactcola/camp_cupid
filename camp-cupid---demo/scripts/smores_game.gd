@@ -27,9 +27,12 @@ func _process(delta: float) -> void:
 	target.position = Globals.pos
 		
 	time_left -= delta
+	##### end game!
 	if time_left <= 0:
 		print("Time's up!")
 		Globals.smores_difficulty_index += 1
+		Globals.scene_index += 1
+		Globals.smores_score = score
 		get_tree().change_scene_to_file("res://scenes/main.tscn")
 	else:
 		timer_label.text = "Time: %d" % ceil(time_left)

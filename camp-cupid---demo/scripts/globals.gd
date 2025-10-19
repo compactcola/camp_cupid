@@ -1,9 +1,9 @@
 extends Node
 
 var relationships = {
-	"Aubrey": 0,
-	"Harper": 0,
-	"Ethan": 0
+	"Aubrey": 0.0,
+	"Harper": 0.0,
+	"Ethan": 0.0
 }
 
 var scenes = [
@@ -22,6 +22,7 @@ var smores_difficulty = {
 	2: 1.1,
 	3: 1.3
 }
+var smores_score = 0
 
 var player_name : String = "Me"
 var fx_layer : CanvasLayer
@@ -107,6 +108,8 @@ func _input(event: InputEvent) -> void:
 		effect.global_position = event.position
 		effect.start_fade()
 
-func add_relationship(character_name : String, amount : int):
+func add_relationship(character_name : String, amount : float):
 	if character_name in relationships:
 		relationships[character_name] += amount
+		print(character_name, " gained ", amount)
+		print(character_name, " current: ", relationships[character_name])
