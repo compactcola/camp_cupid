@@ -13,6 +13,8 @@ var target = Sprite2D.new()
 func _ready():
 	$UI/Button.hide()
 	
+	character.character_shot.connect(relationship_gain)
+	
 	## target reticule
 	target.texture = load("res://assets/target.png")
 	target.scale = Vector2(0.2, 0.2)
@@ -244,14 +246,20 @@ func run_name_selection():
 	var parent_ui = $UI
 	dui.hide()
 	parent_ui.add_child(name_selection)
+	
+func name_chosen(_name : String) -> void:
+	dui.show()
+	process_current_line()
 
 func run_smores_game():
 	character.change_character("EMPTY", "Default", "Default")
 	var smores_game = preload("res://scenes/smores_game.tscn").instantiate()
+	smores_game.game_finished.connect(end_smores_game)
 	var parent_ui = $UI
+	dui.hide()
 	parent_ui.add_child(smores_game)
-
-func name_chosen(_name : String) -> void:
+	
+func end_smores_game(score : int):
 	dui.show()
 	process_current_line()
 

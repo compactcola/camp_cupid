@@ -3,6 +3,8 @@ extends Node2D
 @onready var body_sprite = $Body
 @onready var head_sprite = $Head
 
+signal character_shot(name : String, points_loss : float)
+
 const approved_names = [
 	"Aubrey",
 	"Ethan",
@@ -88,6 +90,8 @@ const CHARACTER_HITBOXES = {
 	]
 }
 
+var current_char : String
+
 func _ready():
 	pass
 
@@ -112,6 +116,7 @@ func change_character(character_name : String, body_expression : String, head_ex
 		
 	body_sprite.sprite_frames = CHARACTER_FRAMES[character_name]
 	head_sprite.sprite_frames = HEAD_FRAMES[character_name]
+	current_char = character_name
 	
 	if character_name in FACE_OFFSETS:
 		head_sprite.position = FACE_OFFSETS[character_name]
@@ -165,4 +170,4 @@ func pop_out():
 #### use for future relationship harm, hurt sprite, death, etc
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		print("Character clicked!")
+		emit_signal("character_shot", current_char, -50)

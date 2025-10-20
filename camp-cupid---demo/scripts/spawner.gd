@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var IngredientScene : PackedScene
-@export var ingredient_types := ["graham", "chocolate", "marshmallow"]
+@export var ingredient_types := ["graham", "chocolate", "marshmallow", "fly"]
 
 var spawn_interval : float = 1*Globals.smores_difficulty[Globals.smores_difficulty_index]
 

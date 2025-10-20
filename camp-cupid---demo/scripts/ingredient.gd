@@ -16,7 +16,8 @@ var SCREEN_HEIGHT
 var textures := {
 	"graham": preload("res://assets/sprites/cracker.png"),
 	"chocolate": preload("res://assets/sprites/chocolate.png"),
-	"marshmallow": preload("res:///assets/sprites/marshmallow.png")
+	"marshmallow": preload("res:///assets/sprites/marshmallow.png"),
+	"fly": preload("res://assets/sprites/fly.png")
 }
 
 func _ready():

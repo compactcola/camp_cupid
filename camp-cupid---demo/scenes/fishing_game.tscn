@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://8wu6mmpho2km"]
+
+[ext_resource type="Texture2D" uid="uid://bj8xdikprjgc7" path="res://assets/backgrounds/water_bg.jpg" id="1_2yxpx"]
+[ext_resource type="Script" uid="uid://cisah67javehr" path="res://scripts/fishing_game.gd" id="1_vhdqh"]
+[ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="2_wogwn"]
+[ext_resource type="FontFile" uid="uid://y8fd7tecadlt" path="res://assets/fonts/SimpleHandmade.otf" id="4_vox6q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7x2r5"]
+bg_color = Color(0.0528, 0.259307, 0.44, 0.862745)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vox6q"]
+bg_color = Color(0.1232, 0.25424, 0.56, 0.870588)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="Theme" id="Theme_7x2r5"]
+Button/styles/normal = SubResource("StyleBoxFlat_vox6q")
+
+[node name="fishing_game" type="Node2D"]
+script = ExtResource("1_vhdqh")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -2.0
+offset_right = 1926.0
+offset_bottom = 1091.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2yxpx")
+
+[node name="FishSpawner" type="Node2D" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 54.0
+offset_right = 373.0
+offset_bottom = 249.0
+theme_override_fonts/font = ExtResource("2_wogwn")
+theme_override_font_sizes/font_size = 100
+text = "Fish Caught:"
+
+[node name="TimerLabel" type="Label" parent="."]
+offset_left = 1263.0
+offset_top = 56.0
+offset_right = 1870.0
+offset_bottom = 198.0
+theme_override_fonts/font = ExtResource("2_wogwn")
+theme_override_font_sizes/font_size = 100
+text = "Time Left: 60"
+horizontal_alignment = 2
+
+[node name="TutorialMessage" type="Node2D" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="TutorialMessage"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = 377.0
+offset_right = 1898.0
+offset_bottom = 646.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7x2r5")
+
+[node name="Label" type="Label" parent="TutorialMessage/PanelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_vox6q")
+theme_override_font_sizes/font_size = 80
+text = "Shoot the arrow lightly into the water to lure the fish out!
+Be careful - shoot too hard and they'll scatter!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="TutorialMessage"]
+offset_left = 755.0
+offset_top = 683.0
+offset_right = 1173.0
+offset_bottom = 856.0
+theme = SubResource("Theme_7x2r5")
+theme_override_fonts/font = ExtResource("2_wogwn")
+theme_override_font_sizes/font_size = 100
+text = "Start!"
+
+[connection signal="pressed" from="TutorialMessage/Button" to="." method="_on_button_pressed"]
