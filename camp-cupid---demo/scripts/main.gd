@@ -8,17 +8,10 @@ var dialog_lines = []
 var body_expression : String = "Default"
 var head_expression : String = "Default"
 
-var target = Sprite2D.new()
-
 func _ready():
 	$UI/Button.hide()
 	
 	character.character_shot.connect(relationship_gain)
-	
-	## target reticule
-	target.texture = load("res://assets/target.png")
-	target.scale = Vector2(0.2, 0.2)
-	get_tree().current_scene.add_child(target)
 	
 	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)
 	if file:
@@ -44,8 +37,6 @@ func change_background(id : String) -> void:
 
 @warning_ignore("unused_parameter")
 func _process(delta) -> void:
-	target.position = Globals.pos
-	
 	if Input.is_action_just_pressed("Space"):
 		if active_typing_timer and is_instance_valid(active_typing_timer):
 			active_typing_timer.stop()
@@ -115,13 +106,19 @@ func process_current_line():
 		process_current_line() ## auto advance so you don't have to click next again
 		return
 		
-	 ## change scene
+	 ###### change scene
 	if (speaker == "SCENE"):
 		if (text == "name_select"):
 			run_name_selection()
 			return
 		elif (text == "smores_game"):
 			run_smores_game()
+			return
+		elif (text == "fishing_game"):
+			run_fishing_game()
+			return
+		elif (text == "birdwatching_game"):
+			run_birdwatching_game()
 			return
 		else:
 			get_tree().change_scene_to_file("res://scenes/%s.tscn" % text)
@@ -254,15 +251,33 @@ func name_chosen(_name : String) -> void:
 func run_smores_game():
 	character.change_character("EMPTY", "Default", "Default")
 	var smores_game = preload("res://scenes/smores_game.tscn").instantiate()
-	smores_game.game_finished.connect(end_smores_game)
+	smores_game.game_finished.connect(end_game)
 	var parent_ui = $UI
 	dui.hide()
 	parent_ui.add_child(smores_game)
-	
-func end_smores_game(score : int):
-	dui.show()
-	process_current_line()
 
+func run_fishing_game():
+	character.change_character("EMPTY", "Default", "Default")
+	var fishing_game = preload("res://scenes/fishing_game.tscn").instantiate()
+	fishing_game.end_game.connect(end_game)
+	var parent_ui = $UI
+	dui.hide()
+	parent_ui.add_child(fishing_game)
+	
+func run_birdwatching_game():
+	character.change_character("EMPTY", "Default", "Default")
+	var bird_game = preload("res://scenes/birdwatching_game.tscn").instantiate()
+	
+	bird_game.end_game.connect(end_game)
+	var parent_ui = $UI
+	dui.hide()
+	parent_ui.add_child(bird_game)
+	
+func end_game(score : int):
+	dui.show()
+	relationship_gain("Aubrey",score) ###replace with actual character logic
+	process_current_line()
+	
 ## useless ass button position randomizer
 func randomize_botton_pos() -> void:
 	var viewport_size = get_viewport_rect().size

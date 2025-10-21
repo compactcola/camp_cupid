@@ -4,8 +4,6 @@ extends Node2D
 @onready var score_label = $ScoreLabel
 @onready var timer_label := $"TimerLabel"
 
-var target = Sprite2D.new()
-
 var time_left := 60.0
 var score := 0
 var fish
@@ -13,16 +11,13 @@ var fish
 const VIEWPORT_HEIGHT = Globals.SCREEN_HEIGHT
 const VIEWPORT_WIDTH = Globals.SCREEN_WIDTH
 
+signal end_game(score)
+
 func _ready():
-	 ### target stuff might need to go into globals tbh
-	target.texture = load("res://assets/target.png")
-	target.scale = Vector2(0.2, 0.2)
-	get_tree().current_scene.add_child(target)
-	
 	set_process(false)
 	
-func _physics_process(delta: float) -> void:
-	target.position = Globals.pos
+#func _physics_process(delta: float) -> void:
+	#target.position = Globals.pos
 	
 func _process(delta: float) -> void:
 	time_left -= delta
@@ -30,9 +25,8 @@ func _process(delta: float) -> void:
 	if time_left <= 0:
 		timer_label.text = "Time's up!"
 		print("Time's up!")
-		Globals.scene_index += 1
-		Globals.smores_score = score
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		emit_signal("end_game", score)
+		queue_free()
 	else:
 		timer_label.text = "Time Left: %d" % ceil(time_left)
 

@@ -17,9 +17,8 @@ var scene_index : int = 0 # works, but might need adjustment when going back to 
 var smores_difficulty_index : int = 0 # use for campfire game difficulty scaling
 var smores_difficulty = {
 	0: 1.0,
-	1: 1.05,
-	2: 1.1,
-	3: 1.3
+	1: 1.15,
+	2: 1.4,
 }
 var smores_score = 0
 
@@ -35,7 +34,17 @@ var last_click := false
 var target = Sprite2D.new()
 var pos = Vector2.ZERO
 
+var reticle_scene = preload("res://scenes/reticle.tscn")
+var reticle_instance : CanvasLayer
+
 func _ready():
+	await get_tree().process_frame  # wait for root to exist
+	if not reticle_instance:
+		reticle_instance = reticle_scene.instantiate()
+		get_tree().root.add_child(reticle_instance)
+		reticle_instance.layer = 100
+		reticle_instance.visible = true
+	
 	serial = GdSerial.new()
 	var ports = serial.list_ports()
 	print("Ports avalible: ", ports)

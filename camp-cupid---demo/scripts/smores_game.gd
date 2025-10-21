@@ -24,23 +24,14 @@ func _ready():
 	
 	set_process(false)
 	
-	target.texture = load("res://assets/target.png")
-	target.scale = Vector2(0.2, 0.2)
-	get_tree().current_scene.add_child(target)
-	
-func _physics_process(delta: float) -> void:
-	target.position = Globals.pos
-	
 func _process(delta: float) -> void:
 	time_left -= delta
 	##### end game!
 	if time_left <= 0:
 		print("Time's up!")
 		Globals.smores_difficulty_index += 1
-		Globals.scene_index += 1
-		Globals.smores_score = score
 		emit_signal("game_finished", score)
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		queue_free()
 	else:
 		timer_label.text = "Time: %d" % ceil(time_left)
 
