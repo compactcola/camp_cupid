@@ -8,5 +8,5 @@ func _ready():
 	sprite.modulate = Color(1,0.1,0.2,1)
 	process_mode = Node.PROCESS_MODE_ALWAYS  # Keeps running even when scene paused
 
-func _process(delta):
+func _physics_process(delta: float) -> void:
 	sprite.position = Globals.pos

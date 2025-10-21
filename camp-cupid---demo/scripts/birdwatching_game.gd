@@ -153,8 +153,6 @@ func _reset_after_round():
 			b.modulate = Color(0,0,0, 0.35)
 	identify_button.hide()
 
-	set_process(false)
-
 func _on_button_pressed():
 	set_process(true)
 	$TutorialMessage.hide()
