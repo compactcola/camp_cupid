@@ -13,7 +13,7 @@ signal game_finished(score: int)
 @onready var ui_cracker_2 = $Cracker2
 
 var time_left := 60.0
-@onready var timer_label := $"Timer Label"
+@onready var timer_label := $TimerLabel
 
 func _ready():
 	$FlyMessage.pivot_offset = $FlyMessage.size / 2
@@ -89,7 +89,7 @@ func check_for_smore():
 	ui_cracker_1.hide()
 	ui_cracker_2.hide()
 	
-	$"Score Label".text = "Smores: %d" % score
+	$ScoreLabel.text = "Smores: %d" % score
 	
 func show_fly_message():
 	var msg = $FlyMessage

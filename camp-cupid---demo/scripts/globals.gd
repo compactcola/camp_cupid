@@ -7,8 +7,7 @@ var relationships = {
 }
 
 var scenes = [
-	"intro", "night_0",
-	"day_1", "night_1",
+	"intro", "night_1",
 	"day_2", "night_2",
 	"day_3", "night_3",
 	"prom"

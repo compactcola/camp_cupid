@@ -38,9 +38,9 @@ func _process(delta: float) -> void:
 
 func spawn_fish_loop():
 	while true:
-		await get_tree().create_timer(randf_range(2.0, 5.0)).timeout
+		await get_tree().create_timer(randf_range(0.2, 4.0)).timeout
 		fish = preload("res://scenes/fish.tscn").instantiate()
-		fish.position = Vector2(randf_range(50, VIEWPORT_WIDTH-50), randf_range(50,VIEWPORT_HEIGHT-50))
+		fish.position = Vector2(randf_range(50, VIEWPORT_WIDTH-50), randf_range(180,VIEWPORT_HEIGHT-50))
 		fish_spawner.add_child(fish)
 		fish.appear()
 		fish.caught.connect(_on_fish_caught)
@@ -48,6 +48,8 @@ func spawn_fish_loop():
 func _on_fish_caught():
 	score += 10
 	score_label.text = "Score: %d" % score
+	### death animations
+	fish.queue_free()
 
 
 func _on_button_pressed() -> void:

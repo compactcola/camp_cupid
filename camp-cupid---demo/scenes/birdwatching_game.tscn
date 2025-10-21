@@ -1,0 +1,145 @@
+[gd_scene load_steps=11 format=3 uid="uid://ckb80qpe2b6k"]
+
+[ext_resource type="Texture2D" uid="uid://0tni847dwmc2" path="res://assets/backgrounds/forest_bg.png" id="1_ix7kf"]
+[ext_resource type="Script" uid="uid://de4x6yvaosw2h" path="res://scripts/birdwatching_game.gd" id="1_m4co6"]
+[ext_resource type="PackedScene" uid="uid://yguftcnx4qsf" path="res://scenes/bird.tscn" id="3_m4co6"]
+[ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="3_muepv"]
+[ext_resource type="FontFile" uid="uid://y8fd7tecadlt" path="res://assets/fonts/SimpleHandmade.otf" id="5_4au54"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4au54"]
+bg_color = Color(0.226707, 0.226708, 0.226707, 0.513726)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4co6"]
+bg_color = Color(0.319756, 0.544796, 0.282177, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obrpc"]
+bg_color = Color(0.266776, 0.420648, 0.188993, 0.862745)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rw6dh"]
+bg_color = Color(0.31464, 0.48, 0.2256, 0.898039)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="Theme" id="Theme_brt7s"]
+Button/styles/normal = SubResource("StyleBoxFlat_rw6dh")
+
+[node name="birdwatching_game" type="Node2D"]
+script = ExtResource("1_m4co6")
+
+[node name="background" type="TextureRect" parent="."]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -2.0
+offset_right = 1926.0
+offset_bottom = 1091.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ix7kf")
+
+[node name="Birds" type="Node2D" parent="."]
+
+[node name="bird" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(227, 648)
+scale = Vector2(0.8, 0.8)
+
+[node name="bird2" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(856, 854)
+scale = Vector2(1.2, 1.2)
+
+[node name="bird3" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(969, 486)
+
+[node name="bird4" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(571, 331)
+scale = Vector2(0.8, 0.8)
+
+[node name="bird5" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(1631, 259)
+
+[node name="bird6" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(1552, 692)
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 54.0
+offset_top = 41.0
+offset_right = 687.0
+offset_bottom = 193.0
+theme_override_fonts/font = ExtResource("3_muepv")
+theme_override_font_sizes/font_size = 130
+text = "Birds Left: 6"
+
+[node name="TimerLabel" type="Label" parent="."]
+offset_left = 1238.0
+offset_top = 43.0
+offset_right = 1871.0
+offset_bottom = 195.0
+theme_override_fonts/font = ExtResource("3_muepv")
+theme_override_font_sizes/font_size = 130
+text = "Time Left: 90"
+horizontal_alignment = 2
+
+[node name="Identify" type="Button" parent="."]
+offset_left = 85.0
+offset_top = 894.0
+offset_right = 520.0
+offset_bottom = 994.0
+theme_override_fonts/font = ExtResource("3_muepv")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/hover = SubResource("StyleBoxFlat_4au54")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m4co6")
+text = "Identify"
+
+[node name="TutorialMessage" type="Node2D" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="TutorialMessage"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = 377.0
+offset_right = 1898.0
+offset_bottom = 646.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_obrpc")
+
+[node name="Label" type="Label" parent="TutorialMessage/PanelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_4au54")
+theme_override_font_sizes/font_size = 100
+text = "Scan the trees to spot the birds!
+Shoot the box to identify which type they are!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="TutorialMessage"]
+offset_left = 615.0
+offset_top = 682.0
+offset_right = 1309.0
+offset_bottom = 868.0
+theme = SubResource("Theme_brt7s")
+theme_override_fonts/font = ExtResource("3_muepv")
+theme_override_font_sizes/font_size = 120
+text = "Start!"
+
+[connection signal="pressed" from="Identify" to="." method="_on_identify_pressed"]
+[connection signal="pressed" from="TutorialMessage/Button" to="." method="_on_button_pressed"]

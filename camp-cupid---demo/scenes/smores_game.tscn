@@ -15,7 +15,7 @@ corner_radius_top_right = 80
 corner_radius_bottom_right = 80
 corner_radius_bottom_left = 80
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulsuk"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_heodn"]
 bg_color = Color(0.388735, 0.197548, 0.0717044, 0.870588)
 corner_radius_top_left = 40
 corner_radius_top_right = 40
@@ -23,9 +23,9 @@ corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
 [sub_resource type="Theme" id="Theme_y3cf3"]
-Button/styles/normal = SubResource("StyleBoxFlat_ulsuk")
+Button/styles/normal = SubResource("StyleBoxFlat_heodn")
 
-[node name="Node2D" type="Node2D"]
+[node name="smores_game" type="Node2D"]
 script = ExtResource("1_2njd8")
 
 [node name="background" type="TextureRect" parent="."]
@@ -41,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_heodn")
 
-[node name="Score Label" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="."]
 offset_left = 54.0
 offset_top = 41.0
 offset_right = 687.0
@@ -50,7 +50,7 @@ theme_override_fonts/font = ExtResource("5_s5djo")
 theme_override_font_sizes/font_size = 130
 text = "Smores: 0"
 
-[node name="Timer Label" type="Label" parent="."]
+[node name="TimerLabel" type="Label" parent="."]
 offset_left = 1238.0
 offset_top = 43.0
 offset_right = 1871.0

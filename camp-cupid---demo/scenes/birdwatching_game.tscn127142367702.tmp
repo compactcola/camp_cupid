@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckb80qpe2b6k"]
+
+[ext_resource type="Texture2D" uid="uid://0tni847dwmc2" path="res://assets/backgrounds/forest_bg.png" id="1_ix7kf"]
+[ext_resource type="Script" uid="uid://de4x6yvaosw2h" path="res://scripts/birdwatching_game.gd" id="1_m4co6"]
+[ext_resource type="PackedScene" uid="uid://yguftcnx4qsf" path="res://scenes/bird.tscn" id="3_m4co6"]
+[ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="3_muepv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4au54"]
+bg_color = Color(0.226707, 0.226708, 0.226707, 0.513726)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4co6"]
+bg_color = Color(0.319756, 0.544796, 0.282177, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="birdwatching_game" type="Node2D"]
+script = ExtResource("1_m4co6")
+
+[node name="background" type="TextureRect" parent="."]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -2.0
+offset_right = 1926.0
+offset_bottom = 1091.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ix7kf")
+
+[node name="Birds" type="Node2D" parent="."]
+
+[node name="bird" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(227, 648)
+scale = Vector2(0.8, 0.8)
+
+[node name="bird2" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(989, 887)
+scale = Vector2(1.2, 1.2)
+
+[node name="bird3" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(969, 486)
+
+[node name="bird4" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(628, 348)
+scale = Vector2(0.8, 0.8)
+
+[node name="bird5" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(1487, 382)
+
+[node name="bird6" parent="Birds" instance=ExtResource("3_m4co6")]
+position = Vector2(1723, 907)
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 54.0
+offset_top = 41.0
+offset_right = 687.0
+offset_bottom = 193.0
+theme_override_fonts/font = ExtResource("3_muepv")
+theme_override_font_sizes/font_size = 130
+text = "Birds Left: 6"
+
+[node name="TimerLabel" type="Label" parent="."]
+offset_left = 1238.0
+offset_top = 43.0
+offset_right = 1871.0
+offset_bottom = 195.0
+theme_override_fonts/font = ExtResource("3_muepv")
+theme_override_font_sizes/font_size = 130
+text = "Time Left: 90"
+horizontal_alignment = 2
+
+[node name="Identify" type="Button" parent="."]
+offset_left = 509.0
+offset_top = 661.0
+offset_right = 944.0
+offset_bottom = 761.0
+theme_override_fonts/font = ExtResource("3_muepv")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/hover = SubResource("StyleBoxFlat_4au54")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m4co6")
+text = "Identify"
