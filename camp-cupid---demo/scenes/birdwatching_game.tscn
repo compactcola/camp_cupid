@@ -104,6 +104,7 @@ theme_override_fonts/font = ExtResource("3_muepv")
 theme_override_font_sizes/font_size = 80
 theme_override_styles/hover = SubResource("StyleBoxFlat_4au54")
 theme_override_styles/normal = SubResource("StyleBoxFlat_m4co6")
+action_mode = 0
 text = "Identify"
 
 [node name="TutorialMessage" type="Node2D" parent="."]
@@ -139,6 +140,7 @@ offset_bottom = 868.0
 theme = SubResource("Theme_brt7s")
 theme_override_fonts/font = ExtResource("3_muepv")
 theme_override_font_sizes/font_size = 120
+action_mode = 0
 text = "Start!"
 
 [connection signal="pressed" from="Identify" to="." method="_on_identify_pressed"]

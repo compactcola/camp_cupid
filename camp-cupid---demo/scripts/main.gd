@@ -209,6 +209,7 @@ func show_choices(options : Array) -> void:
 	for option in options:
 		var button := Button.new()
 		button.text = option["text"]
+		button.action_mode = BaseButton.ACTION_MODE_BUTTON_PRESS
 		button.custom_minimum_size = Vector2(600, 200)
 		button.theme = load("res://resources/themes/button.tres")
 		button.pressed.connect(func():

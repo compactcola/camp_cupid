@@ -78,7 +78,8 @@ func _parse_line(line : String):
 	var click = false # can change to an int or add int later for fire strength
 	
 	pos.x = 2*int(parts[0])
-	pos.y = SCREEN_HEIGHT - int(parts[1])
+	pos.y = SCREEN_HEIGHT - (int(parts[1])*2)
+	
 	click = bool(int(parts[-1]))
 	
 	# mouse input

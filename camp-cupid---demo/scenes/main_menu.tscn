@@ -27,6 +27,7 @@ offset_right = 1279.0
 offset_bottom = 903.0
 theme = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 80
+action_mode = 0
 text = " Play Game "
 
 [node name="Quit" type="Button" parent="."]
@@ -37,6 +38,7 @@ offset_right = 1859.0
 offset_bottom = 994.0
 theme = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 50
+action_mode = 0
 text = "Quit"
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]

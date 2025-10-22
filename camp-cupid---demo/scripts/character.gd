@@ -126,8 +126,15 @@ func change_character(character_name : String, body_expression : String, head_ex
 	else:
 		$Area2D/CollisionPolygon2D.polygon = []
 		
-	body_sprite.play(body_expression)
-	head_sprite.play(head_expression)
+	if character_name == "Danny":
+		body_sprite.position.y =- 200
+		body_sprite.play(head_expression)
+		head_sprite.sprite_frames = HEAD_FRAMES["EMPTY"]
+		
+	else:
+		body_sprite.position.y = 0
+		body_sprite.play(body_expression)
+		head_sprite.play(head_expression)
 	
 var hop_duration : float
 var hop_distance : float

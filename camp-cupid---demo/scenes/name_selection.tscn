@@ -60,42 +60,49 @@ alignment = 1
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "A"
 
 [node name="B" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "B"
 
 [node name="C" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "C"
 
 [node name="D" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "D"
 
 [node name="E" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "E"
 
 [node name="F" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "F"
 
 [node name="G" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "G"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
@@ -106,48 +113,56 @@ alignment = 1
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "H"
 
 [node name="I" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "I"
 
 [node name="J" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "J"
 
 [node name="K" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "K"
 
 [node name="L" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "L"
 
 [node name="M" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "M"
 
 [node name="N" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "N"
 
 [node name="O" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "O"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
@@ -159,42 +174,49 @@ alignment = 1
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "P"
 
 [node name="Q" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "Q"
 
 [node name="R" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "R"
 
 [node name="S" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "S"
 
 [node name="T" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "T"
 
 [node name="U" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "U"
 
 [node name="V" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "V"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
@@ -205,28 +227,33 @@ alignment = 1
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "W"
 
 [node name="X" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "X"
 
 [node name="Y" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "Y"
 
 [node name="Z" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "Z"
 
 [node name="OK" type="Button" parent="CanvasLayer/VBoxContainer/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 theme = ExtResource("1_cjs6i")
+action_mode = 0
 text = "OK"

@@ -92,6 +92,7 @@ offset_bottom = 856.0
 theme = SubResource("Theme_7x2r5")
 theme_override_fonts/font = ExtResource("2_wogwn")
 theme_override_font_sizes/font_size = 100
+action_mode = 0
 text = "Start!"
 
 [connection signal="pressed" from="TutorialMessage/Button" to="." method="_on_button_pressed"]

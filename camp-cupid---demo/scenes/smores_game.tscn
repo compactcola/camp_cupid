@@ -115,6 +115,7 @@ offset_bottom = 868.0
 theme = SubResource("Theme_y3cf3")
 theme_override_fonts/font = ExtResource("5_s5djo")
 theme_override_font_sizes/font_size = 120
+action_mode = 0
 text = "Start!"
 
 [node name="FlyMessage" type="Label" parent="."]
