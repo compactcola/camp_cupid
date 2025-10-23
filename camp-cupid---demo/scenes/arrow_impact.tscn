@@ -6,6 +6,6 @@
 [node name="Sprite2D" type="Sprite2D"]
 top_level = true
 z_index = 1000
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.085, 0.085)
 texture = ExtResource("1_nbfab")
 script = ExtResource("2_xcd1o")

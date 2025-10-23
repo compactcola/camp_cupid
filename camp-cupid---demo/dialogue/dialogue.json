@@ -186,11 +186,77 @@
 		"SCENE:smores_game"
 	],
 	
-	"night_1" : [
+	"night1" : [
 		"BACKGROUND:camp_evening",
 		"Player:Wow, that's less relaxing then I remembered as a kid...",
-		""
+		"Player:(Still, I should eat with someone!)",
+		"Player:(But who...?)",
 		
+		{
+			"type": "CHOICE",
+				"options": [
+					{
+						"text":"Aubrey",
+						"next":"night1_aubrey"
+					},
+					{
+						"text":"Ethan",
+						"next":"night1_ethan"
+					},
+					{
+						"text":"Harper",
+						"next":"night1_harper"
+					}
+			]
+		}
+	],
+	
+	"night1_aubrey": [
+		"Aubrey:Works",
+
+		{
+		"type": "CHOICE",
+			"options": [
+				{
+					"text": "Turn in for the night",
+					"next": "night1_end"
+				}
+			]
+		}
+	],
+	"night1_ethan": [
+		"Ethan:Works",
 		
+		{
+		"type": "CHOICE",
+			"options": [
+				{
+					"text": "Turn in for the night",
+					"next": "night1_end"
+				}
+			]
+		}
+	],
+	"night1_harper":[
+		"Harper:Works",
+
+		{
+		"type": "CHOICE",
+			"options": [
+				{
+					"text": "Turn in for the night",
+					"next": "night1_end"
+				}
+			]
+		}
+	],
+
+	"night1_end" : [
+		"EMPTY:",
+		"BACKGROUND:bunks"
+	],
+
+	"day2" : [
+		"Danny: WORKS"
 	]
 }

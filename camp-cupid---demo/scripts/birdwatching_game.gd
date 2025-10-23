@@ -5,18 +5,22 @@ extends Node2D
 @onready var score_label = $ScoreLabel
 @onready var timer_label = $TimerLabel
 
-signal end_game(score)
 var target = Sprite2D.new()
 
-var birds_left = 6
-var flip_var = 1
 var found_bird : Node2D = null
 
 var time := 0.0
 var amplitude := 250.0
 var speed := 1.2
+var flip_var = 1
+
 var time_left := 90.0
+var birds_left = 6
+var final_score = 0
+var end_type = 0
+
 var new_button_pos := Vector2.ZERO
+
 var moving := false
 var fly_away := false
 var end_state := false
@@ -71,7 +75,7 @@ func _process(delta):
 	time_left -= delta
 	if time_left <= 0:
 		timer_label.text = "Time's up!"
-		emit_signal("end_game", (70-(birds_left*10)))
+		end_game(0) ### ran out of time ending
 	else:
 		timer_label.text = "Time Left: %d" % ceil(time_left)
 
@@ -107,8 +111,7 @@ func on_bird_shot(bird):
 	identify_button.hide()
 
 	await get_tree().create_timer(1.5).timeout
-	emit_signal("end_game", -50+(birds_left*10))
-	queue_free()
+	end_game(2) ### bad end killed a bird
 
 func _on_identify_pressed():
 	if not is_instance_valid(found_bird):
@@ -137,9 +140,7 @@ func _on_identify_pressed():
 
 	# if done, exit
 	if birds_left <= 0:
-		print("All birds found!")
-		emit_signal("end_game", 75)
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		end_game(1) ### found all birds ending
 
 func _reset_after_round():
 	moving = false
@@ -159,3 +160,14 @@ func _on_button_pressed():
 	for bird in birds:
 		bird.show()
 		bird.modulate = Color(0,0,0,0.35)
+
+func end_game(end_type : int):
+	if end_type == 0: ## ran out of time ending score
+		final_score = 70 - (birds_left*10)
+	elif end_type == 1: ## found all birds ending score
+		final_score = 80
+	elif end_type == 2: ## killed a bird ending score
+		final_score = -60 + (birds_left*10)
+	
+	Globals.game_score = final_score
+	get_tree().change_scene_to_file("res://scenes/main.tscn")

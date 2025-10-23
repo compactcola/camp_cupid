@@ -8,10 +8,20 @@ var dialog_lines = []
 var body_expression : String = "Default"
 var head_expression : String = "Default"
 
+var current_charater : String
+var current_bg
+
+var dialog_paused: bool = false
+
+var sfx_player : AudioStreamPlayer
+
 func _ready():
 	$UI/Button.hide()
 	
 	character.character_shot.connect(relationship_gain)
+	
+	sfx_player = AudioStreamPlayer.new()
+	add_child(sfx_player)
 	
 	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)
 	if file:
@@ -22,7 +32,9 @@ func _ready():
 	dialog_index = -1
 	character.change_character("Empty", body_expression, head_expression)
 	process_current_line()
-	
+
+
+
 ### getting fancy with backgrounds
 var backgrounds := {
 	"bunks": preload("res://assets/backgrounds/bunks.jpg"),
@@ -32,8 +44,19 @@ var backgrounds := {
 func change_background(id : String) -> void:
 	if id in backgrounds:
 		$Background/image.texture = backgrounds[id]
+		current_bg = backgrounds[id]
+		
+		if current_bg !=  backgrounds["bunks"]:
+			var birds_ambience = load("res://audio/bird_ambience.wav")
+			sfx_player.stream = birds_ambience
+			sfx_player.play()
+		else:
+			sfx_player.stop()
+			
 	else:
 		return
+
+
 
 @warning_ignore("unused_parameter")
 func _process(delta) -> void:
@@ -58,85 +81,82 @@ func parse_placeholders(text: String) -> String:
 	return result
 
 func process_current_line():
-	if dialog_index < len(dialog_lines) -1:
+	if dialog_index < len(dialog_lines) - 1:
 		dialog_index += 1
-	
-	var line = dialog_lines[dialog_index]
-	
-	if typeof(line) == TYPE_DICTIONARY:
-		if line.has("type") and line["type"] == "CHOICE":
-			show_choices(line["options"])
+		advance_to_next_line()
+
+func advance_to_next_line():
+	while dialog_index < len(dialog_lines):
+		if dialog_paused:
 			return
-	
-	var line_info = parse_line(line)
-	var speaker : String  = line_info["speaker"]
-	var text : String = parse_placeholders(line_info["dialog"])
-	
-	## change expressions
-	if (speaker == "FACE") or (speaker == "BODY"):
-		if (speaker == "FACE"): head_expression = text
-		else: body_expression = text
+		var line = dialog_lines[dialog_index]
+		if typeof(line) == TYPE_DICTIONARY:
+			if line.has("type") and line["type"] == "CHOICE":
+				show_choices(line["options"])
+				return
 		
-		process_current_line()
-		return
+		var line_info = parse_line(line)
+		var speaker : String  = line_info["speaker"]
+		var text : String = parse_placeholders(line_info["dialog"])
 		
-	## relationship gain/loss
-	if (speaker == "POINTS"):
-		var info = text.split(",")
-		assert(len(info) >= 2)
-		relationship_gain(info[0], float(info[1]))
-		
-		process_current_line()
+		# handle non-dialogue (command) lines
+		if speaker in ["FACE", "BODY", "POINTS", "POP_IN", "POP_OUT", "BACKGROUND", "SCENE", "EMPTY"]:
+			await process_special_line(speaker, text)
+			dialog_index += 1
+			continue
+
+		# otherwise display dialogue
+		process_line(speaker, text)
 		return
-	
-	## handle character animations
-	if (speaker == "POP_IN"):
-		character.change_character(text, body_expression, head_expression)
-		await character.pop_in()
-		process_current_line()
-		return
-	elif (speaker == "POP_OUT"):
-		await character.pop_out()
-		process_current_line()
-		return
-	
-	## change background
-	if(speaker == "BACKGROUND"):
-		change_background(text)
-		process_current_line() ## auto advance so you don't have to click next again
-		return
-		
-	 ###### change scene
-	if (speaker == "SCENE"):
-		if (text == "name_select"):
-			run_name_selection()
-			return
-		elif (text == "smores_game"):
-			run_smores_game()
-			return
-		elif (text == "fishing_game"):
-			run_fishing_game()
-			return
-		elif (text == "birdwatching_game"):
-			run_birdwatching_game()
-			return
-		else:
-			get_tree().change_scene_to_file("res://scenes/%s.tscn" % text)
-		Globals.scene_index += 1 ## update so that return to main will start new scene (hopefully)
-	
-	## clear current character on screen
-	if (speaker == "EMPTY"):
-		character.change_character("EMPTY", "Default", "Default")
-		process_current_line()
-		return
-	
-	#### display on UI
-	
-	## check if its player text
+
+# handles commands like FACE, BODY, SCENE, etc.
+func process_special_line(speaker: String, text: String) -> void:
+	match speaker:
+		"FACE":
+			head_expression = text
+		"BODY":
+			body_expression = text
+		"POINTS":
+			var info = text.split(",")
+			if len(info) >= 2:
+				relationship_gain(info[0], float(info[1]))
+		"POP_IN":
+			character.change_character(text, body_expression, head_expression)
+			await character.pop_in()
+		"POP_OUT":
+			await character.pop_out()
+		"BACKGROUND":
+			change_background(text)
+		"SCENE":
+			if (text == "name_select"):
+				dialog_paused = true
+				run_name_selection()
+				return
+			elif (text == "smores_game"):
+				run_smores_game()
+				return
+			elif (text == "end_day"):
+				end_day()
+				return
+			elif (text == "main_screen"):
+				get_tree().change_scene_to_file("res://scenes/map_screen.tscn")
+				return
+			else:
+				get_tree().change_scene_to_file("res://scenes/%s.tscn" % text)
+				Globals.scene_index += 1
+				return
+		"EMPTY":
+			character.change_character("EMPTY", "Default", "Default")
+		_:
+			pass
+
+# handles actual dialogue display
+func process_line(speaker: String, text: String) -> void:
 	if (speaker == "Player"):
 		speaker = Globals.player_name
 	else:
-		character.hop() ## hop when dey talk
+		character.hop()
+		Globals.current_character = speaker
 		
 	if (speaker == "Danny"):
 		dui.speaker.text = "Counselor Dan"
@@ -145,11 +165,8 @@ func process_current_line():
 	
 	dui.dialog.text = text
 	dui.dialog.visible_characters = 0
-	type_text(text.length()) ## call typewriter effect function
-	
-	### change character
+	type_text(text.length())
 	character.change_character(speaker, body_expression, head_expression)
-	#if (speaker != Globals.player_name): character.hop() ## hop when dey talk
 
 ##### typewriter and auto-text effect
 var typing_speed_max : float = 0.03
@@ -158,7 +175,6 @@ var read_delay : float = 0.9
 var active_typing_timer: Timer = null
 
 func type_text(line_length : int) -> void:
-		# Kill any old timer first
 	if active_typing_timer and is_instance_valid(active_typing_timer):
 		active_typing_timer.stop()
 		active_typing_timer.queue_free()
@@ -173,7 +189,7 @@ func type_text(line_length : int) -> void:
 	timer.timeout.connect(Callable(self, "_on_type_timeout").bind(timer, line_length))
 	
 func _on_type_timeout(timer : Timer, line_length : int) -> void:
-	if not is_instance_valid(timer) or dui.dialog == null: ##timer safeguard
+	if not is_instance_valid(timer) or dui.dialog == null:
 		return
 		
 	if dui.dialog.visible_characters < line_length:
@@ -183,9 +199,9 @@ func _on_type_timeout(timer : Timer, line_length : int) -> void:
 		if next_char in [".", ",", "!", "?", ";", ":", ")"]:
 			delay += 0.2
 		elif next_char == "." and dui.dialog.text.substr(dui.dialog.visible_characters, 3) == "...":
-			delay += 0.4  # slightly longer pause for ellipses
+			delay += 0.4
 		elif next_char == "-":
-			delay = 0 # cut off interruption effect
+			delay = 0
 		
 		timer.wait_time = delay
 		dui.dialog.visible_characters +=1
@@ -215,7 +231,6 @@ func show_choices(options : Array) -> void:
 		button.pressed.connect(func():
 			on_choice_selected(option["next"])
 			container.visible = false
-			### dialog logic here
 		)
 		container.add_child(button)
 
@@ -233,7 +248,6 @@ func on_choice_selected(next_branch : String):
 		if typeof(parsed) == TYPE_DICTIONARY and parsed.has(next_branch):
 			dialog_lines = parsed[next_branch]
 			dialog_index = -1
-
 	process_current_line()
 	
 ############### name selection logic!
@@ -246,16 +260,13 @@ func run_name_selection():
 	parent_ui.add_child(name_selection)
 	
 func name_chosen(_name : String) -> void:
+	dialog_paused = false
 	dui.show()
+	dialog_index -= 1 ###show current line hopefully
 	process_current_line()
 
 func run_smores_game():
-	character.change_character("EMPTY", "Default", "Default")
-	var smores_game = preload("res://scenes/smores_game.tscn").instantiate()
-	smores_game.game_finished.connect(end_game)
-	var parent_ui = $UI
-	dui.hide()
-	parent_ui.add_child(smores_game)
+	get_tree().change_scene_to_file("res://scenes/smores_game.tscn")
 
 func run_fishing_game():
 	character.change_character("EMPTY", "Default", "Default")
@@ -268,15 +279,33 @@ func run_fishing_game():
 func run_birdwatching_game():
 	character.change_character("EMPTY", "Default", "Default")
 	var bird_game = preload("res://scenes/birdwatching_game.tscn").instantiate()
-	
 	bird_game.end_game.connect(end_game)
 	var parent_ui = $UI
 	dui.hide()
 	parent_ui.add_child(bird_game)
 	
+func end_day():
+	print("Ending day ", Globals.current_day)
+	Globals.current_day += 1
+	Globals.scene_index += 1
+	load_next_day_dialogue()
+
+func load_next_day_dialogue():
+	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)
+	if file:
+		var parsed = JSON.parse_string(file.get_as_text())
+		if typeof(parsed) == TYPE_DICTIONARY:
+			var next_scene = Globals.scene_index
+			if parsed.has(next_scene):
+				dialog_lines = parsed[next_scene]
+				dialog_index = -1
+				process_current_line()
+			else:
+				print("No dialogue found for ", next_scene)
+
 func end_game(score : int):
 	dui.show()
-	relationship_gain("Aubrey",score) ###replace with actual character logic
+	relationship_gain("Aubrey",score)
 	process_current_line()
 	
 ## useless ass button position randomizer
@@ -289,4 +318,3 @@ func randomize_botton_pos() -> void:
 	
 	$UI/Button.position.x = new_x
 	$UI/Button.position.y = new_y
-	

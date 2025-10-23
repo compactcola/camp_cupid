@@ -11,8 +11,6 @@ var fish
 const VIEWPORT_HEIGHT = Globals.SCREEN_HEIGHT
 const VIEWPORT_WIDTH = Globals.SCREEN_WIDTH
 
-signal end_game(score)
-
 func _ready():
 	set_process(false)
 	
@@ -24,9 +22,7 @@ func _process(delta: float) -> void:
 	##### end game!
 	if time_left <= 0:
 		timer_label.text = "Time's up!"
-		print("Time's up!")
-		emit_signal("end_game", score)
-		queue_free()
+		end_game()
 	else:
 		timer_label.text = "Time Left: %d" % ceil(time_left)
 
@@ -45,8 +41,11 @@ func _on_fish_caught():
 	### death animations
 	fish.queue_free()
 
-
 func _on_button_pressed() -> void:
 	spawn_fish_loop()
 	set_process(true)
 	$TutorialMessage.hide()
+
+func end_game():
+	Globals.game_score = score
+	get_tree().change_scene_to_file("res://scenes/main.tscn")

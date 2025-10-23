@@ -30,10 +30,14 @@ func _process(delta: float) -> void:
 	if time_left <= 0:
 		print("Time's up!")
 		Globals.smores_difficulty_index += 1
-		emit_signal("game_finished", score)
-		queue_free()
+		Globals.scene_index += 1
+		get_tree().change_scene_to_file("res://scenes/main.tscn")
 	else:
 		timer_label.text = "Time: %d" % ceil(time_left)
+	
+	## skip logic for my own sanity
+	if Input.is_action_just_pressed("Space"):
+		time_left = 0
 
 func _on_ingredient_collected(ingredient_type: String):
 	if ingredient_type != "fly":

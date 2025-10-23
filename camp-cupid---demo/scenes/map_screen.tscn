@@ -1,0 +1,141 @@
+[gd_scene load_steps=9 format=3 uid="uid://u03wwfxwxgtp"]
+
+[ext_resource type="Script" uid="uid://bamyyooautxg2" path="res://scripts/map_screen.gd" id="1_3lmvi"]
+[ext_resource type="Texture2D" uid="uid://biw3ftsg8kn6l" path="res://assets/backgrounds/camp_map.png" id="1_pbrhm"]
+[ext_resource type="FontFile" uid="uid://y8fd7tecadlt" path="res://assets/fonts/SimpleHandmade.otf" id="3_1bgxv"]
+[ext_resource type="Theme" uid="uid://ds5gr620wj1c" path="res://resources/themes/button.tres" id="3_bphxi"]
+[ext_resource type="Texture2D" uid="uid://dknjjp13bbvh2" path="res://assets/characters/aubrey/aubreyHead_default.png" id="4_bprcc"]
+[ext_resource type="Texture2D" uid="uid://6mmb7m3d2ct1" path="res://assets/characters/ethan/ethanHead_default.png" id="5_6grhc"]
+[ext_resource type="Texture2D" uid="uid://b1vm351ef038y" path="res://assets/characters/harper/harperHead_default.png" id="6_1bgxv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsmns"]
+content_margin_left = 50.0
+content_margin_top = 30.0
+content_margin_right = 50.0
+content_margin_bottom = 30.0
+bg_color = Color(0.87451, 0.443137, 0.537255, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3lmvi")
+
+[node name="background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_pbrhm")
+expand_mode = 3
+
+[node name="BirdGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 508.0
+offset_right = 543.0
+offset_bottom = 779.0
+action_mode = 0
+text = "Bird"
+
+[node name="FishGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1486.0
+offset_top = 531.0
+offset_right = 1827.0
+offset_bottom = 802.0
+action_mode = 0
+text = "Fish"
+
+[node name="CharacterChoice" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="PanelContainer" type="PanelContainer" parent="CharacterChoice"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jsmns")
+
+[node name="Label" type="Label" parent="CharacterChoice/PanelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_1bgxv")
+theme_override_font_sizes/font_size = 100
+text = "Who would you like to invite?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Aubrey" type="Button" parent="CharacterChoice"]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+theme = ExtResource("3_bphxi")
+text = "Aubrey              "
+icon_alignment = 2
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="CharacterChoice/Aubrey"]
+layout_mode = 0
+offset_left = 310.5
+offset_top = -213.0
+offset_right = 1058.5
+offset_bottom = 154.0
+mouse_filter = 2
+texture = ExtResource("4_bprcc")
+expand_mode = 1
+
+[node name="Ethan" type="Button" parent="CharacterChoice"]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+theme = ExtResource("3_bphxi")
+text = "Ethan              "
+icon_alignment = 2
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="CharacterChoice/Ethan"]
+layout_mode = 0
+offset_left = 324.5
+offset_top = -175.0
+offset_right = 1087.5
+offset_bottom = 151.0
+mouse_filter = 2
+texture = ExtResource("5_6grhc")
+expand_mode = 1
+
+[node name="Harper" type="Button" parent="CharacterChoice"]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+theme = ExtResource("3_bphxi")
+text = "Harper               "
+icon_alignment = 2
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="CharacterChoice/Harper"]
+layout_mode = 0
+offset_left = 326.5
+offset_top = -222.0
+offset_right = 1031.5
+offset_bottom = 151.0
+mouse_filter = 2
+texture = ExtResource("6_1bgxv")
+expand_mode = 1
+
+[connection signal="pressed" from="BirdGame" to="." method="_on_bird_game_pressed"]
+[connection signal="pressed" from="FishGame" to="." method="_on_fish_game_pressed"]

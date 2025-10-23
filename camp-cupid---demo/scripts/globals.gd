@@ -7,12 +7,18 @@ var relationships = {
 }
 
 var scenes = [
-	"intro", "night_1",
-	"day_2", "night_2",
-	"day_3", "night_3",
+	"intro", "night1",
+	"day2", "night2",
+	"day3", "night3",
 	"prom"
 ]
 var scene_index : int = 0 # works, but might need adjustment when going back to old scenes (campfire, map, etc)
+var current_day = 1
+
+### minigame scene data
+var current_game : String
+var current_character : String
+var game_score : float
 
 var smores_difficulty_index : int = 0 # use for campfire game difficulty scaling
 var smores_difficulty = {
@@ -27,6 +33,16 @@ var fx_layer : CanvasLayer
 
 const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
+
+## audio stuff!
+var arrow_hit_sounds = [
+	preload("res://audio/arrow_hit-1.wav"),
+	preload("res://audio/arrow_hit-2.wav"),
+	preload("res://audio/arrow_hit-3.wav"),
+	preload("res://audio/arrow_hit-4.wav"),
+	preload("res://audio/arrow_hit-5.wav")
+]
+var sfx_player : AudioStreamPlayer
 
 ### Serial Imput (so help me god)
 var serial : GdSerial
@@ -44,6 +60,10 @@ func _ready():
 		get_tree().root.add_child(reticle_instance)
 		reticle_instance.layer = 100
 		reticle_instance.visible = true
+	
+	## audio
+	sfx_player = AudioStreamPlayer.new()
+	add_child(sfx_player)
 	
 	serial = GdSerial.new()
 	var ports = serial.list_ports()
@@ -66,6 +86,13 @@ var line : String ## serial data line for parsing
 
 #func _on_scene_change():
 	#my_current_scene = get_tree().current_scene
+
+func play_arrow_hit():
+	if arrow_hit_sounds.size() == 0:
+		return
+	var random_sound = arrow_hit_sounds.pick_random()
+	sfx_player.stream = random_sound
+	sfx_player.play()
 
 func _process(delta):
 	if serial and serial.is_open():
@@ -106,6 +133,7 @@ var ClickEffect = preload("res://scenes/arrow_impact.tscn")
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var effect = ClickEffect.instantiate()
+		play_arrow_hit()
 		
 		#make sure correct scene is loaded
 		if fx_layer and is_instance_valid(fx_layer):
