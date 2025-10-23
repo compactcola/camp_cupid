@@ -81,16 +81,22 @@
 		"Aubrey:Oh hey! {player}, right?",
 		"Player:That's what they call me!",
 		"POINTS:Aubrey,16",
+		"FACE:happy",
 		"Aubrey:Haha, well they call me Aubrey. It's a pleasure to meet you!",
+		"FACE:default",
 		"Aubrey:Have you ever been to Camp Cupid before? I used to come here every summer when I was a kid.",
 		"Player:It's my first time actually.",
+		"FACE:happy",
 		"Aubrey:Well welcome! I'm sure you'll love it! It's short but soooo much fun!",
 		"Aubrey:I love the bird watching here!",
 		"Aubrey:And the [shake]prom[/shake] on the last day is always a blast!",
 		"Player:...prom?",
+		"FACE:default",
 		"Aubrey:Oh yeah, I guess Danny didn't mention it did he?",
 		"Aubrey:On the last day we do a big prom night before we head home.",
+		"FACE:happy",
 		"Aubrey:It's soooo much fun!!",
+		"FACE:default",
 		"Aubrey:Maybe we'll go together!",
 		"Player:That would be awes-",
 		"POP_IN:Danny",
@@ -118,9 +124,11 @@
 		"Ethan:And Harper, Aubrey, and I have been coming here since we were kids.",
 		"Ethan:So by process of elimination...",
 		"Player:Yeah yeah, I get it.",
+		"FACE:happy",
 		"Ethan:Hey no hard feelings, it's great to finally have someone else tagging along!",
 		"Ethan:Hopefully you'll get a chance to hit the lake with me sometime.",
 		"Player:Yeah I'll have to get around to that-",
+		"FACE:default",
 		"POP_IN:Danny",
 		"Danny:Alright everyone, tour time! Let's roll!",
 		"POP_OUT:Danny",
@@ -144,7 +152,9 @@
 		"FACE:default",
 		"Harper:No. Sorry. That did sound kinda rude.",
 		"POINTS:Harper,16",
+		"FACE:happy",
 		"Harper:I am, indeed, Harper. Nice to meet you, {player}.",
+		"FACE:default",
 		"Harper:I'm just a little irritable, I'm not usually up this early.",
 		"FACE:angry",
 		"Harper:And I hate being dragged on a tour for the billionth time.",
@@ -253,10 +263,38 @@
 
 	"night1_end" : [
 		"EMPTY:",
-		"BACKGROUND:bunks"
+		"Danny:Night 1 works!",
+		"Danny:...",
+		"BACKGROUND:bunks",
+		"SCENE:end_day"
 	],
 
 	"day2" : [
-		"Danny: WORKS"
+		"BACKGROUND:camp_day",
+		"Danny:Next day (2), works!",
+		"Danny:FUCKIGN FIANLLY",
+		"SCENE:map_screen"
+	],
+	"night2" : [
+		"Danny:Night 2 loaded, lets see if it works",
+		"Danny:Second text to see if it breaks...",
+		"Danny:And a third...",
+		"Aubrey:And a different character...",
+		"SCENE:smores_game",
+		"Danny:We've survived this far...",
+		"SCENE:end_day"
+	],
+	"day3" : [
+		"Danny:YESSSS, day 3, the final day.",
+		"SCENE:map_screen"
+	],
+	"night3" : [
+		"Danny:Night 3 babeyy",
+		"SCENE:end_day",
+		"SCENE:smores_game",
+		"Danny:Glorious..."
+	],
+	"prom" : [
+		"Danny:PROM TIME"
 	]
 }

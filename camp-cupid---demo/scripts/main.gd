@@ -5,6 +5,13 @@ extends Node2D
 
 var dialog_index : int = 0
 var dialog_lines = []
+
+var flavor_lines = {
+	"Aubrey": ["Ow! Watch it!", "Hey! That hurt!", "Careful!"],
+	"Ethan": ["Hey! what the hell?", "Ow! Watch it!", "Jeez, watch it!"],
+	"Harper": ["Yeesh!", "Ow, rude!", "Could you not?"]
+}
+
 var body_expression : String = "Default"
 var head_expression : String = "Default"
 
@@ -12,13 +19,27 @@ var current_charater : String
 var current_bg
 
 var dialog_paused: bool = false
-
 var sfx_player : AudioStreamPlayer
+@onready var type_sound = preload("res://audio/text_blip.wav")
+
+# typewriter
+var typing_speed_max : float = 0.03
+var typing_speed_min : float = 0.025
+var normal_read_delay : float = 0.9
+var flavor_read_delay : float = 3.0
+
+var active_typing_timer: Timer = null
+
+var interrupting_flavor_line : String = ""
+var interrupting_speaker : String = ""
+var is_interrupting_dialog : bool = false
 
 func _ready():
 	$UI/Button.hide()
 	
 	character.character_shot.connect(relationship_gain)
+	character.interrupt_dialog.connect(on_character_interrupt_dialogue)
+	character.resume_dialog.connect(on_character_resume_dialogue)
 	
 	sfx_player = AudioStreamPlayer.new()
 	add_child(sfx_player)
@@ -27,15 +48,14 @@ func _ready():
 	if file:
 		var parsed = JSON.parse_string(file.get_as_text())
 		if typeof(parsed) == TYPE_DICTIONARY:
-			dialog_lines = parsed[Globals.scenes[Globals.scene_index]] ### HERE'S WHERE I ACCESS THE SCENE INDEX!!!!!
+			dialog_lines = parsed[Globals.scenes[Globals.scene_index]]
 		
 	dialog_index = -1
 	character.change_character("Empty", body_expression, head_expression)
 	process_current_line()
 
 
-
-### getting fancy with backgrounds
+### backgrounds
 var backgrounds := {
 	"bunks": preload("res://assets/backgrounds/bunks.jpg"),
 	"camp_day": preload("res://assets/backgrounds/camp3.webp"),
@@ -52,11 +72,8 @@ func change_background(id : String) -> void:
 			sfx_player.play()
 		else:
 			sfx_player.stop()
-			
 	else:
 		return
-
-
 
 @warning_ignore("unused_parameter")
 func _process(delta) -> void:
@@ -70,15 +87,10 @@ func _process(delta) -> void:
 func parse_line(line: String):
 	var line_info = line.split(":")
 	assert(len(line_info) >= 2)
-	return {
-		"speaker": line_info[0],
-		"dialog": line_info[1]
-	}
+	return {"speaker": line_info[0], "dialog": line_info[1]}
 
 func parse_placeholders(text: String) -> String:
-	var result = text
-	result = result.replace("{player}", Globals.player_name)
-	return result
+	return text.replace("{player}", Globals.player_name)
 
 func process_current_line():
 	if dialog_index < len(dialog_lines) - 1:
@@ -99,17 +111,15 @@ func advance_to_next_line():
 		var speaker : String  = line_info["speaker"]
 		var text : String = parse_placeholders(line_info["dialog"])
 		
-		# handle non-dialogue (command) lines
 		if speaker in ["FACE", "BODY", "POINTS", "POP_IN", "POP_OUT", "BACKGROUND", "SCENE", "EMPTY"]:
 			await process_special_line(speaker, text)
 			dialog_index += 1
 			continue
 
-		# otherwise display dialogue
 		process_line(speaker, text)
 		return
 
-# handles commands like FACE, BODY, SCENE, etc.
+# commands
 func process_special_line(speaker: String, text: String) -> void:
 	match speaker:
 		"FACE":
@@ -128,17 +138,17 @@ func process_special_line(speaker: String, text: String) -> void:
 		"BACKGROUND":
 			change_background(text)
 		"SCENE":
-			if (text == "name_select"):
+			if text == "name_select":
 				dialog_paused = true
 				run_name_selection()
 				return
-			elif (text == "smores_game"):
+			elif text == "smores_game":
 				run_smores_game()
 				return
-			elif (text == "end_day"):
+			elif text == "end_day":
 				end_day()
 				return
-			elif (text == "main_screen"):
+			elif text == "map_screen":
 				get_tree().change_scene_to_file("res://scenes/map_screen.tscn")
 				return
 			else:
@@ -150,78 +160,81 @@ func process_special_line(speaker: String, text: String) -> void:
 		_:
 			pass
 
-# handles actual dialogue display
+# dialogue
 func process_line(speaker: String, text: String) -> void:
-	if (speaker == "Player"):
+	if speaker == "Player":
 		speaker = Globals.player_name
 	else:
 		character.hop()
 		Globals.current_character = speaker
 		
-	if (speaker == "Danny"):
-		dui.speaker.text = "Counselor Dan"
-	else:
-		dui.speaker.text = speaker
-	
+	dui.speaker.text = "Counselor Dan" if speaker == "Danny" else speaker
 	dui.dialog.text = text
 	dui.dialog.visible_characters = 0
+
+	# regular typewriter call with optional completion callback
 	type_text(text.length())
 	character.change_character(speaker, body_expression, head_expression)
 
-##### typewriter and auto-text effect
-var typing_speed_max : float = 0.03
-var typing_speed_min : float = 0.025
-var read_delay : float = 0.9
-var active_typing_timer: Timer = null
-
-func type_text(line_length : int) -> void:
+####  typewriter effect stuff!
+func type_text(line_length: int, custom_read_delay: float = -1) -> void:
 	if active_typing_timer and is_instance_valid(active_typing_timer):
 		active_typing_timer.stop()
 		active_typing_timer.queue_free()
-		
+
 	var timer = Timer.new()
 	timer.wait_time = 0.05
 	timer.one_shot = false
 	add_child(timer)
 	timer.start()
-	
+
 	active_typing_timer = timer
-	timer.timeout.connect(Callable(self, "_on_type_timeout").bind(timer, line_length))
-	
-func _on_type_timeout(timer : Timer, line_length : int) -> void:
+	timer.timeout.connect(Callable(self, "_on_type_timeout").bind(timer, line_length, custom_read_delay))
+
+func _on_type_timeout(timer: Timer, line_length: int, custom_read_delay: float) -> void:
 	if not is_instance_valid(timer) or dui.dialog == null:
 		return
-		
+
 	if dui.dialog.visible_characters < line_length:
 		var next_char = dui.dialog.text[dui.dialog.visible_characters]
-		var delay =  randf_range(typing_speed_max, typing_speed_min)
 		
+		var delay = randf_range(typing_speed_min, typing_speed_max)
 		if next_char in [".", ",", "!", "?", ";", ":", ")"]:
 			delay += 0.2
 		elif next_char == "." and dui.dialog.text.substr(dui.dialog.visible_characters, 3) == "...":
 			delay += 0.4
 		elif next_char == "-":
 			delay = 0
-		
 		timer.wait_time = delay
-		dui.dialog.visible_characters +=1
+		
+		### very bad text sound effect (it's delayed sometimes?)
+		if next_char != " " and next_char != "\n": 
+			sfx_player.pitch_scale = randf_range(0.7, 0.85)
+			sfx_player.stream = type_sound
+			sfx_player.play()
+			
+		dui.dialog.visible_characters += 1
 	else:
 		timer.stop()
 		timer.queue_free()
-		await _continue_after_delay()
+		await _continue_after_delay(custom_read_delay)
 
-func _continue_after_delay() -> void:
-	await get_tree().create_timer(read_delay).timeout
+func _continue_after_delay(custom_read_delay: float = -1) -> void:
+	var delay = custom_read_delay if custom_read_delay > 0 else normal_read_delay
+	await get_tree().create_timer(delay).timeout
+
+	if custom_read_delay > 0 and is_interrupting_dialog:
+		is_interrupting_dialog = false
+		dialog_paused = false
+
 	process_current_line()
-	
-##### choices!
+
+##### choices
 func show_choices(options : Array) -> void:
 	var container = $UI/DialogueUI/ChoiceContainer
 	container.visible = true
-	
 	for child in container.get_children():
 		child.queue_free()
-	
 	for option in options:
 		var button := Button.new()
 		button.text = option["text"]
@@ -234,13 +247,6 @@ func show_choices(options : Array) -> void:
 		)
 		container.add_child(button)
 
-###### relationship functions!
-func relationship_gain(character : String, points : float):
-	var old_value = Globals.relationships[character]
-	var delta = points - old_value
-	Globals.add_relationship(character, points)
-	$UI/RelationshipUI.show_relationship_change(old_value, points, delta)
-
 func on_choice_selected(next_branch : String):
 	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)
 	if file:
@@ -249,7 +255,41 @@ func on_choice_selected(next_branch : String):
 			dialog_lines = parsed[next_branch]
 			dialog_index = -1
 	process_current_line()
-	
+
+###### relationship functions
+func relationship_gain(character : String, points : float):
+	var old_value = Globals.relationships[character]
+	var new_value = clamp(points, 0, 100)  # ensure points is within 0–100
+	var delta = new_value - old_value
+	Globals.add_relationship(character, new_value)
+	$UI/RelationshipUI.show_relationship_change(old_value, new_value, delta)
+
+# handling interruptions (NOT FLEXIBLE RIGHT NOW)
+func on_character_interrupt_dialogue(char_name: String) -> void:
+	if flavor_lines.has(char_name) and not is_interrupting_dialog:
+		is_interrupting_dialog = true
+		dialog_paused = true
+
+		# Stop current typing
+		if active_typing_timer and is_instance_valid(active_typing_timer):
+			active_typing_timer.stop()
+			active_typing_timer.queue_free()
+			active_typing_timer = null
+
+		interrupting_speaker = char_name
+		interrupting_flavor_line = flavor_lines[char_name].pick_random()
+
+		dui.speaker.text = interrupting_speaker
+		dui.dialog.text = interrupting_flavor_line
+		dui.dialog.visible_characters = 0
+
+		# Use typewriter for flavor line with long read delay
+		type_text(interrupting_flavor_line.length(), flavor_read_delay)
+
+func on_character_resume_dialogue(char_name: String):
+	dialog_paused = false
+	is_interrupting_dialog = false
+
 ############### name selection logic!
 func run_name_selection():
 	character.change_character("EMPTY", "Default", "Default")
@@ -262,7 +302,7 @@ func run_name_selection():
 func name_chosen(_name : String) -> void:
 	dialog_paused = false
 	dui.show()
-	dialog_index -= 1 ###show current line hopefully
+	dialog_index -= 1
 	process_current_line()
 
 func run_smores_game():
@@ -285,9 +325,12 @@ func run_birdwatching_game():
 	parent_ui.add_child(bird_game)
 	
 func end_day():
-	print("Ending day ", Globals.current_day)
-	Globals.current_day += 1
 	Globals.scene_index += 1
+	if Globals.scene_index >= Globals.scenes.size():
+		print("No more scenes left!")
+		return
+
+	Globals.current_day = Globals.scenes[Globals.scene_index]
 	load_next_day_dialogue()
 
 func load_next_day_dialogue():
@@ -295,20 +338,20 @@ func load_next_day_dialogue():
 	if file:
 		var parsed = JSON.parse_string(file.get_as_text())
 		if typeof(parsed) == TYPE_DICTIONARY:
-			var next_scene = Globals.scene_index
+			var next_scene = Globals.current_day
 			if parsed.has(next_scene):
 				dialog_lines = parsed[next_scene]
 				dialog_index = -1
 				process_current_line()
 			else:
-				print("No dialogue found for ", next_scene)
+				print("No dialogue found for scene: ", next_scene)
 
 func end_game(score : int):
 	dui.show()
 	relationship_gain("Aubrey",score)
 	process_current_line()
 	
-## useless ass button position randomizer
+## useless ass button positsion randomizer
 func randomize_botton_pos() -> void:
 	var viewport_size = get_viewport_rect().size
 	var button_size = $UI/Button.size

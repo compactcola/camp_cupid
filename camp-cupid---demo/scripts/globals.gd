@@ -6,6 +6,20 @@ var relationships = {
 	"Ethan": 0.0
 }
 
+var is_alive = {
+	"Aubrey": true,
+	"Ethan": true,
+	"Harper": true,
+	"Danny": true
+}
+
+var times_shot = {
+	"Aubrey": 0,
+	"Ethan": 0,
+	"Harper": 0,
+	"Danny": 0
+}
+
 var scenes = [
 	"intro", "night1",
 	"day2", "night2",
@@ -13,7 +27,7 @@ var scenes = [
 	"prom"
 ]
 var scene_index : int = 0 # works, but might need adjustment when going back to old scenes (campfire, map, etc)
-var current_day = 1
+var current_day
 
 ### minigame scene data
 var current_game : String
@@ -148,5 +162,6 @@ func _input(event: InputEvent) -> void:
 func add_relationship(character_name : String, amount : float):
 	if character_name in relationships:
 		relationships[character_name] += amount
+		relationships[character_name] = clamp(relationships[character_name], 0,100)
 		print(character_name, " gained ", amount)
 		print(character_name, " current: ", relationships[character_name])

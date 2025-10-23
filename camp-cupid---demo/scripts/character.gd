@@ -5,6 +5,21 @@ extends Node2D
 
 signal character_shot(name : String, points_loss : float)
 
+var is_talking := false
+var times_shot = {
+	"Aubrey":0,
+	"Ethan":0,
+	"Harper":0
+}
+var is_alive = {
+	"Aubrey": true,
+	"Ethan": true,
+	"Harper": true
+}
+
+signal interrupt_dialog(name : String)
+signal resume_dialog(name : String)
+
 const approved_names = [
 	"Aubrey",
 	"Ethan",
@@ -140,6 +155,9 @@ var hop_duration : float
 var hop_distance : float
 
 func hop():
+	if !is_instance_valid(self) or get_tree() == null or !is_inside_tree():
+		return
+			
 	self.position = Vector2(0,-35)
 	var tween = get_tree().create_tween()
 	var start_y = position.y
@@ -173,8 +191,43 @@ func pop_out():
 	
 	await tween.finished
 
+func show_hit_reaction():
+	if "hit" in body_sprite.sprite_frames.get_animation_names():
+		body_sprite.play("hit")
+	else:
+		var flash = create_tween()
+		flash.tween_property(self, "modulate", Color(1,0.4,0.4), 0.1)
+		flash.tween_property(self, "modulate", Color(1,1,1), 0.3)
+		head_sprite.play("angry")
+	
+func show_death_animation():
+	var fade = create_tween()
+	fade.tween_property(self, "modulate:a", 0.0, 0.8)
+	await fade.finished
+
 ### hitbox functionality - doesn't do anything rn
 #### use for future relationship harm, hurt sprite, death, etc
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	# ignore Danny or EMPTY clicks
+	if current_char == "Danny" or current_char == "EMPTY":
+		return
+
+	# safe checks against Globals dicts
+	if not Globals.is_alive.get(current_char, true):
+		return  # already dead
+
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		emit_signal("character_shot", current_char, -50)
+		# increment shots safely
+		Globals.times_shot[current_char] = Globals.times_shot.get(current_char, 0) + 1
+		emit_signal("interrupt_dialog", current_char)
+
+		if Globals.times_shot.get(current_char, 0) == 1:
+			# first hit: lose relationship, show reaction, resume after delay
+			emit_signal("character_shot", current_char, -50)
+			show_hit_reaction()
+
+		elif Globals.times_shot.get(current_char, 0) >= 2:
+			# second hit: die
+			Globals.is_alive[current_char] = false
+			show_death_animation()
+			emit_signal("character_shot", current_char, -100)
