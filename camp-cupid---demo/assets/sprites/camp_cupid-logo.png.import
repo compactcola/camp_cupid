@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd2r6q0x6w4xn"
-path="res://.godot/imported/menu-bg.png-51a0ab78ef840252e49ddd6da228b3fb.ctex"
+uid="uid://kaa1a1wd1daw"
+path="res://.godot/imported/camp_cupid-logo.png-0777bd3124b8a3918c189291c8a4d7ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/menu-bg.png"
-dest_files=["res://.godot/imported/menu-bg.png-51a0ab78ef840252e49ddd6da228b3fb.ctex"]
+source_file="res://assets/sprites/camp_cupid-logo.png"
+dest_files=["res://.godot/imported/camp_cupid-logo.png-0777bd3124b8a3918c189291c8a4d7ce.ctex"]
 
 [params]
 

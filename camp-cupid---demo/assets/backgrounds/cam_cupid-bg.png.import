@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://r6064sflxqa3"
-path="res://.godot/imported/arrow_impact_old.png-a515f09d039d879cc1ae339d0c27cdd9.ctex"
+uid="uid://b7ytbvaeoqoka"
+path="res://.godot/imported/cam_cupid-bg.png-3fd8777dc032bf535f3728d03129d439.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/arrow_impact_old.png"
-dest_files=["res://.godot/imported/arrow_impact_old.png-a515f09d039d879cc1ae339d0c27cdd9.ctex"]
+source_file="res://assets/backgrounds/cam_cupid-bg.png"
+dest_files=["res://.godot/imported/cam_cupid-bg.png-3fd8777dc032bf535f3728d03129d439.ctex"]
 
 [params]
 

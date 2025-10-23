@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkybrh0xwu0vt"]
+[gd_scene load_steps=5 format=3 uid="uid://bkybrh0xwu0vt"]
 
 [ext_resource type="Script" uid="uid://8kvmup0boetu" path="res://scripts/main_menu.gd" id="1_bqqt6"]
-[ext_resource type="Texture2D" uid="uid://bd2r6q0x6w4xn" path="res://assets/menu-bg.png" id="1_l6cm7"]
 [ext_resource type="Theme" uid="uid://ds5gr620wj1c" path="res://resources/themes/button.tres" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://b7ytbvaeoqoka" path="res://assets/backgrounds/cam_cupid-bg.png" id="2_wu84c"]
+[ext_resource type="Texture2D" uid="uid://kaa1a1wd1daw" path="res://assets/sprites/camp_cupid-logo.png" id="4_8ln24"]
 
 [node name="menu" type="Control"]
 layout_mode = 3
@@ -17,7 +18,7 @@ script = ExtResource("1_bqqt6")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_l6cm7")
+texture = ExtResource("2_wu84c")
 
 [node name="Start" type="Button" parent="."]
 layout_mode = 0
@@ -40,5 +41,10 @@ theme = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 50
 action_mode = 0
 text = "Quit"
+
+[node name="CampCupid-logo" type="Sprite2D" parent="."]
+position = Vector2(873, 324)
+scale = Vector2(1.15431, 1.15431)
+texture = ExtResource("4_8ln24")
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]

@@ -31,6 +31,7 @@ func _process(delta: float) -> void:
 		print("Time's up!")
 		Globals.smores_difficulty_index += 1
 		Globals.scene_index += 1
+		### add minigame flag here maybe
 		get_tree().change_scene_to_file("res://scenes/main.tscn")
 	else:
 		timer_label.text = "Time: %d" % ceil(time_left)

@@ -6,9 +6,9 @@ var game_choice : String
 var character_choice : String
 
 var options = [
-	{"Text": "Aubrey              ", "Value": "aubrey"},
-	{"Text": "Ethan              ", "Value": "ethan"},
-	{"Text": "Harper               ", "Value": "harper"}
+	{"Text": "Aubrey              ", "Value": "Aubrey"},
+	{"Text": "Ethan              ", "Value": "Ethan"},
+	{"Text": "Harper               ", "Value": "Harper"}
 ]
 
 func _ready():

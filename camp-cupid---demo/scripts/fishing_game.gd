@@ -48,4 +48,5 @@ func _on_button_pressed() -> void:
 
 func end_game():
 	Globals.game_score = score
+	Globals.minigame_flag = true
 	get_tree().change_scene_to_file("res://scenes/main.tscn")

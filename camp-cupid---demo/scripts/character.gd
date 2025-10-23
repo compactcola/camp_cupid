@@ -201,6 +201,9 @@ func show_hit_reaction():
 		head_sprite.play("angry")
 	
 func show_death_animation():
+	body_sprite.sprite_frames = CHARACTER_FRAMES["EMPTY"]
+	head_sprite.play("death")
+	get_tree().create_timer(2.0).timeout
 	var fade = create_tween()
 	fade.tween_property(self, "modulate:a", 0.0, 0.8)
 	await fade.finished
@@ -221,12 +224,12 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		Globals.times_shot[current_char] = Globals.times_shot.get(current_char, 0) + 1
 		emit_signal("interrupt_dialog", current_char)
 
-		if Globals.times_shot.get(current_char, 0) == 1:
+		if Globals.times_shot.get(current_char, 0) <= 2:
 			# first hit: lose relationship, show reaction, resume after delay
-			emit_signal("character_shot", current_char, -50)
+			emit_signal("character_shot", current_char, (-20*Globals.times_shot[current_char]))
 			show_hit_reaction()
 
-		elif Globals.times_shot.get(current_char, 0) >= 2:
+		elif Globals.times_shot.get(current_char, 0) >= 3:
 			# second hit: die
 			Globals.is_alive[current_char] = false
 			show_death_animation()

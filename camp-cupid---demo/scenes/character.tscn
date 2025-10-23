@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://drd1ph4insfpu"]
 
 [ext_resource type="Script" uid="uid://d0g0voj10ed0l" path="res://scripts/character.gd" id="1_rkhd4"]
-[ext_resource type="SpriteFrames" uid="uid://lujx2edhfdt2" path="res://resources/ethan.tres" id="2_lrhn5"]
-[ext_resource type="SpriteFrames" uid="uid://cqb8sj44nyekv" path="res://resources/harper_head.tres" id="3_lrhn5"]
+[ext_resource type="SpriteFrames" uid="uid://cggd6372k5v12" path="res://resources/empty.tres" id="2_lrhn5"]
+[ext_resource type="SpriteFrames" uid="uid://dsh3jayb4thlc" path="res://resources/ethan_head.tres" id="3_lrhn5"]
 
 [node name="Character" type="Node2D"]
 z_index = 1
@@ -16,7 +16,7 @@ sprite_frames = ExtResource("2_lrhn5")
 position = Vector2(0, -468)
 scale = Vector2(0.2, 0.2)
 sprite_frames = ExtResource("3_lrhn5")
-animation = &"happy"
+animation = &"death"
 
 [node name="Area2D" type="Area2D" parent="."]
 z_index = 5

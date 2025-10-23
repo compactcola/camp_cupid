@@ -31,8 +31,9 @@ var current_day
 
 ### minigame scene data
 var current_game : String
-var current_character : String
+var current_character : String = "Danny"
 var game_score : float
+var minigame_flag := false
 
 var smores_difficulty_index : int = 0 # use for campfire game difficulty scaling
 var smores_difficulty = {

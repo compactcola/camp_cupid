@@ -1,7 +1,8 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://dsh3jayb4thlc"]
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://dsh3jayb4thlc"]
 
 [ext_resource type="Texture2D" uid="uid://cobxukjn7km0v" path="res://assets/characters/ethan/ethanHead_angry.png" id="1_xcxnn"]
 [ext_resource type="Texture2D" uid="uid://6mmb7m3d2ct1" path="res://assets/characters/ethan/ethanHead_default.png" id="2_lrqb5"]
+[ext_resource type="Texture2D" uid="uid://cleppswgrmjmh" path="res://assets/characters/ethan/ethanChibi_shot.png" id="2_rjdws"]
 [ext_resource type="Texture2D" uid="uid://cc5li10u24jgg" path="res://assets/characters/ethan/ethanHead_happy.png" id="3_lrqb5"]
 
 [resource]
@@ -12,6 +13,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rjdws")
+}],
+"loop": true,
+"name": &"death",
 "speed": 5.0
 }, {
 "frames": [{

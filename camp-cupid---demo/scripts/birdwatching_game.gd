@@ -170,4 +170,5 @@ func end_game(end_type : int):
 		final_score = -60 + (birds_left*10)
 	
 	Globals.game_score = final_score
+	Globals.minigame_flag = true
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
