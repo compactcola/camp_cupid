@@ -11,6 +11,9 @@ signal game_finished(score: int)
 @onready var ui_chocolate = $Chocolate
 @onready var ui_cracker_1 = $Cracker
 @onready var ui_cracker_2 = $Cracker2
+@onready var smore_template: Sprite2D = $SmoreDisplay/Smore
+
+var smore_count := 0
 
 var time_left := 60.0
 @onready var timer_label := $TimerLabel
@@ -21,6 +24,7 @@ func _ready():
 	ui_chocolate.hide()
 	ui_cracker_1.hide()
 	ui_cracker_2.hide()
+	smore_template.visible = false
 	
 	set_process(false)
 	
@@ -28,11 +32,9 @@ func _process(delta: float) -> void:
 	time_left -= delta
 	##### end game!
 	if time_left <= 0:
-		print("Time's up!")
-		Globals.smores_difficulty_index += 1
-		Globals.scene_index += 1
-		### add minigame flag here maybe
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		set_process(false)
+		end_game()
+		return
 	else:
 		timer_label.text = "Time: %d" % ceil(time_left)
 	
@@ -85,7 +87,7 @@ func check_for_smore():
 	ui_cracker_1.hide()
 	ui_cracker_2.hide()
 	
-	$ScoreLabel.text = "Smores: %d" % score
+	add_smore()
 	
 func show_fly_message():
 	var msg = $FlyMessage
@@ -122,3 +124,22 @@ func _on_button_pressed() -> void:
 	set_process(true)
 	add_child(load("res://scenes/spawner.tscn").instantiate())
 	$TutorialMessage.hide()
+	
+func add_smore():
+	smore_count += 1
+	var smore = smore_template.duplicate() as Sprite2D
+	smore.visible = true
+
+	# include scale in spacing
+	var texture_width = smore.texture.get_size().x * smore.scale.x
+	var gap = 10
+	var spacing = texture_width + gap
+
+	smore.position = Vector2(spacing * (smore_count - 1), 0)
+	$SmoreDisplay.add_child(smore)
+	
+func end_game():
+		print("Time's up!")
+		Globals.smores_difficulty_index += 1
+		Globals.scene_index += 1
+		await TransitionManager.transition_to_scene("res://scenes/main.tscn")

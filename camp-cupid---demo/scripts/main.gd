@@ -9,7 +9,8 @@ var dialog_lines = []
 var flavor_lines = {
 	"Aubrey": ["Ow! Watch it!", "Hey! That hurt!", "Careful!"],
 	"Ethan": ["Hey! what the hell?", "Ow! Watch it!", "Jeez, watch it!"],
-	"Harper": ["Yeesh!", "Ow, rude!", "Could you not?"]
+	"Harper": ["Yeesh!", "Ow, rude!", "Could you not?"],
+	"Danny": ["Good luck- I'm immortal!", "Your pathetic arrows do nothing!", "Barely even a scratch!", "Nice try."]
 }
 
 var body_expression : String = "Default"
@@ -35,12 +36,13 @@ var sfx_levels = {
 	"Aubrey":1.2,
 	"Ethan":0.8,
 	"Harper":1.1,
-	"Danny":0.6
+	"Danny":0.7
 }
 
 var interrupting_flavor_line : String = ""
 var interrupting_speaker : String = ""
 var is_interrupting_dialog : bool = false
+var reveal_timer: Timer = null
 
 func _ready():
 	$UI/Button.hide()
@@ -52,30 +54,45 @@ func _ready():
 	
 	character.character_shot.connect(relationship_gain)
 	character.interrupt_dialog.connect(on_character_interrupt_dialogue)
-	character.resume_dialog.connect(on_character_resume_dialogue)
+	#character.resume_dialog.connect(on_character_resume_dialogue)
 	
 	sfx_player = AudioStreamPlayer.new()
 	bg_sfx_player = AudioStreamPlayer.new()
 	add_child(sfx_player)
 	add_child(bg_sfx_player)
 	sfx_player.volume_db = -15
+	bg_sfx_player.volume_db = 20
 	
 	var file = FileAccess.open("res://dialogue/dialogue.json", FileAccess.READ)
 	if file:
 		var parsed = JSON.parse_string(file.get_as_text())
 		if typeof(parsed) == TYPE_DICTIONARY:
-			dialog_lines = parsed[Globals.scenes[Globals.scene_index]]
-		
+			if Globals.scene_index >= Globals.scenes.size():
+				Globals.scene_index = Globals.scenes.size() - 1
+			if parsed.has(Globals.scenes[Globals.scene_index]):
+				dialog_lines = parsed[Globals.scenes[Globals.scene_index]]
+			else:
+				dialog_lines = []
+	else:
+		dialog_lines = []
+
+	# reset safely
 	dialog_index = -1
+	dialog_paused = false
+	is_interrupting_dialog = false
 	character.change_character("Empty", body_expression, head_expression)
-	process_current_line()
+
+	if not dialog_lines.is_empty():
+		process_current_line()
+	else:
+		print("No dialogue found for scene index ", Globals.scene_index)
 
 
 ### backgrounds
 var backgrounds := {
-	"bunks": preload("res://assets/backgrounds/bunks.jpg"),
-	"camp_day": preload("res://assets/backgrounds/camp3.webp"),
-	"camp_evening": preload("res://assets/backgrounds/camp2.jpg")
+	"bunks": preload("res://assets/backgrounds/bunks.png"),
+	"camp_day": preload("res://assets/backgrounds/camp_outside.png"),
+	"camp_evening": preload("res://assets/backgrounds/camp_outside-night.png")
 }	
 func change_background(id : String) -> void:
 	if id in backgrounds:
@@ -93,12 +110,48 @@ func change_background(id : String) -> void:
 
 @warning_ignore("unused_parameter")
 func _process(delta) -> void:
-	if Input.is_action_just_pressed("Space"):
-		if active_typing_timer and is_instance_valid(active_typing_timer):
-			active_typing_timer.stop()
-			active_typing_timer.queue_free()
-			active_typing_timer = null
-		process_current_line() 
+	if Input.is_action_just_pressed("Space") and not dialog_paused:
+		_skip_dialog()
+
+
+func _skip_dialog() -> void:
+	if not dui.dialog or not dui.dialog.text:
+		return
+
+	if active_typing_timer and is_instance_valid(active_typing_timer):
+		# stop the typewriter
+		active_typing_timer.stop()
+		active_typing_timer.queue_free()
+		active_typing_timer = null
+
+		# reveal the full text
+		dui.dialog.visible_characters = dui.dialog.text.length()
+
+		# cancel any previously scheduled reveal timer
+		if reveal_timer and is_instance_valid(reveal_timer):
+			reveal_timer.stop()
+			reveal_timer.queue_free()
+			reveal_timer = null
+
+		reveal_timer = Timer.new()
+		reveal_timer.one_shot = true
+		reveal_timer.wait_time = normal_read_delay
+		add_child(reveal_timer)
+		reveal_timer.start()
+		reveal_timer.timeout.connect(Callable(self, "_on_reveal_timeout"))
+
+	else:
+		if reveal_timer and is_instance_valid(reveal_timer):
+			reveal_timer.stop()
+			reveal_timer.queue_free()
+			reveal_timer = null
+		process_current_line()
+
+func _on_reveal_timeout() -> void:
+	if reveal_timer and is_instance_valid(reveal_timer):
+		reveal_timer.queue_free()
+		reveal_timer = null
+	process_current_line()
 
 func parse_line(line: String):
 	var line_info = line.split(":")
@@ -109,9 +162,28 @@ func parse_placeholders(text: String) -> String:
 	return text.replace("{player}", Globals.player_name)
 
 func process_current_line():
-	if dialog_index < len(dialog_lines) - 1:
-		dialog_index += 1
-		advance_to_next_line()
+	if not Globals.is_dialogue_active:
+		return
+		
+	if dialog_lines.is_empty():
+		print("Warning: No dialog lines loaded.")
+		return
+
+	# Ensure index never exceeds bounds
+	if dialog_index >= dialog_lines.size() - 1:
+		print("End of dialogue reached safely.")
+		dialog_index = dialog_lines.size() - 1
+		return
+
+	# Increment safely
+	dialog_index += 1
+
+	# Guard against async overlap
+	if dialog_index < 0 or dialog_index >= dialog_lines.size():
+		print("Index out of range — aborting advance")
+		return
+
+	advance_to_next_line()
 
 func advance_to_next_line():
 	while dialog_index < len(dialog_lines):
@@ -131,6 +203,8 @@ func advance_to_next_line():
 			await process_special_line(speaker, text)
 			dialog_index += 1
 			continue
+		if Globals.is_alive.get(speaker, true) == false: ### speaker is dead
+			text = "..."
 
 		current_charater = speaker
 		process_line(speaker, text)
@@ -146,6 +220,8 @@ func process_special_line(speaker: String, text: String) -> void:
 		"POINTS":
 			var info = text.split(",")
 			if len(info) >= 2:
+				if Globals.is_alive.get(info[0], true) == false: ### speaker is dead
+					return
 				relationship_gain(info[0], float(info[1]))
 		"POP_IN":
 			character.change_character(text, body_expression, head_expression)
@@ -166,7 +242,8 @@ func process_special_line(speaker: String, text: String) -> void:
 				end_day()
 				return
 			elif text == "map_screen":
-				get_tree().change_scene_to_file("res://scenes/map_screen.tscn")
+				await TransitionManager.transition_to_scene("res://scenes/map_screen.tscn")
+				#get_tree().change_scene_to_file("res://scenes/map_screen.tscn")
 				return
 			else:
 				get_tree().change_scene_to_file("res://scenes/%s.tscn" % text)
@@ -196,6 +273,11 @@ func process_line(speaker: String, text: String) -> void:
 ####  typewriter effect stuff!
 var pitch = 1.0
 func type_text(line_length: int, custom_read_delay: float = -1) -> void:
+	if reveal_timer and is_instance_valid(reveal_timer):
+		reveal_timer.stop()
+		reveal_timer.queue_free()
+		reveal_timer = null
+
 	if active_typing_timer and is_instance_valid(active_typing_timer):
 		active_typing_timer.stop()
 		active_typing_timer.queue_free()
@@ -206,7 +288,6 @@ func type_text(line_length: int, custom_read_delay: float = -1) -> void:
 	add_child(timer)
 	timer.start()
 	
-	print("yay %s" %current_charater)
 	pitch = 1.0
 	if current_charater in sfx_levels:
 		pitch = sfx_levels[current_charater]
@@ -246,11 +327,36 @@ func _continue_after_delay(custom_read_delay: float = -1) -> void:
 	var delay = custom_read_delay if custom_read_delay > 0 else normal_read_delay
 	await get_tree().create_timer(delay).timeout
 
+	# If a reveal timer exists for some reason, clear it to avoid duplicate calls
+	if reveal_timer and is_instance_valid(reveal_timer):
+		reveal_timer.stop()
+		reveal_timer.queue_free()
+		reveal_timer = null
+
 	if custom_read_delay > 0 and is_interrupting_dialog:
 		is_interrupting_dialog = false
 		dialog_paused = false
 
-	process_current_line()
+		var bridge_line = "Anyways..."
+		if Globals.is_alive.get(current_charater, true) == false: ### speaker is dead
+			bridge_line = "..."
+			
+		dui.speaker.text = interrupting_speaker
+		dui.dialog.text = bridge_line
+		dui.dialog.visible_characters = 0
+
+		# Type this short line with normal speed and delay
+		type_text(bridge_line.length(), normal_read_delay)
+		return  # prevent jumping ahead too early
+
+	if custom_read_delay > 0 and is_interrupting_dialog:
+		is_interrupting_dialog = false
+		dialog_paused = false
+
+	if dialog_index < dialog_lines.size() - 1:
+		process_current_line()
+	else:
+		print("End of dialogue reached — halting further progression.")
 
 ##### choices
 func show_choices(options : Array) -> void:
@@ -280,12 +386,13 @@ func on_choice_selected(next_branch : String):
 	process_current_line()
 
 ###### relationship functions
-func relationship_gain(character : String, points : float):
-	var old_value = Globals.relationships[character]
+func relationship_gain(_character : String, points : float):
+	if _character == "Danny" or _character == "EMPTY":
+		return
+	var old_value = Globals.relationships[_character]
 	var new_value = clamp(points, 0, 100)  # ensure points is within 0–100
-	var delta = new_value - old_value
-	Globals.add_relationship(character, new_value)
-	$UI/RelationshipUI.show_relationship_change(old_value, new_value, delta)
+	Globals.add_relationship(_character, new_value)
+	$UI/RelationshipUI.show_relationship_change(old_value, new_value)
 
 # handling interruptions (NOT FLEXIBLE RIGHT NOW)
 func on_character_interrupt_dialogue(char_name: String) -> void:
@@ -309,12 +416,13 @@ func on_character_interrupt_dialogue(char_name: String) -> void:
 		# Use typewriter for flavor line with long read delay
 		type_text(interrupting_flavor_line.length(), flavor_read_delay)
 
-func on_character_resume_dialogue(char_name: String):
+func on_character_resume_dialogue():
 	dialog_paused = false
 	is_interrupting_dialog = false
 
 ############### name selection logic!
 func run_name_selection():
+	dialog_paused = true
 	character.change_character("EMPTY", "Default", "Default")
 	var name_selection = preload("res://scenes/name_selection.tscn").instantiate()
 	name_selection.name_chosen.connect(name_chosen)
@@ -329,11 +437,15 @@ func name_chosen(_name : String) -> void:
 	process_current_line()
 
 func run_smores_game():
-	get_tree().change_scene_to_file("res://scenes/smores_game.tscn")
+	dialog_paused = true
+	await TransitionManager.transition_to_scene("res://scenes/smores_game.tscn")
+	#get_tree().change_scene_to_file("res://scenes/smores_game.tscn")
 
-func end_game(score : int):
+func end_game():
 	dui.show()
+	dialog_paused = false
 	relationship_gain(Globals.current_character, Globals.game_score)
+	dialog_index = -1
 	process_current_line()
 	
 #func run_fishing_game():

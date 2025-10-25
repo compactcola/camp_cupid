@@ -34,12 +34,15 @@ var current_game : String
 var current_character : String = "Danny"
 var game_score : float
 var minigame_flag := false
+var is_dialogue_active = false
+var resume_from_minigame = false
 
 var smores_difficulty_index : int = 0 # use for campfire game difficulty scaling
 var smores_difficulty = {
 	0: 1.0,
 	1: 1.15,
 	2: 1.4,
+	3: 2
 }
 var smores_score = 0
 
@@ -109,14 +112,14 @@ func play_arrow_hit():
 	sfx_player.stream = random_sound
 	sfx_player.play()
 
-func _process(delta):
+func _process(_delta):
 	if serial and serial.is_open():
 		line = serial.readline()
 		if line != "":
 			_parse_line(line)
 
-func _parse_line(line : String):
-	var parts = line.strip_edges().split(",")
+func _parse_line(_line : String):
+	var parts = _line.strip_edges().split(",")
 	var click = false # can change to an int or add int later for fire strength
 	
 	pos.x = 2*int(parts[0])

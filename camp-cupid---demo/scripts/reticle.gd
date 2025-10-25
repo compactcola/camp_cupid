@@ -9,4 +9,5 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS  # Keeps running even when scene paused
 
 func _physics_process(delta: float) -> void:
-	sprite.position = Globals.pos
+	var target = Globals.pos
+	sprite.position = sprite.position.lerp(target, delta * 10.0)

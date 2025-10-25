@@ -1,29 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://drd1ph4insfpu"]
+[gd_scene load_steps=5 format=3 uid="uid://drd1ph4insfpu"]
 
 [ext_resource type="Script" uid="uid://d0g0voj10ed0l" path="res://scripts/character.gd" id="1_rkhd4"]
-[ext_resource type="SpriteFrames" uid="uid://cggd6372k5v12" path="res://resources/empty.tres" id="2_lrhn5"]
+[ext_resource type="SpriteFrames" uid="uid://lujx2edhfdt2" path="res://resources/ethan.tres" id="2_lrhn5"]
 [ext_resource type="SpriteFrames" uid="uid://dsh3jayb4thlc" path="res://resources/ethan_head.tres" id="3_lrhn5"]
+[ext_resource type="Script" uid="uid://dm6tw2e5gcuey" path="res://scripts/character_hitbox.gd" id="4_my7n2"]
 
 [node name="Character" type="Node2D"]
 z_index = 1
 script = ExtResource("1_rkhd4")
 
-[node name="Body" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-sprite_frames = ExtResource("2_lrhn5")
-
-[node name="Head" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -468)
-scale = Vector2(0.2, 0.2)
-sprite_frames = ExtResource("3_lrhn5")
-animation = &"death"
-
 [node name="Area2D" type="Area2D" parent="."]
 z_index = 5
 collision_layer = 17
 collision_mask = 17
+script = ExtResource("4_my7n2")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(129, -159, 75, 296, -100, 264, -75, -35, -162, -133, -114, -325, -45, -361, -63, -440, -6, -517, 55, -429, 38, -349, 92, -324)
+polygon = PackedVector2Array(169, -78, -5, -397, -191, -64, -162, 498, 176, 499)
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Body" type="AnimatedSprite2D" parent="Visuals"]
+scale = Vector2(0.2, 0.2)
+sprite_frames = ExtResource("2_lrhn5")
+
+[node name="Head" type="AnimatedSprite2D" parent="Visuals"]
+position = Vector2(0, -488)
+scale = Vector2(0.2, 0.2)
+sprite_frames = ExtResource("3_lrhn5")
+animation = &"angry"
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

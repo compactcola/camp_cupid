@@ -126,9 +126,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_obrpc")
 [node name="Label" type="Label" parent="TutorialMessage/PanelContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_4au54")
-theme_override_font_sizes/font_size = 100
-text = "Scan the trees to spot the birds!
-Shoot the box to identify which type they are!"
+theme_override_font_sizes/font_size = 90
+text = "Scan the trees to spot the birds and identify them!
+Careful not to shoot the bird itself though!"
 horizontal_alignment = 1
 vertical_alignment = 1
 

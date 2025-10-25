@@ -171,4 +171,5 @@ func end_game(end_type : int):
 	
 	Globals.game_score = final_score
 	Globals.minigame_flag = true
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	await TransitionManager.transition_to_scene("res://scenes/main.tscn")
+	#get_tree().change_scene_to_file("res://scenes/main.tscn")

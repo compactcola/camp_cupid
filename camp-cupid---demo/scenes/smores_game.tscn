@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://gd8ju7dr11vu"]
+[gd_scene load_steps=12 format=3 uid="uid://gd8ju7dr11vu"]
 
 [ext_resource type="Script" uid="uid://fmkhikk2e51b" path="res://scripts/smores_game.gd" id="1_2njd8"]
 [ext_resource type="Texture2D" uid="uid://k8n88h71wf3u" path="res://assets/backgrounds/camp-night.png" id="2_heodn"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="5_s5djo"]
 [ext_resource type="Texture2D" uid="uid://4spj5v1npfc3" path="res://assets/sprites/marshmallow.png" id="6_s5djo"]
 [ext_resource type="Texture2D" uid="uid://do6ykanjcgabs" path="res://assets/sprites/chocolate.png" id="7_fibls"]
+[ext_resource type="Texture2D" uid="uid://c5b546mrle78v" path="res://assets/sprites/smore.png" id="8_s5djo"]
 [ext_resource type="FontFile" uid="uid://y8fd7tecadlt" path="res://assets/fonts/SimpleHandmade.otf" id="9_fibls"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dv05"]
@@ -48,7 +49,7 @@ offset_right = 687.0
 offset_bottom = 193.0
 theme_override_fonts/font = ExtResource("5_s5djo")
 theme_override_font_sizes/font_size = 130
-text = "Smores: 0"
+text = "Smores:"
 
 [node name="TimerLabel" type="Label" parent="."]
 offset_left = 1238.0
@@ -129,5 +130,13 @@ theme_override_font_sizes/font_size = 120
 text = "S'more ruined!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SmoreDisplay" type="Node2D" parent="."]
+position = Vector2(496, 96)
+
+[node name="Smore" type="Sprite2D" parent="SmoreDisplay"]
+rotation = -0.764454
+scale = Vector2(0.365, 0.365)
+texture = ExtResource("8_s5djo")
 
 [connection signal="pressed" from="TutorialMessage/Button" to="." method="_on_button_pressed"]

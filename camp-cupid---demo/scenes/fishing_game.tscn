@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://8wu6mmpho2km"]
 
-[ext_resource type="Texture2D" uid="uid://bj8xdikprjgc7" path="res://assets/backgrounds/water_bg.jpg" id="1_2yxpx"]
 [ext_resource type="Script" uid="uid://cisah67javehr" path="res://scripts/fishing_game.gd" id="1_vhdqh"]
+[ext_resource type="Texture2D" uid="uid://boyibiq5s4xb5" path="res://assets/backgrounds/water_bg.png" id="2_vox6q"]
 [ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="2_wogwn"]
 [ext_resource type="FontFile" uid="uid://y8fd7tecadlt" path="res://assets/fonts/SimpleHandmade.otf" id="4_vox6q"]
 
@@ -36,7 +36,7 @@ offset_right = 1926.0
 offset_bottom = 1091.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_2yxpx")
+texture = ExtResource("2_vox6q")
 
 [node name="FishSpawner" type="Node2D" parent="."]
 

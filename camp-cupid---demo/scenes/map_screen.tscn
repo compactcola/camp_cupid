@@ -1,12 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://u03wwfxwxgtp"]
+[gd_scene load_steps=11 format=3 uid="uid://u03wwfxwxgtp"]
 
 [ext_resource type="Script" uid="uid://bamyyooautxg2" path="res://scripts/map_screen.gd" id="1_3lmvi"]
 [ext_resource type="Texture2D" uid="uid://biw3ftsg8kn6l" path="res://assets/backgrounds/camp_map.png" id="1_pbrhm"]
 [ext_resource type="FontFile" uid="uid://y8fd7tecadlt" path="res://assets/fonts/SimpleHandmade.otf" id="3_1bgxv"]
 [ext_resource type="Theme" uid="uid://ds5gr620wj1c" path="res://resources/themes/button.tres" id="3_bphxi"]
+[ext_resource type="Texture2D" uid="uid://bnvfuswjhjs8d" path="res://assets/backgrounds/map_cabin.png" id="3_jsmns"]
 [ext_resource type="Texture2D" uid="uid://dknjjp13bbvh2" path="res://assets/characters/aubrey/aubreyHead_default.png" id="4_bprcc"]
 [ext_resource type="Texture2D" uid="uid://6mmb7m3d2ct1" path="res://assets/characters/ethan/ethanHead_default.png" id="5_6grhc"]
 [ext_resource type="Texture2D" uid="uid://b1vm351ef038y" path="res://assets/characters/harper/harperHead_default.png" id="6_1bgxv"]
+
+[sub_resource type="Theme" id="Theme_e3iuf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsmns"]
 content_margin_left = 50.0
@@ -38,25 +41,33 @@ grow_vertical = 2
 texture = ExtResource("1_pbrhm")
 expand_mode = 3
 
+[node name="MapCabin" type="Sprite2D" parent="."]
+physics_interpolation_mode = 2
+position = Vector2(958, 545)
+scale = Vector2(0.660417, 0.669136)
+texture = ExtResource("3_jsmns")
+
 [node name="BirdGame" type="Button" parent="."]
 layout_mode = 0
-offset_left = 202.0
-offset_top = 508.0
-offset_right = 543.0
-offset_bottom = 779.0
+offset_left = 144.0
+offset_top = 324.0
+offset_right = 485.0
+offset_bottom = 595.0
+theme = SubResource("Theme_e3iuf")
 action_mode = 0
 text = "Bird"
 
 [node name="FishGame" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1486.0
-offset_top = 531.0
-offset_right = 1827.0
-offset_bottom = 802.0
+offset_left = 1461.0
+offset_top = 74.0
+offset_right = 1802.0
+offset_bottom = 345.0
 action_mode = 0
 text = "Fish"
 
 [node name="CharacterChoice" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

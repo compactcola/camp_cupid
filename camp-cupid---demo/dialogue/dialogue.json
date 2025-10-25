@@ -80,7 +80,7 @@
 	"intro_2_aubrey": [
 		"Aubrey:Oh hey! {player}, right?",
 		"Player:That's what they call me!",
-		"POINTS:Aubrey,16",
+		"POINTS:Aubrey,34",
 		"FACE:happy",
 		"Aubrey:Haha, well they call me Aubrey. It's a pleasure to meet you!",
 		"FACE:default",
@@ -117,7 +117,7 @@
 		"EMPTY:",
 		"PLayer:Hey, it's Ethan right?",
 		"Ethan:Oh hey, it's {player}- the newbie.",
-		"POINTS:Ethan,16",
+		"POINTS:Ethan,34",
 		"Ethan:Nice to meet ya.",
 		"Player:Newbie? It's that obvious?",
 		"Ethan:Well, there's only four of us.",
@@ -151,7 +151,7 @@
 		"Player:I can leave if I'm bothering-",
 		"FACE:default",
 		"Harper:No. Sorry. That did sound kinda rude.",
-		"POINTS:Harper,16",
+		"POINTS:Harper,34",
 		"FACE:happy",
 		"Harper:I am, indeed, Harper. Nice to meet you, {player}.",
 		"FACE:default",
@@ -222,7 +222,8 @@
 	],
 	
 	"night1_aubrey": [
-		"Aubrey:Works",
+		"Aubrey:Mmm, delicious, thanks!",
+		"POINTS:Aubrey,15",
 
 		{
 		"type": "CHOICE",
@@ -235,8 +236,9 @@
 		}
 	],
 	"night1_ethan": [
-		"Ethan:Works",
-		
+		"Ethan:Mmm, delicious, thanks!",
+		"POINTS:Ethan,15",
+
 		{
 		"type": "CHOICE",
 			"options": [
@@ -248,8 +250,8 @@
 		}
 	],
 	"night1_harper":[
-		"Harper:Works",
-
+		"Harper:Mmm, delicious, thanks!",
+		"POINTS:Harper,15",
 		{
 		"type": "CHOICE",
 			"options": [
@@ -260,39 +262,42 @@
 			]
 		}
 	],
-
 	"night1_end" : [
 		"EMPTY:",
-		"Danny:Night 1 works!",
+		"Danny:Good night my lovely campers!",
 		"Danny:...",
 		"BACKGROUND:bunks",
 		"SCENE:end_day"
 	],
 
 	"day2" : [
+		"BACKGROUND:bunks",
+		"Player:Time to start the day!",
 		"BACKGROUND:camp_day",
-		"Danny:Next day (2), works!",
-		"Danny:FUCKIGN FIANLLY",
+		"Danny:Alright- activity time!",
+		"Player:What should I do today...?",
 		"SCENE:map_screen"
 	],
 	"night2" : [
-		"Danny:Night 2 loaded, lets see if it works",
-		"Danny:Second text to see if it breaks...",
-		"Danny:And a third...",
-		"Aubrey:And a different character...",
+		"BACKGROUND:camp_evening",
+		"Danny:Hope everyone had fun!",
+		"Danny:Smores time!",
 		"SCENE:smores_game",
 		"Danny:We've survived this far...",
 		"SCENE:end_day"
 	],
+
 	"day3" : [
+		"BACKGROUND:camp_day",
 		"Danny:YESSSS, day 3, the final day.",
 		"SCENE:map_screen"
 	],
 	"night3" : [
+		"BACKGROUND:camp_evening",
 		"Danny:Night 3 babeyy",
-		"SCENE:end_day",
 		"SCENE:smores_game",
-		"Danny:Glorious..."
+		"Danny:Glorious...",
+		"SCENE:end_day"
 	],
 	"prom" : [
 		"Danny:PROM TIME"

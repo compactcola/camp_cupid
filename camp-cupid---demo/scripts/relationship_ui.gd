@@ -7,12 +7,12 @@ extends Control
 @onready var heart_empty = load("res://assets/sprites/heart-empty.png")
 
 var visible_time := 1.6
-var bar_speed := 1
+var bar_speed := 1.0
 var decreasing = false
 var heart_thresholds = [33, 67, 100]
 var triggered = []
 
-func show_relationship_change(old_value : float, new_value: float, delta: float):
+func show_relationship_change(old_value : float, new_value: float):
 	visible = true
 	modulate.a = 1.0
 	
@@ -34,7 +34,7 @@ func show_relationship_change(old_value : float, new_value: float, delta: float)
 	tween.tween_property(self, "modulate:a", 0.0, 0.4)
 	tween.tween_callback(Callable(self, "_on_hide"))
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !tween:
 		return
 	

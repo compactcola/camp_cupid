@@ -3,11 +3,18 @@ extends Control
 @onready var logo = $"CampCupid-logo"
 @onready var tween := create_tween()
 
+var music_player : AudioStreamPlayer
+@onready var menu_music = preload("res://audio/music/camp-cupid.wav")
+
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	await TransitionManager.transition_to_scene("res://scenes/main.tscn")
 
 func _ready() -> void:
 	idle_wobble()
+	music_player = AudioStreamPlayer.new()
+	add_child(music_player)
+	music_player.stream = menu_music
+	music_player.play()
 
 func idle_wobble() -> void:
 	# Reset tween if it’s running

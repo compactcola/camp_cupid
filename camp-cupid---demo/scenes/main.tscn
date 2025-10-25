@@ -2,13 +2,15 @@
 
 [ext_resource type="Script" uid="uid://bbjj45yg48jpd" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://drd1ph4insfpu" path="res://scenes/character.tscn" id="2_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://bsxcmi7kf3w0h" path="res://assets/backgrounds/bunks.jpg" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://sb08vxy1iwjd" path="res://scenes/dialogue_ui.tscn" id="3_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://ct1honc1pnd24" path="res://assets/button_target.png" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://cbn4g4ivrc2id" path="res://scripts/relationship_ui.gd" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://cuejfyhybhrdc" path="res://assets/sprites/status_bar_bg.png" id="7_tipki"]
 [ext_resource type="Texture2D" uid="uid://b0624fcte4m0t" path="res://assets/sprites/status_bar_fill.png" id="8_85g3d"]
 [ext_resource type="Texture2D" uid="uid://cw6yfjo4yw6rw" path="res://assets/sprites/heart-empty.png" id="9_85g3d"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tipki"]
+load_path = "res://.godot/imported/bunks.jpg-286baf5ef8048883a585b58060038a29.ctex"
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tefeu"]
 texture = ExtResource("5_tbgi4")
@@ -28,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("2_tbgi4")
+texture = SubResource("CompressedTexture2D_tipki")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
