@@ -47,10 +47,9 @@ var reveal_timer: Timer = null
 func _ready():
 	$UI/Button.hide()
 	
-	if Globals.minigame_flag == true: ### post-minigame relationship handler (maybe call function isntead?)
-		print("works")
-		relationship_gain(Globals.current_character, Globals.game_score)
-		Globals.minigame_flag = false
+	Globals.is_dialogue_active = true
+	dialog_paused = false
+	is_interrupting_dialog = false
 	
 	character.character_shot.connect(relationship_gain)
 	character.interrupt_dialog.connect(on_character_interrupt_dialogue)
@@ -76,11 +75,86 @@ func _ready():
 	else:
 		dialog_lines = []
 
-	# reset safely
 	dialog_index = -1
-	dialog_paused = false
-	is_interrupting_dialog = false
 	character.change_character("Empty", body_expression, head_expression)
+	
+	if Globals.minigame_flag == true: ### post-minigame relationship handler (maybe call function isntead?)	
+		print("works")
+		relationship_gain(Globals.current_character, Globals.game_score)
+		
+		var game_reactions = {
+			"fishing_game.tscn": {
+				"Aubrey": 
+					[
+						"FACE:happy",
+						"Aubrey:That so much fun!",
+						"FACE:angry", 
+						"Aubrey:Still... I wish you didn't have to shoot the fish",
+						"FACE:happy",
+						"Aubrey:Still, I had a really great time!",
+						"POP_OUT:Aubrey",
+						"EMPTY:"
+					],
+				"Ethan": 
+					[
+						"FACE:happy",
+						"Ethan:You were pretty solid out there- that was fun!",
+						"Ethan:Plus, I'm never mad at a chance to bond at the lake!",
+						"POP_OUT:Ethan",
+						"EMPTY:"
+					],
+				"Harper": 
+					[
+						"Harper:Normally I hate fishing, but that was actually kind of fun.",
+						"FACE:happy",
+						"Harper:Thanks for inviting me.",
+						"POP_OUT:Harper",
+						"EMPTY:"
+					]
+			},
+			"birdwatching_game.tscn": {
+				"Aubrey": 
+					[
+						"Aubrey:I swear that bird winked at me...",
+						"FACE:happy", 
+						"Aubrey:But that was actually kinda cute!",
+						"POP_OUT:Aubrey",
+						"EMPTY:"
+					],
+				"Ethan": 
+					[
+						"FACE:angry",
+						"Ethan:Birdwatching? That was… new.", 
+						"FACE:happy",
+						"Ethan:Okay fine, some of them were cool.",
+						"Ethan:Thanks for bringing me, maybe we'll do it again sometime.",
+						"POP_OUT:Ethan",
+						"EMPTY:"
+					],
+				"Harper": 
+					[
+						"Harper:I think I got bit by a mosquito for every bird I saw.",
+						"FACE:happy",
+						"Harper:Still, that was actually pretty fun.",
+						"POP_OUT:Harper",
+						"EMPTY:"
+					],
+			}
+		}
+
+		#de-saftey-d some stuff here- it may go terribly
+		var speaker = Globals.current_character
+		var reaction_lines = game_reactions[Globals.current_game][speaker]
+		
+		var formatted_reactions = []
+		for line in reaction_lines:
+			formatted_reactions.append(line)
+		dialog_lines = formatted_reactions + dialog_lines
+		
+		dialog_index = -1
+		dialog_paused = false
+		Globals.minigame_flag = false
+		Globals.is_dialogue_active = true
 
 	if not dialog_lines.is_empty():
 		process_current_line()
@@ -99,9 +173,14 @@ func change_background(id : String) -> void:
 		$Background/image.texture = backgrounds[id]
 		current_bg = backgrounds[id]
 		
-		if current_bg !=  backgrounds["bunks"]:
-			var birds_ambience = load("res://audio/bird_ambience.wav")
-			bg_sfx_player.stream = birds_ambience
+		var ambience 
+		if current_bg ==  backgrounds["camp_day"]:
+			ambience = load("res://audio/bird_ambience.wav")
+			bg_sfx_player.stream = ambience
+			bg_sfx_player.play()
+		elif current_bg == backgrounds["camp_evening"]:
+			ambience = load("res://audio/crickets_ambience.wav")
+			bg_sfx_player.stream = ambience
 			bg_sfx_player.play()
 		else:
 			bg_sfx_player.stop()
@@ -154,8 +233,19 @@ func _on_reveal_timeout() -> void:
 	process_current_line()
 
 func parse_line(line: String):
+	print(line)
+	if line.begins_with("FACE:"):
+		return {"speaker": "FACE", "dialog": line.substr(5)}
+	if line.begins_with("POP_OUT:"):
+		return {"speaker": "POP_OUT", "dialog": line.substr(8)}
+	if line.begins_with("EMPTY:"):
+		return {"speaker": "EMPTY", "dialog": ""}
+	
 	var line_info = line.split(":")
-	assert(len(line_info) >= 2)
+	if line_info.size() < 2:
+		push_warning("Skipping malformed line: %s" % line)
+		return {"speaker": "", "dialog": ""}
+	
 	return {"speaker": line_info[0], "dialog": line_info[1]}
 
 func parse_placeholders(text: String) -> String:
@@ -232,7 +322,6 @@ func process_special_line(speaker: String, text: String) -> void:
 			change_background(text)
 		"SCENE":
 			if text == "name_select":
-				dialog_paused = true
 				run_name_selection()
 				return
 			elif text == "smores_game":

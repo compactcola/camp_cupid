@@ -89,10 +89,12 @@
 		"FACE:happy",
 		"Aubrey:Well welcome! I'm sure you'll love it! It's short but soooo much fun!",
 		"Aubrey:I love the bird watching here!",
+		"BODY:alt",
 		"Aubrey:And the [shake]prom[/shake] on the last day is always a blast!",
 		"Player:...prom?",
 		"FACE:default",
 		"Aubrey:Oh yeah, I guess Danny didn't mention it did he?",
+		"BODY:default",
 		"Aubrey:On the last day we do a big prom night before we head home.",
 		"FACE:happy",
 		"Aubrey:It's soooo much fun!!",
@@ -120,13 +122,17 @@
 		"POINTS:Ethan,34",
 		"Ethan:Nice to meet ya.",
 		"Player:Newbie? It's that obvious?",
+		"BODY:alt",
 		"Ethan:Well, there's only four of us.",
 		"Ethan:And Harper, Aubrey, and I have been coming here since we were kids.",
+		"BODY:default",
 		"Ethan:So by process of elimination...",
 		"Player:Yeah yeah, I get it.",
 		"FACE:happy",
 		"Ethan:Hey no hard feelings, it's great to finally have someone else tagging along!",
+		"BODY:alt",
 		"Ethan:Hopefully you'll get a chance to hit the lake with me sometime.",
+		"BODY:default",
 		"Player:Yeah I'll have to get around to that-",
 		"FACE:default",
 		"POP_IN:Danny",
@@ -158,11 +164,15 @@
 		"Harper:I'm just a little irritable, I'm not usually up this early.",
 		"FACE:angry",
 		"Harper:And I hate being dragged on a tour for the billionth time.",
+		"BODY:alt",
 		"Harper:And don't even get me started on that dumb [shake]prom[/shake] in a couple days...",
 		"FACE:default",
 		"Player:There's a prom?",
+		"BODY:default",
 		"Harper:What? Oh yeah, this is your first year huh?",
+		"BODY:alt",
 		"Harper:On the last day we hold some dumb 'high-school-camp-prom' thing",
+		"BODY:default",
 		"Harper:Unfortunately it's manditory. And a drag.",
 		"Player:Huh.",
 		"POP_IN:Danny",
@@ -201,6 +211,7 @@
 		"Player:Wow, that's less relaxing then I remembered as a kid...",
 		"Player:(Still, I should eat with someone!)",
 		"Player:(But who...?)",
+		"FACE:happy",
 		
 		{
 			"type": "CHOICE",
@@ -223,7 +234,7 @@
 	
 	"night1_aubrey": [
 		"Aubrey:Mmm, delicious, thanks!",
-		"POINTS:Aubrey,15",
+		"POINTS:Aubrey,30",
 
 		{
 		"type": "CHOICE",
@@ -237,7 +248,7 @@
 	],
 	"night1_ethan": [
 		"Ethan:Mmm, delicious, thanks!",
-		"POINTS:Ethan,15",
+		"POINTS:Ethan,30",
 
 		{
 		"type": "CHOICE",
@@ -251,7 +262,7 @@
 	],
 	"night1_harper":[
 		"Harper:Mmm, delicious, thanks!",
-		"POINTS:Harper,15",
+		"POINTS:Harper,30",
 		{
 		"type": "CHOICE",
 			"options": [

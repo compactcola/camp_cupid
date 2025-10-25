@@ -14,7 +14,7 @@ var amplitude := 250.0
 var speed := 1.2
 var flip_var = 1
 
-var time_left := 90.0
+var time_left := 60.0
 var birds_left = 6
 var final_score = 0
 var end_type = 0
@@ -35,10 +35,18 @@ var bird_names := [
 ]
 var names_index = 0
 
+var bg_sfx_player : AudioStreamPlayer
+
 func _ready():
 	set_process(false)
 	identify_button.hide()
 	identify_button.pivot_offset = identify_button.size / 2
+	
+	bg_sfx_player = AudioStreamPlayer.new()
+	add_child(bg_sfx_player)
+	bg_sfx_player.volume_db = +10
+	bg_sfx_player.stream = preload("res://audio/bird_ambience.wav")
+	bg_sfx_player.play()
 	
 	for bird in birds:
 		bird.hide()
@@ -172,4 +180,5 @@ func end_game(end_type : int):
 	Globals.game_score = final_score
 	Globals.minigame_flag = true
 	await TransitionManager.transition_to_scene("res://scenes/main.tscn")
+	queue_free()
 	#get_tree().change_scene_to_file("res://scenes/main.tscn")

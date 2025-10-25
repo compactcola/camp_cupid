@@ -13,6 +13,9 @@ signal game_finished(score: int)
 @onready var ui_cracker_2 = $Cracker2
 @onready var smore_template: Sprite2D = $SmoreDisplay/Smore
 
+var music_player : AudioStreamPlayer
+@onready var music = preload("res://audio/smores-game.wav")
+
 var smore_count := 0
 
 var time_left := 60.0
@@ -27,6 +30,14 @@ func _ready():
 	smore_template.visible = false
 	
 	set_process(false)
+	
+	music_player = AudioStreamPlayer.new()
+	music_player.volume_db = -5
+	add_child(music_player)
+
+	music_player.stream = music
+		
+	music_player.play()
 	
 func _process(delta: float) -> void:
 	time_left -= delta
@@ -141,5 +152,7 @@ func add_smore():
 func end_game():
 		print("Time's up!")
 		Globals.smores_difficulty_index += 1
+		Globals.game_score = smore_count *10
+		Globals.smores_score = smore_count *10
 		Globals.scene_index += 1
 		await TransitionManager.transition_to_scene("res://scenes/main.tscn")

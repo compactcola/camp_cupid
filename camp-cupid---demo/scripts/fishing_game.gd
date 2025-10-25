@@ -13,9 +13,16 @@ const VIEWPORT_WIDTH = Globals.SCREEN_WIDTH
 
 var fish_list: Array = []      # Track all active fish
 var water_disturbed := false   # Flag for whether player has clicked yet
+var bg_sfx_player
 
 func _ready():
 	set_process(false)
+	
+	bg_sfx_player = AudioStreamPlayer.new()
+	add_child(bg_sfx_player)
+	bg_sfx_player.volume_db = +10
+	bg_sfx_player.stream = preload("res://audio/water_ambience.wav")
+	bg_sfx_player.play()
 	
 	# Create idle shadows moving around even before water is disturbed
 	spawn_fish_shadows()
@@ -37,21 +44,23 @@ func _process(delta: float) -> void:
 		timer_label.text = "Time Left: %d" % ceil(time_left)
 
 func spawn_fish_loop():
-	while water_disturbed:
-		await get_tree().create_timer(randf_range(0.8, 3.0)).timeout
-		var fish = fish_scene.instantiate()
-		fish.position = Vector2(randf_range(50, VIEWPORT_WIDTH - 50), randf_range(180, VIEWPORT_HEIGHT - 50))
-		fish_spawner.add_child(fish)
-		fish_list.append(fish)
+	if not water_disturbed:
+		return
+	var fish = fish_scene.instantiate()
+	fish.position = Vector2(randf_range(50, VIEWPORT_WIDTH - 50), randf_range(180, VIEWPORT_HEIGHT - 50))
+	fish_spawner.add_child(fish)
+	fish_list.append(fish)
+	
+	fish.appear()
+	fish.start_swimming()
+	fish.caught.connect(_on_fish_caught.bind(fish))
+	fade_out_fish_later(fish)
+	
+	# schedule next spawn
+	var delay = randf_range(0.8, 7.0)
+	await get_tree().create_timer(delay).timeout
+	spawn_fish_loop()
 
-		# Custom fade-in & swim behavior (implemented in fish script)
-		fish.appear()
-		fish.start_swimming()
-
-		# Connect signals
-		fish.caught.connect(_on_fish_caught.bind(fish))
-
-		fade_out_fish_later(fish)
 
 func fade_out_fish_later(fish):
 	await get_tree().create_timer(randf_range(2.0, 4.0)).timeout
@@ -78,8 +87,9 @@ func _on_button_pressed() -> void:
 func end_game():
 	Globals.game_score = score
 	Globals.minigame_flag = true
+	water_disturbed = false   # stop the spawning loop
 	await TransitionManager.transition_to_scene("res://scenes/main.tscn")
-	#get_tree().change_scene_to_file("res://scenes/main.tscn")
+	queue_free()
 
 func spawn_fish_shadows():
 	for i in range(3): # a few subtle “shadow” fish roaming around

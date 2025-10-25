@@ -1,14 +1,32 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://7qhxawrk80dy"]
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://7qhxawrk80dy"]
 
+[ext_resource type="Texture2D" uid="uid://dvuyqrghp167p" path="res://assets/characters/aubrey/aubrey_altPose.png" id="1_0axqo"]
 [ext_resource type="Texture2D" uid="uid://xoq6tu3onutf" path="res://assets/characters/aubrey/aubrey_default.png" id="1_lq8i8"]
+[ext_resource type="Texture2D" uid="uid://df3nms4e1kyyo" path="res://assets/characters/aubrey/aubrey_prom.png" id="3_7cg5v"]
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0axqo")
+}],
+"loop": true,
+"name": &"alt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_lq8i8")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_7cg5v")
+}],
+"loop": true,
+"name": &"prom",
 "speed": 5.0
 }]

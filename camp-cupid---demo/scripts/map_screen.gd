@@ -24,10 +24,28 @@ func _ready():
 		
 		btn.text = opt["Text"]
 		
-		if Globals.is_alive.get(opt["Value"], true) == false: ### speaker is dead
+		if Globals.is_alive.get(opt["Value"], true) == false:
 			btn.modulate = Color(0.4,0.4,0.4,1)
+			var tex_rect = btn.get_node("TextureRect")
+			if tex_rect and tex_rect is TextureRect:
+				var lower_name = opt["Value"].to_lower()
+				tex_rect.texture = load("res://assets/characters/%s/%sHead_dead.png" % [lower_name, lower_name])
+			
 			continue
 		btn.pressed.connect(_on_button_pressed.bind(opt["Value"]))
+
+	$BirdGame.mouse_entered.connect(_on_hover_entered.bind($BirdGame))
+	$BirdGame.mouse_exited.connect(_on_hover_exited.bind($BirdGame))
+	$FishGame.mouse_entered.connect(_on_hover_entered.bind($FishGame))
+	$FishGame.mouse_exited.connect(_on_hover_exited.bind($FishGame))
+
+func _on_hover_entered(btn: Button) -> void:
+	var tween = create_tween()
+	tween.tween_property(btn, "scale", Vector2(1.1, 1.1), 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func _on_hover_exited(btn: Button) -> void:
+	var tween = create_tween()
+	tween.tween_property(btn, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 func _on_button_pressed(value):
 	character_choice = value
@@ -48,8 +66,6 @@ func _on_fish_game_pressed() -> void:
 func finalize_choice(game_choice, character_choice):
 	Globals.current_character = character_choice
 	Globals.current_game = game_choice
-	
 	Globals.scene_index += 1
+	Globals.minigame_flag = true
 	await TransitionManager.transition_to_scene("res://scenes/%s" % game_choice)
-	#get_tree().change_scene_to_file("res://scenes/%s" % game_choice)
-	#### advance scene index?

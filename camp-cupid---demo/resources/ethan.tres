@@ -1,14 +1,32 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://lujx2edhfdt2"]
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://lujx2edhfdt2"]
 
 [ext_resource type="Texture2D" uid="uid://wgof3tslgsnj" path="res://assets/characters/ethan/ethan_default.png" id="1_ihtgn"]
+[ext_resource type="Texture2D" uid="uid://digru2vibynne" path="res://assets/characters/ethan/ethan_altPose.png" id="1_ws028"]
+[ext_resource type="Texture2D" uid="uid://dsrrn333j21p8" path="res://assets/characters/ethan/ethan_prom.png" id="3_bomqr"]
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ws028")
+}],
+"loop": true,
+"name": &"alt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_ihtgn")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bomqr")
+}],
+"loop": true,
+"name": &"prom",
 "speed": 5.0
 }]
