@@ -155,6 +155,13 @@ func change_character(character_name : String, body_expression : String, head_ex
 		
 	else:
 		body_sprite.position.y = 0
+		
+		### wierd aubrey edge case
+		if character_name == "Aubrey" and body_expression == "alt":
+			body_sprite.flip_h = true
+		else:
+			body_sprite.flip_h = false
+			
 		body_sprite.play(body_expression)
 		head_sprite.play(head_expression)
 	

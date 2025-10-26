@@ -42,7 +42,6 @@ script = ExtResource("1_m4co6")
 
 [node name="background" type="TextureRect" parent="."]
 z_index = -1
-anchors_preset = -1
 offset_right = 1910.0
 offset_bottom = 1088.0
 texture = ExtResource("1_ix7kf")

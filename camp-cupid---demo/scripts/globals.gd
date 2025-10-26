@@ -49,8 +49,8 @@ var smores_score = 0
 var player_name : String = "Me"
 var fx_layer : CanvasLayer
 
-const SCREEN_WIDTH = 1920
-const SCREEN_HEIGHT = 1080
+var SCREEN_WIDTH
+var SCREEN_HEIGHT
 
 ## audio stuff!
 var arrow_hit_sounds = [
@@ -63,15 +63,24 @@ var arrow_hit_sounds = [
 var sfx_player : AudioStreamPlayer
 
 ### Serial Imput (so help me god)
+var skip : bool = false    # current hardware state (pressed or not)
 var serial : GdSerial
 var last_click := false
 var target = Sprite2D.new()
 var pos = Vector2.ZERO
+var last_skip := false   
 
 var reticle_scene = preload("res://scenes/reticle.tscn")
 var reticle_instance : CanvasLayer
 
+var skip_cooldown := 0.2
+var skip_timer := 0.0
+
 func _ready():
+	
+	SCREEN_HEIGHT = DisplayServer.window_get_size().y
+	SCREEN_WIDTH = DisplayServer.window_get_size().x
+	
 	await get_tree().process_frame  # wait for root to exist
 	if not reticle_instance:
 		reticle_instance = reticle_scene.instantiate()
@@ -88,7 +97,7 @@ func _ready():
 	print("Ports avalible: ", ports)
 	
 	if ports.size() > 0:
-		serial.set_port("COM3") #first open port (maybe use COM3 in future)
+		serial.set_port("COM4") #first open port (maybe use COM3 in future)
 		serial.set_baud_rate(9600)
 		
 		if serial.open():
@@ -112,20 +121,33 @@ func play_arrow_hit():
 	sfx_player.stream = random_sound
 	sfx_player.play()
 
-func _process(_delta):
+func _process(delta):
 	if serial and serial.is_open():
 		line = serial.readline()
 		if line != "":
 			_parse_line(line)
+
 
 func _parse_line(_line : String):
 	var parts = _line.strip_edges().split(",")
 	var click = false # can change to an int or add int later for fire strength
 	
 	pos.x = 2*int(parts[0])
-	pos.y = SCREEN_HEIGHT - (int(parts[1])*2)
+	pos.y = SCREEN_HEIGHT - (int(parts[1])*2) +200
 	
-	click = bool(int(parts[-1]))
+	click = bool(int(parts[-2])) ### might not work once we get the skip button on end of serial- need exact index
+	
+	 #--- v SKIP BUTTON STUFF v ---- #
+	# SKIP button: detect rising edge
+	var new_skip = bool(int(parts[-1]))   # second-to-last or last index as needed
+	if new_skip and not skip:
+		# rising edge: trigger once for the rest of the game to consume
+		self.skip = true                 # stores hardware current state for next frame
+		Globals.skip = true              # set the public flag consumed by other scripts
+	else:
+		# keep hardware state in skip, but do NOT clear Globals.skip here
+		# (Globals.skip is a one-frame trigger consumed by the game)
+		self.skip = new_skip
 	
 	# mouse input
 	var motion := InputEventMouseMotion.new()
@@ -169,3 +191,50 @@ func add_relationship(character_name : String, amount : float):
 		relationships[character_name] = clamp(relationships[character_name], 0,100)
 		print(character_name, " gained ", amount)
 		print(character_name, " current: ", relationships[character_name])
+		
+### end game stuff
+func _unhandled_input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		go_to_main_menu()
+		
+func go_to_main_menu():
+	print("Returning to main menu...")
+	clear_data()
+	await TransitionManager.transition_to_scene("res://scenes/main_menu.tscn")
+	
+func clear_data():
+	scene_index = 0 
+	current_day
+	
+	### minigame scene data
+	current_game = ""
+	current_character = ""
+	game_score = 0
+	minigame_flag = false
+	is_dialogue_active = false
+	resume_from_minigame = false
+
+	smores_difficulty_index = 0 # use for campfire game difficulty scaling
+	smores_score = 0
+
+	is_alive = {
+		"Aubrey": true,
+		"Ethan": true,
+		"Harper": true,
+		"Danny": true
+	}
+
+	times_shot = {
+		"Aubrey": 0,
+		"Ethan": 0,
+		"Harper": 0,
+		"Danny": 0
+	}
+	
+	relationships = {
+		"Aubrey": 0.0,
+		"Harper": 0.0,
+		"Ethan": 0.0
+	}
+
+	player_name = "Me"

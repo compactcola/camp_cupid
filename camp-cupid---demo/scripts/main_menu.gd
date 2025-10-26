@@ -8,6 +8,8 @@ var music_player : AudioStreamPlayer
 
 func _on_start_pressed() -> void:
 	await TransitionManager.transition_to_scene("res://scenes/main.tscn")
+	
+
 
 func _ready() -> void:
 	idle_wobble()
@@ -29,3 +31,7 @@ func idle_wobble() -> void:
 	tween.tween_interval(0.5)
 	tween.tween_property(logo, "rotation_degrees", -7, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_interval(0.5)
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

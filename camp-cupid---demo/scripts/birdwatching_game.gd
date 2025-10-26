@@ -175,7 +175,7 @@ func end_game(end_type : int):
 	elif end_type == 1: ## found all birds ending score
 		final_score = 80
 	elif end_type == 2: ## killed a bird ending score
-		final_score = -60 + (birds_left*10)
+		final_score = 0 - (birds_left*10)
 	
 	Globals.game_score = final_score
 	Globals.minigame_flag = true

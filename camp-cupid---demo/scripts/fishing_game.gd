@@ -8,8 +8,8 @@ var time_left := 45.0
 var score := 0
 var fish_scene := preload("res://scenes/fish.tscn")
 
-const VIEWPORT_HEIGHT = Globals.SCREEN_HEIGHT
-const VIEWPORT_WIDTH = Globals.SCREEN_WIDTH
+var VIEWPORT_HEIGHT = Globals.SCREEN_HEIGHT
+var VIEWPORT_WIDTH = Globals.SCREEN_WIDTH
 
 var fish_list: Array = []      # Track all active fish
 var water_disturbed := false   # Flag for whether player has clicked yet
@@ -85,6 +85,13 @@ func _on_button_pressed() -> void:
 	water_disturbed = false  # reset until first click
 
 func end_game():
+	water_disturbed = false   # stops spawn loop
+	set_process(false)
+	for fish in fish_list:
+		if is_instance_valid(fish):
+			fish.queue_free()
+	fish_list.clear()
+	
 	Globals.game_score = score
 	Globals.minigame_flag = true
 	water_disturbed = false   # stop the spawning loop

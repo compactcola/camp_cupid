@@ -27,7 +27,7 @@ var bg_sfx_player : AudioStreamPlayer
 # typewriter
 var typing_speed_max : float = 0.03
 var typing_speed_min : float = 0.025
-var normal_read_delay : float = 0.9
+var normal_read_delay : float = 1.1
 var flavor_read_delay : float = 2.0
 
 var active_typing_timer: Timer = null
@@ -79,7 +79,6 @@ func _ready():
 	character.change_character("Empty", body_expression, head_expression)
 	
 	if Globals.minigame_flag == true: ### post-minigame relationship handler (maybe call function isntead?)	
-		print("works")
 		relationship_gain(Globals.current_character, Globals.game_score)
 		
 		var game_reactions = {
@@ -177,21 +176,42 @@ func change_background(id : String) -> void:
 		if current_bg ==  backgrounds["camp_day"]:
 			ambience = load("res://audio/bird_ambience.wav")
 			bg_sfx_player.stream = ambience
+			bg_sfx_player.volume_db = 20
 			bg_sfx_player.play()
 		elif current_bg == backgrounds["camp_evening"]:
 			ambience = load("res://audio/crickets_ambience.wav")
 			bg_sfx_player.stream = ambience
+			bg_sfx_player.volume_db = 5
 			bg_sfx_player.play()
 		else:
 			bg_sfx_player.stop()
 	else:
 		return
 
+var skip_cooldown := 0.2
+var skip_timer := 0.0
 @warning_ignore("unused_parameter")
 func _process(delta) -> void:
-	if Input.is_action_just_pressed("Space") and not dialog_paused:
-		_skip_dialog()
+	# update cooldown
+	if skip_timer > 0.0:
+		skip_timer -= delta
 
+	# capture and consume the global skip flag (one-shot)
+	var hardware_skip_triggered := false
+	if Globals.skip:
+		hardware_skip_triggered = true
+		Globals.skip = false   # consume it so it does not re-trigger next frame
+
+	# If hardware triggered and cooldown not active, act as Space press
+	if hardware_skip_triggered and skip_timer <= 0.0:
+		_skip_dialog()          # shortcut: act immediately
+		skip_timer = skip_cooldown
+		return                 # optionally skip the rest of this frame
+
+	# normal keyboard input handling (separate from hardware)
+	if Input.is_action_just_pressed("Space") and skip_timer <= 0.0 and not dialog_paused:
+		_skip_dialog()
+		skip_timer = skip_cooldown
 
 func _skip_dialog() -> void:
 	if not dui.dialog or not dui.dialog.text:
@@ -479,7 +499,7 @@ func relationship_gain(_character : String, points : float):
 	if _character == "Danny" or _character == "EMPTY":
 		return
 	var old_value = Globals.relationships[_character]
-	var new_value = clamp(points, 0, 100)  # ensure points is within 0–100
+	var new_value =  Globals.relationships[_character] + points # ensure points is within 0–100
 	Globals.add_relationship(_character, new_value)
 	$UI/RelationshipUI.show_relationship_change(old_value, new_value)
 

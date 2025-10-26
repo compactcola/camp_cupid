@@ -294,23 +294,45 @@
 		"Danny:Hope everyone had fun!",
 		"Danny:Smores time!",
 		"SCENE:smores_game",
-		"Danny:We've survived this far...",
+		"Danny:Good night everyone!",
 		"SCENE:end_day"
 	],
 
 	"day3" : [
 		"BACKGROUND:camp_day",
-		"Danny:YESSSS, day 3, the final day.",
+		"Danny:YESSSS, day 3, the final day!",
 		"SCENE:map_screen"
 	],
 	"night3" : [
 		"BACKGROUND:camp_evening",
-		"Danny:Night 3 babeyy",
+		"Danny:Night 3 babeyy, let's make s'mores!",
 		"SCENE:smores_game",
-		"Danny:Glorious...",
+		"Danny:Alright everyone! Rest up for prom tomorrow!",
 		"SCENE:end_day"
 	],
 	"prom" : [
-		"Danny:PROM TIME"
+		"EMPTY:",
+		"BACKGROUND:bunks",
+		"POP_IN:Danny",
+		"Danny:PROM TIME!",
+		"Danny:Let's rock!",
+		"BACKGROUND:camp_day",
+		"BODY:prom",
+		"Aubrey:I can't wait for prom!",
+		"FACE:angry",
+		"Harper:Let's get this over with...",
+		"Ethan:It is a bit early out for prom isn't it?",
+		"FACE:default",
+		"Danny:Well good news- prom's not implemented yet!",
+		"Danny:It is just a demo after all",
+		"FACE:angry",
+		"Aubrey:Aw man, what the heck!",
+		"FACE:happy",
+		"Harper:Oh thank god!",
+		"FACE:default",
+		"Ethan:Oh well...",
+		"Player:Ah shoot- maybe one day!",
+		"POP_IN:Danny",
+		"Danny:Thanks for playing~!"
 	]
 }
