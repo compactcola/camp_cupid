@@ -137,16 +137,11 @@ func _parse_line(_line : String):
 	
 	click = bool(int(parts[-2])) ### might not work once we get the skip button on end of serial- need exact index
 	
-	 #--- v SKIP BUTTON STUFF v ---- #
-	# SKIP button: detect rising edge
-	var new_skip = bool(int(parts[-1]))   # second-to-last or last index as needed
+	var new_skip = bool(int(parts[-1]))
 	if new_skip and not skip:
-		# rising edge: trigger once for the rest of the game to consume
-		self.skip = true                 # stores hardware current state for next frame
-		Globals.skip = true              # set the public flag consumed by other scripts
+		self.skip = true
+		Globals.skip = true
 	else:
-		# keep hardware state in skip, but do NOT clear Globals.skip here
-		# (Globals.skip is a one-frame trigger consumed by the game)
 		self.skip = new_skip
 	
 	# mouse input

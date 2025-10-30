@@ -436,7 +436,6 @@ func _continue_after_delay(custom_read_delay: float = -1) -> void:
 	var delay = custom_read_delay if custom_read_delay > 0 else normal_read_delay
 	await get_tree().create_timer(delay).timeout
 
-	# If a reveal timer exists for some reason, clear it to avoid duplicate calls
 	if reveal_timer and is_instance_valid(reveal_timer):
 		reveal_timer.stop()
 		reveal_timer.queue_free()
