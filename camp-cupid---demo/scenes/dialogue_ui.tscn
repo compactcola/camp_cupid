@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://sb08vxy1iwjd"]
+[gd_scene load_steps=11 format=3 uid="uid://sb08vxy1iwjd"]
 
 [ext_resource type="Theme" uid="uid://b6gxwgdty7knw" path="res://resources/themes/dialogue_theme.tres" id="1_njptv"]
 [ext_resource type="Script" uid="uid://dpmy0t0fxy2ns" path="res://scripts/dialogue_ui.gd" id="2_6q285"]
 [ext_resource type="FontFile" uid="uid://ccc1y2kkamb7y" path="res://assets/fonts/KGSimplytheBest.ttf" id="3_e6usr"]
 [ext_resource type="FontFile" uid="uid://dqbq21o4gne4n" path="res://assets/fonts/Vanilla Pancake.otf" id="4_e6usr"]
+[ext_resource type="Texture2D" uid="uid://cnbrbfdio654e" path="res://assets/sprites/circle.png" id="5_imsod"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6q285"]
 content_margin_left = 40.0
@@ -97,3 +98,16 @@ theme = SubResource("Theme_6q285")
 text = "Name"
 label_settings = SubResource("LabelSettings_2x5cq")
 vertical_alignment = 1
+
+[node name="DialogTimer" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 1832.0
+offset_top = 990.0
+offset_right = 2088.0
+offset_bottom = 1246.0
+scale = Vector2(0.3, 0.3)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+radial_initial_angle = 270.0
+texture_progress = ExtResource("5_imsod")

@@ -253,7 +253,6 @@ func _on_reveal_timeout() -> void:
 	process_current_line()
 
 func parse_line(line: String):
-	print(line)
 	if line.begins_with("FACE:"):
 		return {"speaker": "FACE", "dialog": line.substr(5)}
 	if line.begins_with("POP_OUT:"):
@@ -276,12 +275,12 @@ func process_current_line():
 		return
 		
 	if dialog_lines.is_empty():
-		print("Warning: No dialog lines loaded.")
+		print("no dialog lines loaded.")
 		return
 
 	# Ensure index never exceeds bounds
 	if dialog_index >= dialog_lines.size() - 1:
-		print("End of dialogue reached safely.")
+		print("end of dialogue reached")
 		dialog_index = dialog_lines.size() - 1
 		return
 
@@ -290,7 +289,7 @@ func process_current_line():
 
 	# Guard against async overlap
 	if dialog_index < 0 or dialog_index >= dialog_lines.size():
-		print("Index out of range — aborting advance")
+		print("iIndex out of range — aborting")
 		return
 
 	advance_to_next_line()
