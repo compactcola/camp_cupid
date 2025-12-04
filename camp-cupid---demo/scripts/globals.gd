@@ -97,7 +97,7 @@ func _ready():
 	print("Ports avalible: ", ports)
 	
 	if ports.size() > 0:
-		serial.set_port("COM4") #first open port (maybe use COM3 in future)
+		serial.set_port("COM5") #first open port (maybe use COM3 in future)
 		serial.set_baud_rate(9600)
 		
 		if serial.open():
